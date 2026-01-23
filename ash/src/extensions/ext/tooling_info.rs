@@ -11,8 +11,10 @@ impl crate::ext::tooling_info::Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::PhysicalDeviceToolPropertiesEXT<'_>>> {
-        read_into_defaulted_vector(|count, data| {
-            (self.fp.get_physical_device_tool_properties_ext)(physical_device, count, data)
-        })
+        unsafe {
+            read_into_defaulted_vector(|count, data| {
+                (self.fp.get_physical_device_tool_properties_ext)(physical_device, count, data)
+            })
+        }
     }
 }

@@ -1,4 +1,5 @@
 use ash::vk::{PhysicalDeviceProperties, PipelineColorBlendStateCreateInfo};
+use jay_ash as ash;
 
 #[test]
 fn assert_struct_field_is_array() {
@@ -28,6 +29,8 @@ fn assert_ffi_array_param_is_pointer() {
     unsafe fn dummy(device: &ash::Device, cmd_buffer: ash::vk::CommandBuffer) {
         let blend_constants: [f32; 4] = [0.0, 0.0, 0.0, 0.0];
 
-        device.cmd_set_blend_constants(cmd_buffer, &blend_constants);
+        unsafe {
+            device.cmd_set_blend_constants(cmd_buffer, &blend_constants);
+        }
     }
 }

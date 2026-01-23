@@ -12,7 +12,9 @@ impl crate::ext::host_image_copy::Device {
         &self,
         copy_memory_to_image_info: &vk::CopyMemoryToImageInfoEXT<'_>,
     ) -> VkResult<()> {
-        (self.fp.copy_memory_to_image_ext)(self.handle, copy_memory_to_image_info).result()
+        unsafe {
+            (self.fp.copy_memory_to_image_ext)(self.handle, copy_memory_to_image_info).result()
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemoryEXT.html>
@@ -21,7 +23,9 @@ impl crate::ext::host_image_copy::Device {
         &self,
         copy_image_to_memory_info: &vk::CopyImageToMemoryInfoEXT<'_>,
     ) -> VkResult<()> {
-        (self.fp.copy_image_to_memory_ext)(self.handle, copy_image_to_memory_info).result()
+        unsafe {
+            (self.fp.copy_image_to_memory_ext)(self.handle, copy_image_to_memory_info).result()
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImageEXT.html>
@@ -30,7 +34,7 @@ impl crate::ext::host_image_copy::Device {
         &self,
         copy_image_to_image_info: &vk::CopyImageToImageInfoEXT<'_>,
     ) -> VkResult<()> {
-        (self.fp.copy_image_to_image_ext)(self.handle, copy_image_to_image_info).result()
+        unsafe { (self.fp.copy_image_to_image_ext)(self.handle, copy_image_to_image_info).result() }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayoutEXT.html>
@@ -39,12 +43,14 @@ impl crate::ext::host_image_copy::Device {
         &self,
         transitions: &[vk::HostImageLayoutTransitionInfoEXT<'_>],
     ) -> VkResult<()> {
-        (self.fp.transition_image_layout_ext)(
-            self.handle,
-            transitions.len() as u32,
-            transitions.as_ptr(),
-        )
-        .result()
+        unsafe {
+            (self.fp.transition_image_layout_ext)(
+                self.handle,
+                transitions.len() as u32,
+                transitions.as_ptr(),
+            )
+            .result()
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>
@@ -64,6 +70,8 @@ impl crate::ext::host_image_copy::Device {
         subresource: &vk::ImageSubresource2EXT<'_>,
         layout: &mut vk::SubresourceLayout2EXT<'_>,
     ) {
-        (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
+        unsafe {
+            (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
+        }
     }
 }

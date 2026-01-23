@@ -12,6 +12,8 @@ impl crate::khr::present_wait::Device {
         present_id: u64,
         timeout: u64,
     ) -> VkResult<()> {
-        (self.fp.wait_for_present_khr)(self.handle, swapchain, present_id, timeout).result()
+        unsafe {
+            (self.fp.wait_for_present_khr)(self.handle, swapchain, present_id, timeout).result()
+        }
     }
 }

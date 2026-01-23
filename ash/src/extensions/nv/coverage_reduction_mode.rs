@@ -12,16 +12,18 @@ impl crate::nv::coverage_reduction_mode::Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<usize> {
-        let mut count = mem::MaybeUninit::uninit();
-        (self
-            .fp
-            .get_physical_device_supported_framebuffer_mixed_samples_combinations_nv)(
-            physical_device,
-            count.as_mut_ptr(),
-            ptr::null_mut(),
-        )
-        .assume_init_on_success(count)
-        .map(|c| c as usize)
+        unsafe {
+            let mut count = mem::MaybeUninit::uninit();
+            (self
+                .fp
+                .get_physical_device_supported_framebuffer_mixed_samples_combinations_nv)(
+                physical_device,
+                count.as_mut_ptr(),
+                ptr::null_mut(),
+            )
+            .assume_init_on_success(count)
+            .map(|c| c as usize)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV.html>
@@ -34,16 +36,18 @@ impl crate::nv::coverage_reduction_mode::Instance {
         physical_device: vk::PhysicalDevice,
         out: &mut [vk::FramebufferMixedSamplesCombinationNV<'_>],
     ) -> VkResult<()> {
-        let mut count = out.len() as u32;
-        (self
-            .fp
-            .get_physical_device_supported_framebuffer_mixed_samples_combinations_nv)(
-            physical_device,
-            &mut count,
-            out.as_mut_ptr(),
-        )
-        .result()?;
-        assert_eq!(count as usize, out.len());
-        Ok(())
+        unsafe {
+            let mut count = out.len() as u32;
+            (self
+                .fp
+                .get_physical_device_supported_framebuffer_mixed_samples_combinations_nv)(
+                physical_device,
+                &mut count,
+                out.as_mut_ptr(),
+            )
+            .result()?;
+            assert_eq!(count as usize, out.len());
+            Ok(())
+        }
     }
 }

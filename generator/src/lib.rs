@@ -9,8 +9,11 @@
 )]
 
 use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
+use indexmap::IndexMap;
 use itertools::Itertools;
+use linearize::{Linearize, StaticMap};
 use nom::{
+    IResult, Parser,
     branch::alt,
     bytes::complete::{tag, take_until, take_while1},
     character::complete::{
@@ -18,26 +21,40 @@ use nom::{
     },
     combinator::{map, map_res, opt, value},
     multi::{many1, separated_list1},
-    sequence::{delimited, pair, preceded, separated_pair, terminated, tuple},
-    IResult, Parser,
+    sequence::{delimited, pair, preceded, separated_pair, terminated},
 };
-use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
 use quote::*;
 use regex::Regex;
+use std::ffi::CStr;
 use std::{
     borrow::Cow,
     collections::{BTreeMap, HashMap, HashSet},
     fmt::Display,
     ops::Not,
     path::Path,
+    sync::LazyLock,
 };
 use syn::Ident;
 
-const DESIRED_API: &str = "vulkan";
+trait IsVulkanApi {
+    fn is_vulkan_api(&self) -> bool;
+}
+
+impl IsVulkanApi for String {
+    fn is_vulkan_api(&self) -> bool {
+        contains_desired_api(self)
+    }
+}
+
+impl IsVulkanApi for Option<String> {
+    fn is_vulkan_api(&self) -> bool {
+        self.as_deref().is_none_or(contains_desired_api)
+    }
+}
 
 fn contains_desired_api(api: &str) -> bool {
-    api.split(',').any(|n| n == DESIRED_API)
+    api.split(',').any(|n| n == "vulkan")
 }
 
 macro_rules! get_variant {
@@ -48,6 +65,7 @@ macro_rules! get_variant {
         }
     };
     ($variant:path { $($member:ident),+ }) => {
+        #[allow(clippy::double_parens)]
         |enum_| match enum_ {
             $variant { $($member),+, .. } => Some(( $($member),+ )),
             _ => None,
@@ -84,7 +102,7 @@ impl quote::ToTokens for CType {
 }
 
 fn parse_ctype(i: &str) -> IResult<&str, CType> {
-    (alt((value(CType::U64, tag("ULL")), value(CType::U32, tag("U")))))(i)
+    (alt((value(CType::U64, tag("ULL")), value(CType::U32, tag("U"))))).parse(i)
 }
 
 fn parse_cexpr(i: &str) -> IResult<&str, (CType, String)> {
@@ -93,11 +111,12 @@ fn parse_cexpr(i: &str) -> IResult<&str, (CType, String)> {
         parse_inverse_number,
         parse_decimal_number,
         parse_hexadecimal_number,
-    )))(i)
+    )))
+    .parse(i)
 }
 
 fn parse_cfloat(i: &str) -> IResult<&str, f32> {
-    (terminated(nom::number::complete::float, one_of("fF")))(i)
+    (terminated(nom::number::complete::float, one_of("fF"))).parse(i)
 }
 
 fn parse_inverse_number(i: &str) -> IResult<&str, (CType, String)> {
@@ -118,7 +137,8 @@ fn parse_inverse_number(i: &str) -> IResult<&str, (CType, String)> {
             };
             (ctyp, expr)
         },
-    ))(i)
+    ))
+    .parse(i)
 }
 
 // Like a C string, but does not support quote escaping and expects at least one character.
@@ -130,21 +150,24 @@ fn parse_c_include_string(i: &str) -> IResult<&str, String> {
             c.iter().map(char::to_string).join("")
         }),
         char('"'),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn parse_c_include(i: &str) -> IResult<&str, String> {
     (preceded(
         tag("#include"),
         preceded(multispace1, parse_c_include_string),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn parse_decimal_number(i: &str) -> IResult<&str, (CType, String)> {
     (map(
         pair(digit1.map(str::to_string), parse_ctype),
         |(dig, ctype)| (ctype, dig),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn parse_hexadecimal_number(i: &str) -> IResult<&str, (CType, String)> {
@@ -156,15 +179,16 @@ fn parse_hexadecimal_number(i: &str) -> IResult<&str, (CType, String)> {
                 format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string()),
             )
         }),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn parse_c_identifier(i: &str) -> IResult<&str, &str> {
-    take_while1(|c: char| c == '_' || c.is_alphanumeric())(i)
+    take_while1(|c: char| c == '_' || c.is_alphanumeric()).parse(i)
 }
 
 fn parse_comment_suffix(i: &str) -> IResult<&str, Option<&str>> {
-    opt(delimited(tag("//"), take_until("\n"), newline))(i)
+    opt(delimited(tag("//"), take_until("\n"), newline)).parse(i)
 }
 
 fn parse_parameter_names(i: &str) -> IResult<&str, Vec<&str>> {
@@ -172,7 +196,8 @@ fn parse_parameter_names(i: &str) -> IResult<&str, Vec<&str>> {
         char('('),
         separated_list1(tag(", "), parse_c_identifier),
         char(')'),
-    )(i)
+    )
+    .parse(i)
 }
 
 /// Parses a C macro define optionally prefixed by a comment and optionally
@@ -182,10 +207,11 @@ fn parse_c_define_header(i: &str) -> IResult<&str, (Option<&str>, (&str, Option<
     (pair(
         parse_comment_suffix,
         preceded(
-            tag("#define "),
+            preceded(opt(newline), tag("#define ")),
             pair(parse_c_identifier, opt(parse_parameter_names)),
         ),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 #[derive(Debug)]
@@ -208,11 +234,11 @@ struct CParameterType<'a> {
 fn parse_c_type(i: &str) -> IResult<&str, CParameterType<'_>> {
     (map(
         separated_pair(
-            tuple((
+            (
                 opt(tag("const ")),
                 preceded(opt(tag("struct ")), parse_c_identifier),
                 opt(char('*')),
-            )),
+            ),
             multispace0,
             opt(pair(opt(tag("const")), char('*'))),
         ),
@@ -236,7 +262,8 @@ fn parse_c_type(i: &str) -> IResult<&str, CParameterType<'_>> {
                 (None, Some(_)) => unreachable!(),
             },
         },
-    ))(i)
+    ))
+    .parse(i)
 }
 
 #[derive(Debug)]
@@ -268,7 +295,8 @@ fn parse_c_parameter(i: &str) -> IResult<&str, CParameter<'_>> {
             _name: name,
             static_array,
         },
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
@@ -287,9 +315,14 @@ fn is_opaque_type(ty: &str) -> bool {
             | "xcb_connection_t"
             | "ANativeWindow"
             | "AHardwareBuffer"
+            | "OHNativeWindow"
             | "CAMetalLayer"
             | "IDirectFB"
             | "IDirectFBSurface"
+            | "_screen_buffer"
+            | "_screen_context"
+            | "_screen_window"
+            | "SECURITY_ATTRIBUTES"
     )
 }
 
@@ -312,7 +345,7 @@ pub trait ConstantExt {
     fn variant_ident(&self, enum_name: &str) -> Ident;
     fn notation(&self) -> Option<&str>;
     fn formatted_notation(&self) -> Option<Cow<'_, str>> {
-        static DOC_LINK: Lazy<Regex> = Lazy::new(|| Regex::new(r"<<([\w-]+)>>").unwrap());
+        static DOC_LINK: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"<<([\w-]+)>>").unwrap());
         self.notation().map(|n| {
             DOC_LINK.replace(
                 n,
@@ -323,7 +356,7 @@ pub trait ConstantExt {
     fn is_alias(&self) -> bool {
         false
     }
-    fn is_deprecated(&self) -> bool;
+    fn deprecated(&self) -> Option<&str>;
     fn doc_attribute(&self) -> Option<TokenStream> {
         self.formatted_notation().map(|n| quote!(#[doc = #n]))
     }
@@ -339,7 +372,7 @@ impl ConstantExt for vkxml::ExtensionEnum {
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
     }
-    fn is_deprecated(&self) -> bool {
+    fn deprecated(&self) -> Option<&str> {
         todo!()
     }
 }
@@ -359,8 +392,8 @@ impl ConstantExt for vk_parse::Enum {
     fn is_alias(&self) -> bool {
         matches!(self.spec, vk_parse::EnumSpec::Alias { .. })
     }
-    fn is_deprecated(&self) -> bool {
-        self.deprecated.is_some()
+    fn deprecated(&self) -> Option<&str> {
+        self.deprecated.as_deref()
     }
 }
 
@@ -374,7 +407,7 @@ impl ConstantExt for vkxml::Constant {
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
     }
-    fn is_deprecated(&self) -> bool {
+    fn deprecated(&self) -> Option<&str> {
         todo!()
     }
 }
@@ -553,7 +586,7 @@ impl FeatureExt for vkxml::Feature {
         version.replace('.', "_")
     }
 }
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Linearize)]
 pub enum FunctionType {
     Static,
     Entry,
@@ -566,7 +599,7 @@ pub trait CommandExt {
 
 impl CommandExt for vk_parse::CommandDefinition {
     fn function_type(&self) -> FunctionType {
-        let is_first_param_device = self.params.first().map_or(false, |field| {
+        let is_first_param_device = self.params.first().is_some_and(|field| {
             matches!(
                 field.definition.type_name.as_deref(),
                 Some("VkDevice" | "VkCommandBuffer" | "VkQueue")
@@ -872,7 +905,7 @@ impl FieldExt for vk_parse::CommandParam {
     }
 
     fn type_tokens(&self, is_ffi_param: bool, type_lifetime: Option<TokenStream>) -> TokenStream {
-        assert!(!self.is_void(), "{:?}", self);
+        assert!(!self.is_void(), "{self:?}");
         let (rem, ty) = parse_c_parameter(&self.definition.code).unwrap();
         assert!(rem.is_empty());
         // Disambiguate overloaded names
@@ -956,10 +989,7 @@ fn generate_function_pointers<'a>(
             let function_name_rust = format_ident!("{}", type_name.to_snake_case());
             let type_name = format_ident!("{}", type_name);
 
-            let params = cmd
-                .params
-                .iter()
-                .filter(|param| matches!(param.api.as_deref(), None | Some(DESIRED_API)));
+            let params = cmd.params.iter().filter(|param| param.api.is_vulkan_api());
 
             let params_tokens: Vec<_> = params
                 .clone()
@@ -1021,7 +1051,7 @@ fn generate_function_pointers<'a>(
         .collect::<Vec<_>>();
 
     struct CommandToParamTraits<'a>(&'a Command<'a>);
-    impl<'a> quote::ToTokens for CommandToParamTraits<'a> {
+    impl quote::ToTokens for CommandToParamTraits<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             for (param_ident, validstructs) in &self.0.parameter_validstructs {
                 let param_ident = param_ident.to_string();
@@ -1055,7 +1085,7 @@ fn generate_function_pointers<'a>(
     }
 
     struct CommandToType<'a>(&'a Command<'a>);
-    impl<'a> quote::ToTokens for CommandToType<'a> {
+    impl quote::ToTokens for CommandToType<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.pfn_type_name;
             let parameters = &self.0.parameters;
@@ -1069,7 +1099,7 @@ fn generate_function_pointers<'a>(
     }
 
     struct CommandToMember<'a>(&'a Command<'a>);
-    impl<'a> quote::ToTokens for CommandToMember<'a> {
+    impl quote::ToTokens for CommandToMember<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.pfn_type_name;
             let function_name_rust = &self.0.function_name_rust;
@@ -1078,26 +1108,28 @@ fn generate_function_pointers<'a>(
     }
 
     struct CommandToLoader<'a>(&'a Command<'a>);
-    impl<'a> quote::ToTokens for CommandToLoader<'a> {
+    impl quote::ToTokens for CommandToLoader<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let function_name_rust = &self.0.function_name_rust;
+            let pfn_type_name = &self.0.pfn_type_name;
             let parameters_unused = &self.0.parameters_unused;
             let returns = &self.0.returns;
 
-            let byte_function_name =
-                Literal::byte_string(format!("{}\0", self.0.function_name_c).as_bytes());
+            let byte_function_name = Literal::c_string(
+                CStr::from_bytes_until_nul(format!("{}\0", self.0.function_name_c).as_bytes())
+                    .unwrap(),
+            );
 
             quote!(
                 #function_name_rust: unsafe {
                     unsafe extern "system" fn #function_name_rust (#parameters_unused) #returns {
                         panic!(concat!("Unable to load ", stringify!(#function_name_rust)))
                     }
-                    let cname = CStr::from_bytes_with_nul_unchecked(#byte_function_name);
-                    let val = _f(cname);
+                    let val = _f(#byte_function_name);
                     if val.is_null() {
                         #function_name_rust
                     } else {
-                        ::core::mem::transmute(val)
+                        ::core::mem::transmute::<*const c_void, #pfn_type_name>(val)
                     }
                 }
             )
@@ -1162,8 +1194,9 @@ pub struct ExtensionConstant<'a> {
     pub name: &'a str,
     pub constant: Constant,
     pub notation: Option<&'a str>,
+    pub deprecated: Option<&'a str>,
 }
-impl<'a> ConstantExt for ExtensionConstant<'a> {
+impl ConstantExt for ExtensionConstant<'_> {
     fn constant(&self, _enum_name: &str) -> Constant {
         self.constant.clone()
     }
@@ -1173,9 +1206,8 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn notation(&self) -> Option<&str> {
         self.notation
     }
-    fn is_deprecated(&self) -> bool {
-        // We won't create this struct if the extension constant was deprecated
-        false
+    fn deprecated(&self) -> Option<&str> {
+        self.deprecated
     }
 }
 
@@ -1192,7 +1224,7 @@ pub fn generate_extension_constants<'a>(
             api,
             items
         }))
-        .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
+        .filter(|(api, _items)| api.is_vulkan_api())
         .flat_map(|(_api, items)| items);
 
     let mut extended_enums = BTreeMap::<String, Vec<ExtensionConstant<'_>>>::new();
@@ -1203,12 +1235,14 @@ pub fn generate_extension_constants<'a>(
                 continue;
             }
 
-            if !matches!(enum_.api.as_deref(), None | Some(DESIRED_API)) {
+            if !enum_.api.is_vulkan_api() {
                 continue;
             }
 
-            if enum_.deprecated.is_some() {
-                continue;
+            match enum_.deprecated.as_deref() {
+                None | Some("true") => {}
+                Some("aliased") => continue,
+                x => panic!("Unknown deprecation reason {x:?}"),
             }
 
             let (constant, extends, is_alias) = if let Some(r) =
@@ -1227,6 +1261,7 @@ pub fn generate_extension_constants<'a>(
                 name: &enum_.name,
                 constant,
                 notation: enum_.comment.as_deref(),
+                deprecated: enum_.deprecated.as_deref(),
             };
             let ident = name_to_tokens(&extends);
             const_values
@@ -1236,6 +1271,7 @@ pub fn generate_extension_constants<'a>(
                 .push(ConstantMatchInfo {
                     ident: ext_constant.variant_ident(&extends),
                     is_alias,
+                    is_deprecated: enum_.deprecated.is_some(),
                 });
 
             extended_enums
@@ -1271,7 +1307,9 @@ pub fn generate_extension_commands<'a>(
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> ExtensionCommands<'a> {
-    let byte_name_ident = Literal::byte_string(format!("{full_extension_name}\0").as_bytes());
+    let byte_name_ident = Literal::c_string(
+        CStr::from_bytes_until_nul(format!("{full_extension_name}\0").as_bytes()).unwrap(),
+    );
 
     let extension_name = full_extension_name.strip_prefix("VK_").unwrap();
     let (vendor, extension_ident) = extension_name.split_once('_').unwrap();
@@ -1308,7 +1346,7 @@ pub fn generate_extension_commands<'a>(
             api,
             items
         }))
-        .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
+        .filter(|(api, _items)| api.is_vulkan_api())
         .flat_map(|(_api, items)| items)
         .filter_map(get_variant!(vk_parse::InterfaceItem::Command { name }));
 
@@ -1339,43 +1377,45 @@ pub fn generate_extension_commands<'a>(
             &rename_commands,
             fn_cache,
             has_lifetimes,
-            &format!(
-                "Raw {} instance-level function pointers",
-                full_extension_name
-            ),
+            &format!("Raw {full_extension_name} instance-level function pointers"),
         );
-        let doc = format!("{} instance-level functions", full_extension_name);
+        let doc = format!("{full_extension_name} instance-level functions");
 
-        (fp, quote! {
-            #[doc = #doc]
-            #[derive(Clone)]
-            pub struct Instance {
-                pub(crate) fp: InstanceFn,
-                pub(crate) handle: crate::vk::Instance,
-            }
-
-            impl Instance {
-                pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                    let handle = instance.handle();
-                    let fp = InstanceFn::load(|name| unsafe {
-                        core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
-                    });
-                    Self { handle, fp }
+        (
+            fp,
+            quote! {
+                #[doc = #doc]
+                #[derive(Clone)]
+                pub struct Instance {
+                    pub(crate) fp: InstanceFn,
+                    pub(crate) handle: crate::vk::Instance,
                 }
 
-                #[inline]
-                pub fn fp(&self) -> &InstanceFn {
-                    &self.fp
+                impl Instance {
+                    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                        let handle = instance.handle();
+                        let fp = InstanceFn::load(|name| unsafe {
+                            core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                                entry.get_instance_proc_addr(handle, name.as_ptr()),
+                            )
+                        });
+                        Self { handle, fp }
+                    }
+
+                    #[inline]
+                    pub fn fp(&self) -> &InstanceFn {
+                        &self.fp
+                    }
+
+                    #[inline]
+                    pub fn instance(&self) -> crate::vk::Instance {
+                        self.handle
+                    }
                 }
 
-                #[inline]
-                pub fn instance(&self) -> crate::vk::Instance {
-                    self.handle
-                }
-            }
-
-            #table
-        })
+                #table
+            },
+        )
     });
 
     let device_fp = (!device_commands.is_empty()).then(|| {
@@ -1387,40 +1427,45 @@ pub fn generate_extension_commands<'a>(
             &rename_commands,
             fn_cache,
             has_lifetimes,
-            &format!("Raw {} device-level function pointers", full_extension_name),
+            &format!("Raw {full_extension_name} device-level function pointers"),
         );
-        let doc = format!("{} device-level functions", full_extension_name);
+        let doc = format!("{full_extension_name} device-level functions");
 
-        (fp, quote! {
-            #[doc = #doc]
-            #[derive(Clone)]
-            pub struct Device {
-                pub(crate) fp: DeviceFn,
-                pub(crate) handle: crate::vk::Device,
-            }
-
-            impl Device {
-                pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                    let handle = device.handle();
-                    let fp = DeviceFn::load(|name| unsafe {
-                        core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-                    });
-                    Self { handle, fp }
+        (
+            fp,
+            quote! {
+                #[doc = #doc]
+                #[derive(Clone)]
+                pub struct Device {
+                    pub(crate) fp: DeviceFn,
+                    pub(crate) handle: crate::vk::Device,
                 }
 
-                #[inline]
-                pub fn fp(&self) -> &DeviceFn {
-                    &self.fp
+                impl Device {
+                    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                        let handle = device.handle();
+                        let fp = DeviceFn::load(|name| unsafe {
+                            core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                                instance.get_device_proc_addr(handle, name.as_ptr()),
+                            )
+                        });
+                        Self { handle, fp }
+                    }
+
+                    #[inline]
+                    pub fn fp(&self) -> &DeviceFn {
+                        &self.fp
+                    }
+
+                    #[inline]
+                    pub fn device(&self) -> crate::vk::Device {
+                        self.handle
+                    }
                 }
 
-                #[inline]
-                pub fn device(&self) -> crate::vk::Device {
-                    self.handle
-                }
-            }
-
-            #table
-        })
+                #table
+            },
+        )
     });
 
     let (raw_device_fp, hl_device_fp) = device_fp.map_or((None, None), |(a, b)| (Some(a), Some(b)));
@@ -1430,9 +1475,7 @@ pub fn generate_extension_commands<'a>(
     ExtensionCommands {
         vendor,
         raw: quote! {
-                pub const #name_ident: &CStr = unsafe {
-                    CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
-                };
+                pub const #name_ident: &CStr = #byte_name_ident;
                 #spec_version
                 #raw_instance_fp
                 #raw_device_fp
@@ -1481,12 +1524,10 @@ pub fn generate_define(
         let deprecated = comment
             .and_then(|c| c.trim().strip_prefix("DEPRECATED: "))
             .map(|comment| quote!(#[deprecated = #comment]))
+            // TODO: Read from `<deprecated>` introduced in 1.4.320
             .or_else(|| match define.deprecated.as_ref()?.as_str() {
                 "true" => Some(quote!(#[deprecated])),
-                "aliased" => {
-                    Some(quote!(#[deprecated = "an old name not following Vulkan conventions"]))
-                }
-                x => panic!("Unknown deprecation reason {}", x),
+                x => panic!("Unknown deprecation reason {x}"),
             });
 
         let (code, ident) = if let Some(parameters) = parameters {
@@ -1564,7 +1605,7 @@ pub enum EnumType {
     Enum(TokenStream),
 }
 
-static TRAILING_NUMBER: Lazy<Regex> = Lazy::new(|| Regex::new("(\\d+)$").unwrap());
+static TRAILING_NUMBER: LazyLock<Regex> = LazyLock::new(|| Regex::new("(\\d+)$").unwrap());
 
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let variant_name = variant_name.to_uppercase();
@@ -1601,6 +1642,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         "_NVX",
         "_NXP",
         "_NZXT",
+        "_OHOS",
         "_QCOM",
         "_QNX",
         "_RASTERGRID",
@@ -1654,24 +1696,26 @@ pub fn bitflags_impl_block(
     enum_name: &str,
     constants: &[&impl ConstantExt],
 ) -> TokenStream {
-    let variants = constants
-        .iter()
-        .filter(|constant| !constant.is_deprecated())
-        .map(|constant| {
-            let variant_ident = constant.variant_ident(enum_name);
-            let notation = constant.doc_attribute();
-            let constant = constant.constant(enum_name);
-            let value = if let Constant::Alias(_) = &constant {
-                quote!(#constant)
-            } else {
-                quote!(Self(#constant))
-            };
-
-            quote! {
-                #notation
-                pub const #variant_ident: Self = #value;
-            }
+    let variants = constants.iter().map(|constant| {
+        let deprecated = constant.deprecated().map(|deprecated| match deprecated {
+            "true" => quote!(#[deprecated]),
+            x => panic!("Unknown deprecation reason {x}"),
         });
+        let variant_ident = constant.variant_ident(enum_name);
+        let notation = constant.doc_attribute();
+        let constant = constant.constant(enum_name);
+        let value = if let Constant::Alias(_) = &constant {
+            quote!(#constant)
+        } else {
+            quote!(Self(#constant))
+        };
+
+        quote! {
+            #deprecated
+            #notation
+            pub const #variant_ident: Self = #value;
+        }
+    });
 
     quote! {
         impl #ident {
@@ -1694,7 +1738,11 @@ pub fn generate_enum<'a>(
         .children
         .iter()
         .filter_map(get_variant!(vk_parse::EnumsChild::Enum))
-        .filter(|constant| !constant.is_deprecated())
+        .filter(|constant| match constant.deprecated() {
+            None => true,
+            Some("aliased") => false,
+            x => panic!("Unknown deprecation reason {x:?}"),
+        })
         .collect_vec();
 
     let mut values = Vec::with_capacity(constants.len());
@@ -1703,6 +1751,7 @@ pub fn generate_enum<'a>(
         values.push(ConstantMatchInfo {
             ident: constant.variant_ident(name),
             is_alias: constant.is_alias(),
+            is_deprecated: constant.deprecated.is_some(),
         });
     }
     const_values.insert(
@@ -1789,7 +1838,7 @@ fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
 
     quote! {
         #[cfg(feature = "std")]
-        impl std::error::Error for #ident {}
+        impl core::error::Error for #ident {}
         impl fmt::Display for #ident {
             fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
                 let name = match *self {
@@ -2028,12 +2077,11 @@ fn derive_getters_and_setters(
             let field = &member.vkxml_field;
 
             // Associated _count members
-            if field.array.is_some() {
-                if let Some(array_size) = &field.size {
-                    if !allowed_count_members.contains(&(&struct_.name, array_size)) {
-                        return Some(array_size);
-                    }
-                }
+            if field.array.is_some()
+                && let Some(array_size) = &field.size
+                && !allowed_count_members.contains(&(&struct_.name, array_size))
+            {
+                return Some(array_size);
             }
 
             if let Some(objecttype) = &member.vk_parse_type_member.objecttype {
@@ -2132,7 +2180,9 @@ fn derive_getters_and_setters(
                         if self.#param_ident.is_null() {
                             None
                         } else {
-                            Some(CStr::from_ptr(self.#param_ident))
+                            unsafe {
+                                Some(CStr::from_ptr(self.#param_ident))
+                            }
                         }
                     }
                 });
@@ -2154,8 +2204,8 @@ fn derive_getters_and_setters(
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
-        if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
-            if let Some(ref array_size) = field.size {
+        if matches!(field.array, Some(vkxml::ArrayType::Dynamic))
+            && let Some(ref array_size) = field.size {
                 let mut ptr = if field.is_const {
                     quote!(.as_ptr())
                 } else if let Some(tl) = &mut type_lifetime {
@@ -2249,7 +2299,6 @@ fn derive_getters_and_setters(
                         self
                     }
                 });
-            }
         }
 
         if field.basetype == "VkBool32" {
@@ -2433,9 +2482,11 @@ pub fn generate_struct(
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
+            #[derive(Copy, Clone, Default)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTransformMatrixKHR.html>"]
             pub struct TransformMatrixKHR {
-                pub matrix: [f32; 12],
+                pub matrix: [[f32; 3]; 4],
             }
         };
     }
@@ -2483,7 +2534,7 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
-            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMatrixMotionInstanceNV.html>"]
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,
@@ -2492,6 +2543,48 @@ pub fn generate_struct(
                 /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+            }
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV.html>"]
+            pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
+                // TODO: Add bitfield helpers
+                pub geometry_index_and_flags: u32,
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildTriangleClusterInfoNV.html>"]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+                _todo_many_bitfields: [u8; 0],
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV.html>"]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+                _todo_many_bitfields: [u8; 0],
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
+            pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
+                _todo_bitfield_and_other_fields: [u8; 0],
             }
         };
     }
@@ -2506,7 +2599,7 @@ pub fn generate_struct(
                 .filter_map(get_variant!(vk_parse::TypeMember::Definition)),
         )
         .filter(|(_, vk_parse_field)| {
-            matches!(vk_parse_field.api.as_deref(), None | Some(DESIRED_API))
+            vk_parse_field.api.is_vulkan_api()
         })
         .map(|(field, vk_parse_field)| {
             let deprecated = vk_parse_field
@@ -2517,7 +2610,7 @@ pub fn generate_struct(
                     "ignored" => {
                         quote!(#[deprecated = "functionality described by this member no longer operates"])
                     }
-                    x => panic!("Unknown deprecation reason {}", x),
+                    x => panic!("Unknown deprecation reason {x}"),
                 });
                 PreprocessedMember {
                     vkxml_field: field,
@@ -2678,7 +2771,7 @@ pub fn root_structs(
             type_
                 .name
                 .as_ref()
-                .map_or(false, |name| allowed_types.contains(name.as_str()))
+                .is_some_and(|name| allowed_types.contains(name.as_str()))
         })
         .filter_map(|type_| type_.structextends.as_ref())
         .flat_map(|e| e.split(','))
@@ -2690,10 +2783,8 @@ pub fn generate_definition_vk_parse(
     allowed_types: &HashSet<&str>,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
-    if let Some(api) = &definition.api {
-        if api != DESIRED_API {
-            return None;
-        }
+    if !definition.api.is_vulkan_api() {
+        return None;
     }
 
     match definition.category.as_deref() {
@@ -2754,41 +2845,46 @@ pub fn generate_definition(
         _ => None,
     }
 }
-pub fn generate_feature<'a>(
+pub fn collect_feature<'a>(
     feature: &vkxml::Feature,
     commands: &CommandMap<'a>,
-    fn_cache: &mut HashSet<&'a str>,
-    has_lifetimes: &HashSet<Ident>,
-) -> (TokenStream, TokenStream) {
-    if !contains_desired_api(&feature.api) {
-        return (quote!(), quote!());
+    command_definitions: &mut IndexMap<
+        String,
+        (
+            f32,
+            StaticMap<FunctionType, Vec<&'a vk_parse::CommandDefinition>>,
+        ),
+    >,
+) {
+    if !feature.api.is_vulkan_api() {
+        return;
     }
-
-    let (static_commands, entry_commands, device_commands, instance_commands) = feature
+    let version = feature.version_string();
+    let (_, map) = command_definitions
+        .entry(version)
+        .or_insert((feature.version, Default::default()));
+    feature
         .elements
         .iter()
         .filter_map(get_variant!(vkxml::FeatureElement::Require))
         .flat_map(|spec| &spec.elements)
         .filter_map(get_variant!(vkxml::FeatureReference::CommandReference))
         .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
-        .fold(
-            (Vec::new(), Vec::new(), Vec::new(), Vec::new()),
-            |mut accs, &cmd_ref| {
-                let acc = match cmd_ref.function_type() {
-                    FunctionType::Static => &mut accs.0,
-                    FunctionType::Entry => &mut accs.1,
-                    FunctionType::Device => &mut accs.2,
-                    FunctionType::Instance => &mut accs.3,
-                };
-                acc.push(cmd_ref);
-                accs
-            },
-        );
-    let version = feature.version_string();
-    let (static_fn_fp, static_fn_table) = if feature.is_version(1, 0) {
+        .for_each(|&cmd_ref| {
+            map[cmd_ref.function_type()].push(cmd_ref);
+        });
+}
+pub fn generate_feature<'a>(
+    version: &str,
+    fp_version: f32,
+    command_definitions: &StaticMap<FunctionType, Vec<&'a vk_parse::CommandDefinition>>,
+    fn_cache: &mut HashSet<&'a str>,
+    has_lifetimes: &HashSet<Ident>,
+) -> (TokenStream, TokenStream) {
+    let (static_fn_fp, static_fn_table) = if version == "1_0" {
         generate_function_pointers(
             format_ident!("{}", "StaticFn"),
-            &static_commands,
+            &command_definitions[FunctionType::Static],
             &HashMap::new(),
             fn_cache,
             has_lifetimes,
@@ -2799,36 +2895,27 @@ pub fn generate_feature<'a>(
     };
     let (entry_fp, entry_table) = generate_function_pointers(
         format_ident!("EntryFnV{}", version),
-        &entry_commands,
+        &command_definitions[FunctionType::Entry],
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
-        &format!(
-            "Raw Vulkan {} entry point function pointers",
-            feature.version
-        ),
+        &format!("Raw Vulkan {fp_version} entry point function pointers"),
     );
     let (instance_fp, instance_table) = generate_function_pointers(
         format_ident!("InstanceFnV{}", version),
-        &instance_commands,
+        &command_definitions[FunctionType::Instance],
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
-        &format!(
-            "Raw Vulkan {} instance-level function pointers",
-            feature.version
-        ),
+        &format!("Raw Vulkan {fp_version} instance-level function pointers"),
     );
     let (device_fp, device_table) = generate_function_pointers(
         format_ident!("DeviceFnV{}", version),
-        &device_commands,
+        &command_definitions[FunctionType::Device],
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
-        &format!(
-            "Raw Vulkan {} device-level function pointers",
-            feature.version
-        ),
+        &format!("Raw Vulkan {fp_version} device-level function pointers"),
     );
     (
         quote! {
@@ -2880,7 +2967,7 @@ pub fn generate_feature_extension<'a>(
         .0
         .iter()
         .filter_map(get_variant!(vk_parse::RegistryChild::Feature))
-        .filter(|feature| contains_desired_api(&feature.api))
+        .filter(|feature| feature.api.is_vulkan_api())
         .map(|feature| {
             generate_extension_constants(
                 &feature.name,
@@ -2898,6 +2985,7 @@ pub fn generate_feature_extension<'a>(
 pub struct ConstantMatchInfo {
     pub ident: Ident,
     pub is_alias: bool,
+    pub is_deprecated: bool,
 }
 
 #[derive(Default)]
@@ -2948,7 +3036,9 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -
                 } else {
                     let ident = &value.ident;
                     let name = ident.to_string();
-                    Some(quote! { Self::#ident => Some(#name), })
+                    let allow_deprecated =
+                        value.is_deprecated.then(|| quote!(#[allow(deprecated)]));
+                    Some(quote! { #allow_deprecated Self::#ident => Some(#name), })
                 }
             });
             quote! {
@@ -3019,11 +3109,11 @@ pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, Stri
             }
             Some(_) => {}
             None => {
-                if let Some(header_name) = ty.requires.clone() {
-                    if header_includes.iter().any(|(name, _)| name == &header_name) {
-                        // Omit types from system and other headers
-                        header_types.push(ty.name.clone().expect("Type must have a name"));
-                    }
+                if let Some(header_name) = ty.requires.clone()
+                    && header_includes.iter().any(|(name, _)| name == &header_name)
+                {
+                    // Omit types from system and other headers
+                    header_types.push(ty.name.clone().expect("Type must have a name"));
                 }
             }
         };
@@ -3067,7 +3157,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let vk_xml = vk_headers_dir.join("registry/vk.xml");
     use std::fs::File;
     use std::io::Write;
-    let (spec2, _errors) = vk_parse::parse_file(&vk_xml).expect("Invalid xml file");
+    let (spec2, errors) = vk_parse::parse_file(&vk_xml).expect("Invalid xml file");
+    if !errors.is_empty() {
+        eprintln!("vk_parse encountered one or more errors while parsing: {errors:?}")
+    }
     let extensions: Vec<&vk_parse::Extension> = spec2
         .0
         .iter()
@@ -3076,15 +3169,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .children
         .iter()
         .filter(|e| {
-            if let Some(supported) = &e.supported {
-                contains_desired_api(supported) ||
+            e.supported.as_ref().is_none_or(|supported| {
+                supported.is_vulkan_api() ||
                 // VK_ANDROID_native_buffer is for internal use only, but types defined elsewhere
                 // reference enum extension constants.  Exempt the extension from this check until
                 // types are properly folded in with their extension (where applicable).
                 e.name == "VK_ANDROID_native_buffer"
-            } else {
-                true
-            }
+            })
         })
         .collect();
 
@@ -3115,7 +3206,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .0
         .iter()
         .filter_map(get_variant!(vk_parse::RegistryChild::Feature))
-        .filter(|feature| contains_desired_api(&feature.api))
+        .filter(|feature| feature.api.is_vulkan_api())
         .flat_map(|features| &features.children);
 
     let extension_children = extensions.iter().flat_map(|extension| &extension.children);
@@ -3123,7 +3214,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let (required_types, required_commands) = features_children
         .chain(extension_children)
         .filter_map(get_variant!(vk_parse::FeatureChild::Require { api, items }))
-        .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
+        .filter(|(api, _items)| api.is_vulkan_api())
         .flat_map(|(_api, items)| items)
         .fold((HashSet::new(), HashSet::new()), |mut acc, elem| {
             match elem {
@@ -3170,9 +3261,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .filter_map(get_variant!(vk_parse::RegistryChild::Enums))
         .filter(|enums| enums.kind.is_some())
         .filter(|enums| {
-            enums.name.as_ref().map_or(true, |n| {
-                required_types.contains(n.replace("FlagBits", "Flags").as_str())
-            })
+            enums
+                .name
+                .as_ref()
+                .is_none_or(|n| required_types.contains(n.replace("FlagBits", "Flags").as_str()))
         })
         .map(|e| generate_enum(e, &mut const_cache, &mut const_values, &mut bitflags_cache))
         .fold((Vec::new(), Vec::new()), |mut acc, elem| {
@@ -3235,10 +3327,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .flat_map(|types| &types.children)
         .filter_map(get_variant!(vk_parse::TypesChild::Type))
     {
-        if let (Some(name), Some(alias)) = (&type_.name, &type_.alias) {
-            if has_lifetimes.contains(&name_to_tokens(alias)) {
-                has_lifetimes.insert(name_to_tokens(name));
-            }
+        if let (Some(name), Some(alias)) = (&type_.name, &type_.alias)
+            && has_lifetimes.contains(&name_to_tokens(alias))
+        {
+            has_lifetimes.insert(name_to_tokens(name));
         }
     }
 
@@ -3274,7 +3366,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     }
     let high_level_extension_cmds = high_level_extension_cmds.into_iter().map(|(vendor, code)| {
         let vendor_ident = format_ident!("{}", vendor.to_lowercase());
-        let doc = format!("Extensions tagged {}", vendor);
+        let doc = format!("Extensions tagged {vendor}");
         quote! {
             #[doc = #doc]
             pub mod #vendor_ident {
@@ -3330,9 +3422,21 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .map(|ty| generate_aliases_of_types(ty, &required_types, &has_lifetimes, &mut ty_cache))
         .collect();
 
-    let (feature_fp_code, feature_table_code): (Vec<_>, Vec<_>) = features
+    let mut feature_versions = IndexMap::new();
+    features
         .iter()
-        .map(|feature| generate_feature(feature, &commands, &mut fn_cache, &has_lifetimes))
+        .for_each(|feature| collect_feature(feature, &commands, &mut feature_versions));
+    let (feature_fp_code, feature_table_code): (Vec<_>, Vec<_>) = feature_versions
+        .iter()
+        .map(|(version, (fp_version, definitions))| {
+            generate_feature(
+                version,
+                *fp_version,
+                definitions,
+                &mut fn_cache,
+                &has_lifetimes,
+            )
+        })
         .unzip();
     let feature_extensions_code =
         generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
@@ -3457,6 +3561,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     fn write_formatted(text: &[u8], out: File) -> std::process::Child {
         let mut child = std::process::Command::new("rustfmt")
+            .arg("--edition=2024")
             .stdin(std::process::Stdio::piped())
             .stdout(out)
             .spawn()

@@ -11,11 +11,13 @@ impl crate::ext::pipeline_properties::Device {
         pipeline_info: &vk::PipelineInfoEXT<'_>,
         pipeline_properties: &mut impl crate::ext::pipeline_properties::GetPipelinePropertiesEXTParamPipelineProperties,
     ) -> VkResult<()> {
-        (self.fp.get_pipeline_properties_ext)(
-            self.handle,
-            pipeline_info,
-            <*mut _>::cast(pipeline_properties),
-        )
-        .result()
+        unsafe {
+            (self.fp.get_pipeline_properties_ext)(
+                self.handle,
+                pipeline_info,
+                <*mut _>::cast(pipeline_properties),
+            )
+            .result()
+        }
     }
 }

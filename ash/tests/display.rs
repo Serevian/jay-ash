@@ -1,4 +1,5 @@
 use ash::vk;
+use jay_ash as ash;
 
 #[test]
 fn debug_flags() {

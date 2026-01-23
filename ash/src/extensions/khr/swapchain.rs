@@ -1,10 +1,10 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
 
+use crate::RawPtr;
 #[cfg(doc)]
 use crate::khr;
 use crate::prelude::*;
 use crate::vk;
-use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
 
@@ -16,14 +16,16 @@ impl crate::khr::swapchain::Device {
         create_info: &vk::SwapchainCreateInfoKHR<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SwapchainKHR> {
-        let mut swapchain = mem::MaybeUninit::uninit();
-        (self.fp.create_swapchain_khr)(
-            self.handle,
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            swapchain.as_mut_ptr(),
-        )
-        .assume_init_on_success(swapchain)
+        unsafe {
+            let mut swapchain = mem::MaybeUninit::uninit();
+            (self.fp.create_swapchain_khr)(
+                self.handle,
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                swapchain.as_mut_ptr(),
+            )
+            .assume_init_on_success(swapchain)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySwapchainKHR.html>
@@ -33,7 +35,13 @@ impl crate::khr::swapchain::Device {
         swapchain: vk::SwapchainKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
-        (self.fp.destroy_swapchain_khr)(self.handle, swapchain, allocation_callbacks.as_raw_ptr());
+        unsafe {
+            (self.fp.destroy_swapchain_khr)(
+                self.handle,
+                swapchain,
+                allocation_callbacks.as_raw_ptr(),
+            );
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainImagesKHR.html>
@@ -42,9 +50,11 @@ impl crate::khr::swapchain::Device {
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<Vec<vk::Image>> {
-        read_into_uninitialized_vector(|count, data| {
-            (self.fp.get_swapchain_images_khr)(self.handle, swapchain, count, data)
-        })
+        unsafe {
+            read_into_uninitialized_vector(|count, data| {
+                (self.fp.get_swapchain_images_khr)(self.handle, swapchain, count, data)
+            })
+        }
     }
 
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
@@ -58,19 +68,21 @@ impl crate::khr::swapchain::Device {
         semaphore: vk::Semaphore,
         fence: vk::Fence,
     ) -> VkResult<(u32, bool)> {
-        let mut index = mem::MaybeUninit::uninit();
-        let err_code = (self.fp.acquire_next_image_khr)(
-            self.handle,
-            swapchain,
-            timeout,
-            semaphore,
-            fence,
-            index.as_mut_ptr(),
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
-            _ => Err(err_code),
+        unsafe {
+            let mut index = mem::MaybeUninit::uninit();
+            let err_code = (self.fp.acquire_next_image_khr)(
+                self.handle,
+                swapchain,
+                timeout,
+                semaphore,
+                fence,
+                index.as_mut_ptr(),
+            );
+            match err_code {
+                vk::Result::SUCCESS => Ok((index.assume_init(), false)),
+                vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
+                _ => Err(err_code),
+            }
         }
     }
 
@@ -83,11 +95,13 @@ impl crate::khr::swapchain::Device {
         queue: vk::Queue,
         present_info: &vk::PresentInfoKHR<'_>,
     ) -> VkResult<bool> {
-        let err_code = (self.fp.queue_present_khr)(queue, present_info);
-        match err_code {
-            vk::Result::SUCCESS => Ok(false),
-            vk::Result::SUBOPTIMAL_KHR => Ok(true),
-            _ => Err(err_code),
+        unsafe {
+            let err_code = (self.fp.queue_present_khr)(queue, present_info);
+            match err_code {
+                vk::Result::SUCCESS => Ok(false),
+                vk::Result::SUBOPTIMAL_KHR => Ok(true),
+                _ => Err(err_code),
+            }
         }
     }
 
@@ -105,11 +119,13 @@ impl crate::khr::swapchain::Device {
         &self,
         device_group_present_capabilities: &mut vk::DeviceGroupPresentCapabilitiesKHR<'_>,
     ) -> VkResult<()> {
-        (self.fp.get_device_group_present_capabilities_khr)(
-            self.handle,
-            device_group_present_capabilities,
-        )
-        .result()
+        unsafe {
+            (self.fp.get_device_group_present_capabilities_khr)(
+                self.handle,
+                device_group_present_capabilities,
+            )
+            .result()
+        }
     }
 
     /// Only available since [Vulkan 1.1].
@@ -126,13 +142,15 @@ impl crate::khr::swapchain::Device {
         &self,
         surface: vk::SurfaceKHR,
     ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
-        let mut modes = mem::MaybeUninit::uninit();
-        (self.fp.get_device_group_surface_present_modes_khr)(
-            self.handle,
-            surface,
-            modes.as_mut_ptr(),
-        )
-        .assume_init_on_success(modes)
+        unsafe {
+            let mut modes = mem::MaybeUninit::uninit();
+            (self.fp.get_device_group_surface_present_modes_khr)(
+                self.handle,
+                surface,
+                modes.as_mut_ptr(),
+            )
+            .assume_init_on_success(modes)
+        }
     }
 
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
@@ -151,13 +169,15 @@ impl crate::khr::swapchain::Device {
         &self,
         acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
     ) -> VkResult<(u32, bool)> {
-        let mut index = mem::MaybeUninit::uninit();
-        let err_code =
-            (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
-        match err_code {
-            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
-            _ => Err(err_code),
+        unsafe {
+            let mut index = mem::MaybeUninit::uninit();
+            let err_code =
+                (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
+            match err_code {
+                vk::Result::SUCCESS => Ok((index.assume_init(), false)),
+                vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
+                _ => Err(err_code),
+            }
         }
     }
 }
@@ -178,13 +198,15 @@ impl crate::khr::swapchain::Instance {
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
     ) -> VkResult<Vec<vk::Rect2D>> {
-        read_into_uninitialized_vector(|count, data| {
-            (self.fp.get_physical_device_present_rectangles_khr)(
-                physical_device,
-                surface,
-                count,
-                data,
-            )
-        })
+        unsafe {
+            read_into_uninitialized_vector(|count, data| {
+                (self.fp.get_physical_device_present_rectangles_khr)(
+                    physical_device,
+                    surface,
+                    count,
+                    data,
+                )
+            })
+        }
     }
 }

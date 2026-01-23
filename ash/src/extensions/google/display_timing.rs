@@ -12,9 +12,11 @@ impl crate::google::display_timing::Device {
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<Vec<vk::PastPresentationTimingGOOGLE>> {
-        read_into_uninitialized_vector(|count, data| {
-            (self.fp.get_past_presentation_timing_google)(self.handle, swapchain, count, data)
-        })
+        unsafe {
+            read_into_uninitialized_vector(|count, data| {
+                (self.fp.get_past_presentation_timing_google)(self.handle, swapchain, count, data)
+            })
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRefreshCycleDurationGOOGLE.html>
@@ -23,8 +25,14 @@ impl crate::google::display_timing::Device {
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<vk::RefreshCycleDurationGOOGLE> {
-        let mut properties = mem::MaybeUninit::uninit();
-        (self.fp.get_refresh_cycle_duration_google)(self.handle, swapchain, properties.as_mut_ptr())
+        unsafe {
+            let mut properties = mem::MaybeUninit::uninit();
+            (self.fp.get_refresh_cycle_duration_google)(
+                self.handle,
+                swapchain,
+                properties.as_mut_ptr(),
+            )
             .assume_init_on_success(properties)
+        }
     }
 }

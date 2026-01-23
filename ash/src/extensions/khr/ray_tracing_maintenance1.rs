@@ -12,6 +12,8 @@ impl crate::khr::ray_tracing_maintenance1::Device {
         command_buffer: vk::CommandBuffer,
         indirect_device_address: vk::DeviceAddress,
     ) {
-        (self.fp.cmd_trace_rays_indirect2_khr)(command_buffer, indirect_device_address);
+        unsafe {
+            (self.fp.cmd_trace_rays_indirect2_khr)(command_buffer, indirect_device_address);
+        }
     }
 }

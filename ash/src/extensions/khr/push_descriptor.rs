@@ -14,14 +14,16 @@ impl crate::khr::push_descriptor::Device {
         set: u32,
         descriptor_writes: &[vk::WriteDescriptorSet<'_>],
     ) {
-        (self.fp.cmd_push_descriptor_set_khr)(
-            command_buffer,
-            pipeline_bind_point,
-            layout,
-            set,
-            descriptor_writes.len() as u32,
-            descriptor_writes.as_ptr(),
-        )
+        unsafe {
+            (self.fp.cmd_push_descriptor_set_khr)(
+                command_buffer,
+                pipeline_bind_point,
+                layout,
+                set,
+                descriptor_writes.len() as u32,
+                descriptor_writes.as_ptr(),
+            )
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>
@@ -34,12 +36,14 @@ impl crate::khr::push_descriptor::Device {
         set: u32,
         p_data: *const ffi::c_void,
     ) {
-        (self.fp.cmd_push_descriptor_set_with_template_khr)(
-            command_buffer,
-            descriptor_update_template,
-            layout,
-            set,
-            p_data,
-        )
+        unsafe {
+            (self.fp.cmd_push_descriptor_set_with_template_khr)(
+                command_buffer,
+                descriptor_update_template,
+                layout,
+                set,
+                p_data,
+            )
+        }
     }
 }

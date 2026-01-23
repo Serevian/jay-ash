@@ -24,6 +24,7 @@
 //! ## Examples
 //!
 //! ```no_run
+//! # use jay_ash as ash;
 //! use ash::{vk, Entry};
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //! let entry = Entry::linked();
@@ -81,7 +82,7 @@ pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
 }
 
-impl<'r, T> RawPtr<T> for Option<&'r T> {
+impl<T> RawPtr<T> for Option<&T> {
     fn as_raw_ptr(&self) -> *const T {
         match *self {
             Some(inner) => inner,
@@ -98,6 +99,7 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
 /// It is unfortunately not possible to write `x @ ash::vk::SomeStruct => one_line_expression(),`.
 ///
 /// ```
+/// # use jay_ash as ash;
 /// let mut info = ash::vk::DeviceCreateInfo::default();
 /// let info: *mut ash::vk::BaseOutStructure = <*mut _>::cast(&mut info);
 /// unsafe {
@@ -118,6 +120,7 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
 /// expression like `_ => None` is not yet supported.
 ///
 /// ```
+/// # use jay_ash as ash;
 /// # let mut info = ash::vk::DeviceCreateInfo::default();
 /// # let info: *mut ash::vk::BaseOutStructure = <*mut _>::cast(&mut info);
 /// let device_create_flags: Option<ash::vk::DeviceCreateFlags> = unsafe {
@@ -160,6 +163,7 @@ macro_rules! match_out_struct {
 /// It is unfortunately not possible to write `x @ ash::vk::SomeStruct => one_line_expression(),`.
 ///
 /// ```
+/// # use jay_ash as ash;
 /// let info = ash::vk::DeviceCreateInfo::default();
 /// let info: *const ash::vk::BaseInStructure = <*const _>::cast(&info);
 /// unsafe {

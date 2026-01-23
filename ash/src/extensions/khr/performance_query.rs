@@ -12,13 +12,13 @@ impl crate::khr::performance_query::Device {
         &self,
         info: &vk::AcquireProfilingLockInfoKHR<'_>,
     ) -> VkResult<()> {
-        (self.fp.acquire_profiling_lock_khr)(self.handle, info).result()
+        unsafe { (self.fp.acquire_profiling_lock_khr)(self.handle, info).result() }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseProfilingLockKHR.html>
     #[inline]
     pub unsafe fn release_profiling_lock(&self) {
-        (self.fp.release_profiling_lock_khr)(self.handle)
+        unsafe { (self.fp.release_profiling_lock_khr)(self.handle) }
     }
 }
 
@@ -30,18 +30,20 @@ impl crate::khr::performance_query::Instance {
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
     ) -> VkResult<usize> {
-        let mut count = mem::MaybeUninit::uninit();
-        (self
-            .fp
-            .enumerate_physical_device_queue_family_performance_query_counters_khr)(
-            physical_device,
-            queue_family_index,
-            count.as_mut_ptr(),
-            ptr::null_mut(),
-            ptr::null_mut(),
-        )
-        .assume_init_on_success(count)
-        .map(|c| c as usize)
+        unsafe {
+            let mut count = mem::MaybeUninit::uninit();
+            (self
+                .fp
+                .enumerate_physical_device_queue_family_performance_query_counters_khr)(
+                physical_device,
+                queue_family_index,
+                count.as_mut_ptr(),
+                ptr::null_mut(),
+                ptr::null_mut(),
+            )
+            .assume_init_on_success(count)
+            .map(|c| c as usize)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR.html>
@@ -56,21 +58,23 @@ impl crate::khr::performance_query::Instance {
         out_counters: &mut [vk::PerformanceCounterKHR<'_>],
         out_counter_descriptions: &mut [vk::PerformanceCounterDescriptionKHR<'_>],
     ) -> VkResult<()> {
-        assert_eq!(out_counters.len(), out_counter_descriptions.len());
-        let mut count = out_counters.len() as u32;
-        (self
-            .fp
-            .enumerate_physical_device_queue_family_performance_query_counters_khr)(
-            physical_device,
-            queue_family_index,
-            &mut count,
-            out_counters.as_mut_ptr(),
-            out_counter_descriptions.as_mut_ptr(),
-        )
-        .result()?;
-        assert_eq!(count as usize, out_counters.len());
-        assert_eq!(count as usize, out_counter_descriptions.len());
-        Ok(())
+        unsafe {
+            assert_eq!(out_counters.len(), out_counter_descriptions.len());
+            let mut count = out_counters.len() as u32;
+            (self
+                .fp
+                .enumerate_physical_device_queue_family_performance_query_counters_khr)(
+                physical_device,
+                queue_family_index,
+                &mut count,
+                out_counters.as_mut_ptr(),
+                out_counter_descriptions.as_mut_ptr(),
+            )
+            .result()?;
+            assert_eq!(count as usize, out_counters.len());
+            assert_eq!(count as usize, out_counter_descriptions.len());
+            Ok(())
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR.html>
@@ -80,14 +84,16 @@ impl crate::khr::performance_query::Instance {
         physical_device: vk::PhysicalDevice,
         performance_query_create_info: &vk::QueryPoolPerformanceCreateInfoKHR<'_>,
     ) -> u32 {
-        let mut num_passes = mem::MaybeUninit::uninit();
-        (self
-            .fp
-            .get_physical_device_queue_family_performance_query_passes_khr)(
-            physical_device,
-            performance_query_create_info,
-            num_passes.as_mut_ptr(),
-        );
-        num_passes.assume_init()
+        unsafe {
+            let mut num_passes = mem::MaybeUninit::uninit();
+            (self
+                .fp
+                .get_physical_device_queue_family_performance_query_passes_khr)(
+                physical_device,
+                performance_query_create_info,
+                num_passes.as_mut_ptr(),
+            );
+            num_passes.assume_init()
+        }
     }
 }

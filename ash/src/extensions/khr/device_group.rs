@@ -16,21 +16,23 @@ impl crate::khr::device_group::Device {
         local_device_index: u32,
         remote_device_index: u32,
     ) -> vk::PeerMemoryFeatureFlags {
-        let mut peer_memory_features = mem::MaybeUninit::uninit();
-        (self.fp.get_device_group_peer_memory_features_khr)(
-            self.handle,
-            heap_index,
-            local_device_index,
-            remote_device_index,
-            peer_memory_features.as_mut_ptr(),
-        );
-        peer_memory_features.assume_init()
+        unsafe {
+            let mut peer_memory_features = mem::MaybeUninit::uninit();
+            (self.fp.get_device_group_peer_memory_features_khr)(
+                self.handle,
+                heap_index,
+                local_device_index,
+                remote_device_index,
+                peer_memory_features.as_mut_ptr(),
+            );
+            peer_memory_features.assume_init()
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDeviceMaskKHR.html>
     #[inline]
     pub unsafe fn cmd_set_device_mask(&self, command_buffer: vk::CommandBuffer, device_mask: u32) {
-        (self.fp.cmd_set_device_mask_khr)(command_buffer, device_mask)
+        unsafe { (self.fp.cmd_set_device_mask_khr)(command_buffer, device_mask) }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchBaseKHR.html>
@@ -41,15 +43,17 @@ impl crate::khr::device_group::Device {
         base_group: (u32, u32, u32),
         group_count: (u32, u32, u32),
     ) {
-        (self.fp.cmd_dispatch_base_khr)(
-            command_buffer,
-            base_group.0,
-            base_group.1,
-            base_group.2,
-            group_count.0,
-            group_count.1,
-            group_count.2,
-        )
+        unsafe {
+            (self.fp.cmd_dispatch_base_khr)(
+                command_buffer,
+                base_group.0,
+                base_group.1,
+                base_group.2,
+                group_count.0,
+                group_count.1,
+                group_count.2,
+            )
+        }
     }
 
     /// Requires [`VK_KHR_surface`] to be enabled.
@@ -65,11 +69,13 @@ impl crate::khr::device_group::Device {
         &self,
         device_group_present_capabilities: &mut vk::DeviceGroupPresentCapabilitiesKHR<'_>,
     ) -> VkResult<()> {
-        (self.fp.get_device_group_present_capabilities_khr)(
-            self.handle,
-            device_group_present_capabilities,
-        )
-        .result()
+        unsafe {
+            (self.fp.get_device_group_present_capabilities_khr)(
+                self.handle,
+                device_group_present_capabilities,
+            )
+            .result()
+        }
     }
 
     /// Requires [`VK_KHR_surface`] to be enabled.
@@ -85,13 +91,15 @@ impl crate::khr::device_group::Device {
         &self,
         surface: vk::SurfaceKHR,
     ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
-        let mut modes = mem::MaybeUninit::uninit();
-        (self.fp.get_device_group_surface_present_modes_khr)(
-            self.handle,
-            surface,
-            modes.as_mut_ptr(),
-        )
-        .assume_init_on_success(modes)
+        unsafe {
+            let mut modes = mem::MaybeUninit::uninit();
+            (self.fp.get_device_group_surface_present_modes_khr)(
+                self.handle,
+                surface,
+                modes.as_mut_ptr(),
+            )
+            .assume_init_on_success(modes)
+        }
     }
 
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
@@ -109,13 +117,15 @@ impl crate::khr::device_group::Device {
         &self,
         acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
     ) -> VkResult<(u32, bool)> {
-        let mut index = mem::MaybeUninit::uninit();
-        let err_code =
-            (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
-        match err_code {
-            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
-            _ => Err(err_code),
+        unsafe {
+            let mut index = mem::MaybeUninit::uninit();
+            let err_code =
+                (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
+            match err_code {
+                vk::Result::SUCCESS => Ok((index.assume_init(), false)),
+                vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
+                _ => Err(err_code),
+            }
         }
     }
 }
@@ -135,13 +145,15 @@ impl crate::khr::device_group::Instance {
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
     ) -> VkResult<Vec<vk::Rect2D>> {
-        read_into_uninitialized_vector(|count, data| {
-            (self.fp.get_physical_device_present_rectangles_khr)(
-                physical_device,
-                surface,
-                count,
-                data,
-            )
-        })
+        unsafe {
+            read_into_uninitialized_vector(|count, data| {
+                (self.fp.get_physical_device_present_rectangles_khr)(
+                    physical_device,
+                    surface,
+                    count,
+                    data,
+                )
+            })
+        }
     }
 }

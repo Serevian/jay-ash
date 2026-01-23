@@ -10,7 +10,9 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         bind_descriptor_sets_info: &vk::BindDescriptorSetsInfoKHR<'_>,
     ) {
-        (self.fp.cmd_bind_descriptor_sets2_khr)(command_buffer, bind_descriptor_sets_info)
+        unsafe {
+            (self.fp.cmd_bind_descriptor_sets2_khr)(command_buffer, bind_descriptor_sets_info)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html>
@@ -20,7 +22,7 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         push_constants_info: &vk::PushConstantsInfoKHR<'_>,
     ) {
-        (self.fp.cmd_push_constants2_khr)(command_buffer, push_constants_info)
+        unsafe { (self.fp.cmd_push_constants2_khr)(command_buffer, push_constants_info) }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2KHR.html>
@@ -30,7 +32,7 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         push_descriptor_set_info: &vk::PushDescriptorSetInfoKHR<'_>,
     ) {
-        (self.fp.cmd_push_descriptor_set2_khr)(command_buffer, push_descriptor_set_info)
+        unsafe { (self.fp.cmd_push_descriptor_set2_khr)(command_buffer, push_descriptor_set_info) }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>
@@ -40,10 +42,12 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         push_descriptor_set_with_template_info: &vk::PushDescriptorSetWithTemplateInfoKHR<'_>,
     ) {
-        (self.fp.cmd_push_descriptor_set_with_template2_khr)(
-            command_buffer,
-            push_descriptor_set_with_template_info,
-        )
+        unsafe {
+            (self.fp.cmd_push_descriptor_set_with_template2_khr)(
+                command_buffer,
+                push_descriptor_set_with_template_info,
+            )
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsets2EXT.html>
@@ -53,10 +57,12 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         set_descriptor_buffer_offsets_info: &vk::SetDescriptorBufferOffsetsInfoEXT<'_>,
     ) {
-        (self.fp.cmd_set_descriptor_buffer_offsets2_ext)(
-            command_buffer,
-            set_descriptor_buffer_offsets_info,
-        )
+        unsafe {
+            (self.fp.cmd_set_descriptor_buffer_offsets2_ext)(
+                command_buffer,
+                set_descriptor_buffer_offsets_info,
+            )
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html>
@@ -66,9 +72,11 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         bind_descriptor_buffer_embedded_samplers_info: &vk::BindDescriptorBufferEmbeddedSamplersInfoEXT<'_>,
     ) {
-        (self.fp.cmd_bind_descriptor_buffer_embedded_samplers2_ext)(
-            command_buffer,
-            bind_descriptor_buffer_embedded_samplers_info,
-        )
+        unsafe {
+            (self.fp.cmd_bind_descriptor_buffer_embedded_samplers2_ext)(
+                command_buffer,
+                bind_descriptor_buffer_embedded_samplers_info,
+            )
+        }
     }
 }

@@ -13,19 +13,21 @@ impl crate::amd::shader_info::Device {
         pipeline: vk::Pipeline,
         shader_stage: vk::ShaderStageFlags,
     ) -> VkResult<vk::ShaderStatisticsInfoAMD> {
-        let mut info = mem::MaybeUninit::<vk::ShaderStatisticsInfoAMD>::uninit();
-        let mut size = mem::size_of_val(&info);
-        (self.fp.get_shader_info_amd)(
-            self.handle,
-            pipeline,
-            shader_stage,
-            vk::ShaderInfoTypeAMD::STATISTICS,
-            &mut size,
-            info.as_mut_ptr().cast(),
-        )
-        .result()?;
-        assert_eq!(size, mem::size_of_val(&info));
-        Ok(info.assume_init())
+        unsafe {
+            let mut info = mem::MaybeUninit::<vk::ShaderStatisticsInfoAMD>::uninit();
+            let mut size = size_of_val(&info);
+            (self.fp.get_shader_info_amd)(
+                self.handle,
+                pipeline,
+                shader_stage,
+                vk::ShaderInfoTypeAMD::STATISTICS,
+                &mut size,
+                info.as_mut_ptr().cast(),
+            )
+            .result()?;
+            assert_eq!(size, size_of_val(&info));
+            Ok(info.assume_init())
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderInfoAMD.html> with [`vk::ShaderInfoTypeAMD::BINARY`]
@@ -35,16 +37,18 @@ impl crate::amd::shader_info::Device {
         pipeline: vk::Pipeline,
         shader_stage: vk::ShaderStageFlags,
     ) -> VkResult<Vec<u8>> {
-        read_into_uninitialized_vector(|count, data: *mut u8| {
-            (self.fp.get_shader_info_amd)(
-                self.handle,
-                pipeline,
-                shader_stage,
-                vk::ShaderInfoTypeAMD::BINARY,
-                count,
-                data.cast(),
-            )
-        })
+        unsafe {
+            read_into_uninitialized_vector(|count, data: *mut u8| {
+                (self.fp.get_shader_info_amd)(
+                    self.handle,
+                    pipeline,
+                    shader_stage,
+                    vk::ShaderInfoTypeAMD::BINARY,
+                    count,
+                    data.cast(),
+                )
+            })
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderInfoAMD.html> with [`vk::ShaderInfoTypeAMD::DISASSEMBLY`]
@@ -54,15 +58,17 @@ impl crate::amd::shader_info::Device {
         pipeline: vk::Pipeline,
         shader_stage: vk::ShaderStageFlags,
     ) -> VkResult<Vec<u8>> {
-        read_into_uninitialized_vector(|count, data: *mut u8| {
-            (self.fp.get_shader_info_amd)(
-                self.handle,
-                pipeline,
-                shader_stage,
-                vk::ShaderInfoTypeAMD::DISASSEMBLY,
-                count,
-                data.cast(),
-            )
-        })
+        unsafe {
+            read_into_uninitialized_vector(|count, data: *mut u8| {
+                (self.fp.get_shader_info_amd)(
+                    self.handle,
+                    pipeline,
+                    shader_stage,
+                    vk::ShaderInfoTypeAMD::DISASSEMBLY,
+                    count,
+                    data.cast(),
+                )
+            })
+        }
     }
 }

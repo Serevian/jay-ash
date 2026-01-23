@@ -14,12 +14,14 @@ impl crate::khr::get_surface_capabilities2::Instance {
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
         surface_capabilities: &mut vk::SurfaceCapabilities2KHR<'_>,
     ) -> VkResult<()> {
-        (self.fp.get_physical_device_surface_capabilities2_khr)(
-            physical_device,
-            surface_info,
-            surface_capabilities,
-        )
-        .result()
+        unsafe {
+            (self.fp.get_physical_device_surface_capabilities2_khr)(
+                physical_device,
+                surface_info,
+                surface_capabilities,
+            )
+            .result()
+        }
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_surface_formats2()`][Self::get_physical_device_surface_formats2()]
@@ -29,14 +31,16 @@ impl crate::khr::get_surface_capabilities2::Instance {
         physical_device: vk::PhysicalDevice,
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
     ) -> VkResult<usize> {
-        let mut count = mem::MaybeUninit::uninit();
-        let err_code = (self.fp.get_physical_device_surface_formats2_khr)(
-            physical_device,
-            surface_info,
-            count.as_mut_ptr(),
-            ptr::null_mut(),
-        );
-        err_code.assume_init_on_success(count).map(|c| c as usize)
+        unsafe {
+            let mut count = mem::MaybeUninit::uninit();
+            let err_code = (self.fp.get_physical_device_surface_formats2_khr)(
+                physical_device,
+                surface_info,
+                count.as_mut_ptr(),
+                ptr::null_mut(),
+            );
+            err_code.assume_init_on_success(count).map(|c| c as usize)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html>
@@ -50,14 +54,16 @@ impl crate::khr::get_surface_capabilities2::Instance {
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
         out: &mut [vk::SurfaceFormat2KHR<'_>],
     ) -> VkResult<()> {
-        let mut count = out.len() as u32;
-        let err_code = (self.fp.get_physical_device_surface_formats2_khr)(
-            physical_device,
-            surface_info,
-            &mut count,
-            out.as_mut_ptr(),
-        );
-        assert_eq!(count as usize, out.len());
-        err_code.result()
+        unsafe {
+            let mut count = out.len() as u32;
+            let err_code = (self.fp.get_physical_device_surface_formats2_khr)(
+                physical_device,
+                surface_info,
+                &mut count,
+                out.as_mut_ptr(),
+            );
+            assert_eq!(count as usize, out.len());
+            err_code.result()
+        }
     }
 }

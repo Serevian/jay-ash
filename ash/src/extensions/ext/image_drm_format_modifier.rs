@@ -11,7 +11,9 @@ impl crate::ext::image_drm_format_modifier::Device {
         image: vk::Image,
         properties: &mut vk::ImageDrmFormatModifierPropertiesEXT<'_>,
     ) -> VkResult<()> {
-        (self.fp.get_image_drm_format_modifier_properties_ext)(self.handle, image, properties)
-            .result()
+        unsafe {
+            (self.fp.get_image_drm_format_modifier_properties_ext)(self.handle, image, properties)
+                .result()
+        }
     }
 }

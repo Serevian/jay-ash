@@ -22,6 +22,8 @@ impl crate::ext::image_compression_control::Device {
         subresource: &vk::ImageSubresource2EXT<'_>,
         layout: &mut vk::SubresourceLayout2EXT<'_>,
     ) {
-        (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
+        unsafe {
+            (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
+        }
     }
 }
