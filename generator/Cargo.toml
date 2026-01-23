@@ -11,13 +11,15 @@ publish = false
 # file is generated as currently checked in): 
 bindgen = "=0.69.4"
 heck = "0.5"
-itertools = "0.12"
+itertools = "0.14"
 nom = "8"
 proc-macro2 = "1.0"
 quote = "1.0"
 regex = "1.4"
-vk-parse = { version = "0.12", features = ["vkxml-convert"] }
+vk-parse = { git = "https://github.com/krolli/vk-parse.git", rev = "fd40bd8a929c1b60bd89716d7affddc30d1cedb3", features = ["vkxml-convert"] }
 vkxml = "0.3"
+linearize = { version = "0.1.5", features = ["derive"] }
+indexmap = "2.13.0"
 
 [dependencies.syn]
 version = "2.0"
