@@ -16,12 +16,14 @@ impl crate::nv::copy_memory_indirect::Device {
         copy_count: u32,
         stride: u32,
     ) {
-        (self.fp.cmd_copy_memory_indirect_nv)(
-            command_buffer,
-            copy_buffer_address,
-            copy_count,
-            stride,
-        )
+        unsafe {
+            (self.fp.cmd_copy_memory_indirect_nv)(
+                command_buffer,
+                copy_buffer_address,
+                copy_count,
+                stride,
+            )
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToImageIndirectNV.html>
@@ -39,14 +41,16 @@ impl crate::nv::copy_memory_indirect::Device {
         dst_image_layout: vk::ImageLayout,
         image_subresources: &[vk::ImageSubresourceLayers],
     ) {
-        (self.fp.cmd_copy_memory_to_image_indirect_nv)(
-            command_buffer,
-            copy_buffer_address,
-            image_subresources.len() as u32,
-            stride,
-            dst_image,
-            dst_image_layout,
-            image_subresources.as_ptr(),
-        )
+        unsafe {
+            (self.fp.cmd_copy_memory_to_image_indirect_nv)(
+                command_buffer,
+                copy_buffer_address,
+                image_subresources.len() as u32,
+                stride,
+                dst_image,
+                dst_image_layout,
+                image_subresources.as_ptr(),
+            )
+        }
     }
 }

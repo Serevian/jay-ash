@@ -26,6 +26,7 @@ use nom::{
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
 use quote::*;
 use regex::Regex;
+use std::ffi::CStr;
 use std::{
     borrow::Cow,
     collections::{BTreeMap, HashMap, HashSet},
@@ -64,6 +65,7 @@ macro_rules! get_variant {
         }
     };
     ($variant:path { $($member:ident),+ }) => {
+        #[allow(clippy::double_parens)]
         |enum_| match enum_ {
             $variant { $($member),+, .. } => Some(( $($member),+ )),
             _ => None,
@@ -1109,23 +1111,25 @@ fn generate_function_pointers<'a>(
     impl quote::ToTokens for CommandToLoader<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let function_name_rust = &self.0.function_name_rust;
+            let pfn_type_name = &self.0.pfn_type_name;
             let parameters_unused = &self.0.parameters_unused;
             let returns = &self.0.returns;
 
-            let byte_function_name =
-                Literal::byte_string(format!("{}\0", self.0.function_name_c).as_bytes());
+            let byte_function_name = Literal::c_string(
+                CStr::from_bytes_until_nul(format!("{}\0", self.0.function_name_c).as_bytes())
+                    .unwrap(),
+            );
 
             quote!(
                 #function_name_rust: unsafe {
                     unsafe extern "system" fn #function_name_rust (#parameters_unused) #returns {
                         panic!(concat!("Unable to load ", stringify!(#function_name_rust)))
                     }
-                    let cname = CStr::from_bytes_with_nul_unchecked(#byte_function_name);
-                    let val = _f(cname);
+                    let val = _f(#byte_function_name);
                     if val.is_null() {
                         #function_name_rust
                     } else {
-                        ::core::mem::transmute(val)
+                        ::core::mem::transmute::<*const c_void, #pfn_type_name>(val)
                     }
                 }
             )
@@ -1303,7 +1307,9 @@ pub fn generate_extension_commands<'a>(
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> ExtensionCommands<'a> {
-    let byte_name_ident = Literal::byte_string(format!("{full_extension_name}\0").as_bytes());
+    let byte_name_ident = Literal::c_string(
+        CStr::from_bytes_until_nul(format!("{full_extension_name}\0").as_bytes()).unwrap(),
+    );
 
     let extension_name = full_extension_name.strip_prefix("VK_").unwrap();
     let (vendor, extension_ident) = extension_name.split_once('_').unwrap();
@@ -1371,42 +1377,45 @@ pub fn generate_extension_commands<'a>(
             &rename_commands,
             fn_cache,
             has_lifetimes,
-            &format!(
-                "Raw {full_extension_name} instance-level function pointers"
-            ),
+            &format!("Raw {full_extension_name} instance-level function pointers"),
         );
         let doc = format!("{full_extension_name} instance-level functions");
 
-        (fp, quote! {
-            #[doc = #doc]
-            #[derive(Clone)]
-            pub struct Instance {
-                pub(crate) fp: InstanceFn,
-                pub(crate) handle: crate::vk::Instance,
-            }
-
-            impl Instance {
-                pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                    let handle = instance.handle();
-                    let fp = InstanceFn::load(|name| unsafe {
-                        core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
-                    });
-                    Self { handle, fp }
+        (
+            fp,
+            quote! {
+                #[doc = #doc]
+                #[derive(Clone)]
+                pub struct Instance {
+                    pub(crate) fp: InstanceFn,
+                    pub(crate) handle: crate::vk::Instance,
                 }
 
-                #[inline]
-                pub fn fp(&self) -> &InstanceFn {
-                    &self.fp
+                impl Instance {
+                    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                        let handle = instance.handle();
+                        let fp = InstanceFn::load(|name| unsafe {
+                            core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                                entry.get_instance_proc_addr(handle, name.as_ptr()),
+                            )
+                        });
+                        Self { handle, fp }
+                    }
+
+                    #[inline]
+                    pub fn fp(&self) -> &InstanceFn {
+                        &self.fp
+                    }
+
+                    #[inline]
+                    pub fn instance(&self) -> crate::vk::Instance {
+                        self.handle
+                    }
                 }
 
-                #[inline]
-                pub fn instance(&self) -> crate::vk::Instance {
-                    self.handle
-                }
-            }
-
-            #table
-        })
+                #table
+            },
+        )
     });
 
     let device_fp = (!device_commands.is_empty()).then(|| {
@@ -1422,36 +1431,41 @@ pub fn generate_extension_commands<'a>(
         );
         let doc = format!("{full_extension_name} device-level functions");
 
-        (fp, quote! {
-            #[doc = #doc]
-            #[derive(Clone)]
-            pub struct Device {
-                pub(crate) fp: DeviceFn,
-                pub(crate) handle: crate::vk::Device,
-            }
-
-            impl Device {
-                pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                    let handle = device.handle();
-                    let fp = DeviceFn::load(|name| unsafe {
-                        core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-                    });
-                    Self { handle, fp }
+        (
+            fp,
+            quote! {
+                #[doc = #doc]
+                #[derive(Clone)]
+                pub struct Device {
+                    pub(crate) fp: DeviceFn,
+                    pub(crate) handle: crate::vk::Device,
                 }
 
-                #[inline]
-                pub fn fp(&self) -> &DeviceFn {
-                    &self.fp
+                impl Device {
+                    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                        let handle = device.handle();
+                        let fp = DeviceFn::load(|name| unsafe {
+                            core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                                instance.get_device_proc_addr(handle, name.as_ptr()),
+                            )
+                        });
+                        Self { handle, fp }
+                    }
+
+                    #[inline]
+                    pub fn fp(&self) -> &DeviceFn {
+                        &self.fp
+                    }
+
+                    #[inline]
+                    pub fn device(&self) -> crate::vk::Device {
+                        self.handle
+                    }
                 }
 
-                #[inline]
-                pub fn device(&self) -> crate::vk::Device {
-                    self.handle
-                }
-            }
-
-            #table
-        })
+                #table
+            },
+        )
     });
 
     let (raw_device_fp, hl_device_fp) = device_fp.map_or((None, None), |(a, b)| (Some(a), Some(b)));
@@ -1461,9 +1475,7 @@ pub fn generate_extension_commands<'a>(
     ExtensionCommands {
         vendor,
         raw: quote! {
-                pub const #name_ident: &CStr = unsafe {
-                    CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
-                };
+                pub const #name_ident: &CStr = #byte_name_ident;
                 #spec_version
                 #raw_instance_fp
                 #raw_device_fp
@@ -1826,7 +1838,7 @@ fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
 
     quote! {
         #[cfg(feature = "std")]
-        impl std::error::Error for #ident {}
+        impl core::error::Error for #ident {}
         impl fmt::Display for #ident {
             fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
                 let name = match *self {
@@ -2168,7 +2180,9 @@ fn derive_getters_and_setters(
                         if self.#param_ident.is_null() {
                             None
                         } else {
-                            Some(CStr::from_ptr(self.#param_ident))
+                            unsafe {
+                                Some(CStr::from_ptr(self.#param_ident))
+                            }
                         }
                     }
                 });
@@ -3547,6 +3561,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     fn write_formatted(text: &[u8], out: File) -> std::process::Child {
         let mut child = std::process::Command::new("rustfmt")
+            .arg("--edition=2024")
             .stdin(std::process::Stdio::piped())
             .stdout(out)
             .spawn()

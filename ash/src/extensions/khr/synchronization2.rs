@@ -11,7 +11,7 @@ impl crate::khr::synchronization2::Device {
         command_buffer: vk::CommandBuffer,
         dependency_info: &vk::DependencyInfoKHR<'_>,
     ) {
-        (self.fp.cmd_pipeline_barrier2_khr)(command_buffer, dependency_info)
+        unsafe { (self.fp.cmd_pipeline_barrier2_khr)(command_buffer, dependency_info) }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent2KHR.html>
@@ -22,7 +22,7 @@ impl crate::khr::synchronization2::Device {
         event: vk::Event,
         stage_mask: vk::PipelineStageFlags2KHR,
     ) {
-        (self.fp.cmd_reset_event2_khr)(command_buffer, event, stage_mask)
+        unsafe { (self.fp.cmd_reset_event2_khr)(command_buffer, event, stage_mask) }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent2KHR.html>
@@ -33,7 +33,7 @@ impl crate::khr::synchronization2::Device {
         event: vk::Event,
         dependency_info: &vk::DependencyInfoKHR<'_>,
     ) {
-        (self.fp.cmd_set_event2_khr)(command_buffer, event, dependency_info)
+        unsafe { (self.fp.cmd_set_event2_khr)(command_buffer, event, dependency_info) }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents2KHR.html>
@@ -44,13 +44,15 @@ impl crate::khr::synchronization2::Device {
         events: &[vk::Event],
         dependency_infos: &[vk::DependencyInfoKHR<'_>],
     ) {
-        assert_eq!(events.len(), dependency_infos.len());
-        (self.fp.cmd_wait_events2_khr)(
-            command_buffer,
-            events.len() as u32,
-            events.as_ptr(),
-            dependency_infos.as_ptr(),
-        )
+        unsafe {
+            assert_eq!(events.len(), dependency_infos.len());
+            (self.fp.cmd_wait_events2_khr)(
+                command_buffer,
+                events.len() as u32,
+                events.as_ptr(),
+                dependency_infos.as_ptr(),
+            )
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp2KHR.html>
@@ -62,7 +64,7 @@ impl crate::khr::synchronization2::Device {
         query_pool: vk::QueryPool,
         query: u32,
     ) {
-        (self.fp.cmd_write_timestamp2_khr)(command_buffer, stage, query_pool, query)
+        unsafe { (self.fp.cmd_write_timestamp2_khr)(command_buffer, stage, query_pool, query) }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit2KHR.html>
@@ -73,6 +75,9 @@ impl crate::khr::synchronization2::Device {
         submits: &[vk::SubmitInfo2KHR<'_>],
         fence: vk::Fence,
     ) -> VkResult<()> {
-        (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence).result()
+        unsafe {
+            (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence)
+                .result()
+        }
     }
 }

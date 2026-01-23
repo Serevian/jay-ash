@@ -10,12 +10,14 @@ impl crate::ext::hdr_metadata::Device {
         swapchains: &[vk::SwapchainKHR],
         metadata: &[vk::HdrMetadataEXT<'_>],
     ) {
-        assert_eq!(swapchains.len(), metadata.len());
-        (self.fp.set_hdr_metadata_ext)(
-            self.handle,
-            swapchains.len() as u32,
-            swapchains.as_ptr(),
-            metadata.as_ptr(),
-        )
+        unsafe {
+            assert_eq!(swapchains.len(), metadata.len());
+            (self.fp.set_hdr_metadata_ext)(
+                self.handle,
+                swapchains.len() as u32,
+                swapchains.as_ptr(),
+                metadata.as_ptr(),
+            )
+        }
     }
 }

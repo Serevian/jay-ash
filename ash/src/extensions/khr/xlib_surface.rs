@@ -13,14 +13,16 @@ impl crate::khr::xlib_surface::Instance {
         create_info: &vk::XlibSurfaceCreateInfoKHR<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::MaybeUninit::uninit();
-        (self.fp.create_xlib_surface_khr)(
-            self.handle,
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            surface.as_mut_ptr(),
-        )
-        .assume_init_on_success(surface)
+        unsafe {
+            let mut surface = mem::MaybeUninit::uninit();
+            (self.fp.create_xlib_surface_khr)(
+                self.handle,
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                surface.as_mut_ptr(),
+            )
+            .assume_init_on_success(surface)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html>
@@ -32,13 +34,15 @@ impl crate::khr::xlib_surface::Instance {
         display: *mut vk::Display,
         visual_id: vk::VisualID,
     ) -> bool {
-        let b = (self.fp.get_physical_device_xlib_presentation_support_khr)(
-            physical_device,
-            queue_family_index,
-            display,
-            visual_id,
-        );
+        unsafe {
+            let b = (self.fp.get_physical_device_xlib_presentation_support_khr)(
+                physical_device,
+                queue_family_index,
+                display,
+                visual_id,
+            );
 
-        b > 0
+            b > 0
+        }
     }
 }

@@ -11,14 +11,16 @@ impl crate::khr::cooperative_matrix::Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::CooperativeMatrixPropertiesKHR<'_>>> {
-        read_into_defaulted_vector(|count, data| {
-            (self
-                .fp
-                .get_physical_device_cooperative_matrix_properties_khr)(
-                physical_device,
-                count,
-                data,
-            )
-        })
+        unsafe {
+            read_into_defaulted_vector(|count, data| {
+                (self
+                    .fp
+                    .get_physical_device_cooperative_matrix_properties_khr)(
+                    physical_device,
+                    count,
+                    data,
+                )
+            })
+        }
     }
 }

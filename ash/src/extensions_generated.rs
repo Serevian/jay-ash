@@ -52,7 +52,9 @@ pub mod amd {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -94,13 +96,11 @@ pub mod amd {
                                 stringify!(cmd_draw_indirect_count_amd)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirectCountAMD\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawIndirectCountAMD");
                         if val.is_null() {
                             cmd_draw_indirect_count_amd
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndirectCount>(val)
                         }
                     },
                     cmd_draw_indexed_indirect_count_amd: unsafe {
@@ -118,14 +118,13 @@ pub mod amd {
                                 stringify!(cmd_draw_indexed_indirect_count_amd)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDrawIndexedIndirectCountAMD\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawIndexedIndirectCountAMD");
                         if val.is_null() {
                             cmd_draw_indexed_indirect_count_amd
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndexedIndirectCount>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -181,7 +180,9 @@ pub mod amd {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -218,12 +219,11 @@ pub mod amd {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(get_shader_info_amd)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetShaderInfoAMD\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetShaderInfoAMD");
                         if val.is_null() {
                             get_shader_info_amd
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetShaderInfoAMD>(val)
                         }
                     },
                 }
@@ -279,7 +279,9 @@ pub mod amd {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -319,13 +321,13 @@ pub mod amd {
                                 stringify!(cmd_write_buffer_marker_amd)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteBufferMarkerAMD\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdWriteBufferMarkerAMD");
                         if val.is_null() {
                             cmd_write_buffer_marker_amd
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdWriteBufferMarkerAMD>(
+                                val,
+                            )
                         }
                     },
                     cmd_write_buffer_marker2_amd: unsafe {
@@ -341,13 +343,13 @@ pub mod amd {
                                 stringify!(cmd_write_buffer_marker2_amd)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteBufferMarker2AMD\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdWriteBufferMarker2AMD");
                         if val.is_null() {
                             cmd_write_buffer_marker2_amd
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdWriteBufferMarker2AMD>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -395,7 +397,9 @@ pub mod amd {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -432,12 +436,11 @@ pub mod amd {
                                 stringify!(set_local_dimming_amd)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetLocalDimmingAMD\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSetLocalDimmingAMD");
                         if val.is_null() {
                             set_local_dimming_amd
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSetLocalDimmingAMD>(val)
                         }
                     },
                 }
@@ -485,7 +488,9 @@ pub mod amd {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -518,12 +523,11 @@ pub mod amd {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(anti_lag_update_amd)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkAntiLagUpdateAMD\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAntiLagUpdateAMD");
                         if val.is_null() {
                             anti_lag_update_amd
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAntiLagUpdateAMD>(val)
                         }
                     },
                 }
@@ -550,7 +554,9 @@ pub mod amdx {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -598,14 +604,14 @@ pub mod amdx {
                                 stringify!(create_execution_graph_pipelines_amdx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateExecutionGraphPipelinesAMDX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateExecutionGraphPipelinesAMDX");
                         if val.is_null() {
                             create_execution_graph_pipelines_amdx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateExecutionGraphPipelinesAMDX,
+                            >(val)
                         }
                     },
                     get_execution_graph_pipeline_scratch_size_amdx: unsafe {
@@ -619,14 +625,14 @@ pub mod amdx {
                                 stringify!(get_execution_graph_pipeline_scratch_size_amdx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetExecutionGraphPipelineScratchSizeAMDX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetExecutionGraphPipelineScratchSizeAMDX");
                         if val.is_null() {
                             get_execution_graph_pipeline_scratch_size_amdx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetExecutionGraphPipelineScratchSizeAMDX,
+                            >(val)
                         }
                     },
                     get_execution_graph_pipeline_node_index_amdx: unsafe {
@@ -641,14 +647,14 @@ pub mod amdx {
                                 stringify!(get_execution_graph_pipeline_node_index_amdx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetExecutionGraphPipelineNodeIndexAMDX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetExecutionGraphPipelineNodeIndexAMDX");
                         if val.is_null() {
                             get_execution_graph_pipeline_node_index_amdx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetExecutionGraphPipelineNodeIndexAMDX,
+                            >(val)
                         }
                     },
                     cmd_initialize_graph_scratch_memory_amdx: unsafe {
@@ -663,14 +669,14 @@ pub mod amdx {
                                 stringify!(cmd_initialize_graph_scratch_memory_amdx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdInitializeGraphScratchMemoryAMDX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdInitializeGraphScratchMemoryAMDX");
                         if val.is_null() {
                             cmd_initialize_graph_scratch_memory_amdx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdInitializeGraphScratchMemoryAMDX,
+                            >(val)
                         }
                     },
                     cmd_dispatch_graph_amdx: unsafe {
@@ -685,13 +691,11 @@ pub mod amdx {
                                 stringify!(cmd_dispatch_graph_amdx)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchGraphAMDX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDispatchGraphAMDX");
                         if val.is_null() {
                             cmd_dispatch_graph_amdx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDispatchGraphAMDX>(val)
                         }
                     },
                     cmd_dispatch_graph_indirect_amdx: unsafe {
@@ -706,14 +710,14 @@ pub mod amdx {
                                 stringify!(cmd_dispatch_graph_indirect_amdx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDispatchGraphIndirectAMDX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDispatchGraphIndirectAMDX");
                         if val.is_null() {
                             cmd_dispatch_graph_indirect_amdx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDispatchGraphIndirectAMDX,
+                            >(val)
                         }
                     },
                     cmd_dispatch_graph_indirect_count_amdx: unsafe {
@@ -728,14 +732,14 @@ pub mod amdx {
                                 stringify!(cmd_dispatch_graph_indirect_count_amdx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDispatchGraphIndirectCountAMDX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDispatchGraphIndirectCountAMDX");
                         if val.is_null() {
                             cmd_dispatch_graph_indirect_count_amdx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDispatchGraphIndirectCountAMDX,
+                            >(val)
                         }
                     },
                 }
@@ -770,7 +774,9 @@ pub mod android {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -811,14 +817,14 @@ pub mod android {
                                 stringify!(get_swapchain_gralloc_usage_android)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetSwapchainGrallocUsageANDROID\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSwapchainGrallocUsageANDROID");
                         if val.is_null() {
                             get_swapchain_gralloc_usage_android
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetSwapchainGrallocUsageANDROID,
+                            >(val)
                         }
                     },
                     acquire_image_android: unsafe {
@@ -834,12 +840,11 @@ pub mod android {
                                 stringify!(acquire_image_android)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkAcquireImageANDROID\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireImageANDROID");
                         if val.is_null() {
                             acquire_image_android
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAcquireImageANDROID>(val)
                         }
                     },
                     queue_signal_release_image_android: unsafe {
@@ -855,14 +860,14 @@ pub mod android {
                                 stringify!(queue_signal_release_image_android)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkQueueSignalReleaseImageANDROID\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkQueueSignalReleaseImageANDROID");
                         if val.is_null() {
                             queue_signal_release_image_android
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkQueueSignalReleaseImageANDROID,
+                            >(val)
                         }
                     },
                     get_swapchain_gralloc_usage2_android: unsafe {
@@ -879,14 +884,14 @@ pub mod android {
                                 stringify!(get_swapchain_gralloc_usage2_android)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetSwapchainGrallocUsage2ANDROID\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSwapchainGrallocUsage2ANDROID");
                         if val.is_null() {
                             get_swapchain_gralloc_usage2_android
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetSwapchainGrallocUsage2ANDROID,
+                            >(val)
                         }
                     },
                 }
@@ -910,7 +915,9 @@ pub mod android {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -950,14 +957,14 @@ pub mod android {
                                 stringify!(get_android_hardware_buffer_properties_android)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetAndroidHardwareBufferPropertiesANDROID\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetAndroidHardwareBufferPropertiesANDROID");
                         if val.is_null() {
                             get_android_hardware_buffer_properties_android
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetAndroidHardwareBufferPropertiesANDROID,
+                            >(val)
                         }
                     },
                     get_memory_android_hardware_buffer_android: unsafe {
@@ -971,14 +978,14 @@ pub mod android {
                                 stringify!(get_memory_android_hardware_buffer_android)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetMemoryAndroidHardwareBufferANDROID\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryAndroidHardwareBufferANDROID");
                         if val.is_null() {
                             get_memory_android_hardware_buffer_android
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetMemoryAndroidHardwareBufferANDROID,
+                            >(val)
                         }
                     },
                 }
@@ -1045,7 +1052,9 @@ pub mod arm {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -1083,14 +1092,14 @@ pub mod arm {
                                 stringify!(get_physical_device_external_tensor_properties_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceExternalTensorPropertiesARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceExternalTensorPropertiesARM");
                         if val.is_null() {
                             get_physical_device_external_tensor_properties_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceExternalTensorPropertiesARM,
+                            >(val)
                         }
                     },
                 }
@@ -1106,7 +1115,9 @@ pub mod arm {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -1153,12 +1164,11 @@ pub mod arm {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_tensor_arm)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateTensorARM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateTensorARM");
                         if val.is_null() {
                             create_tensor_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateTensorARM>(val)
                         }
                     },
                     destroy_tensor_arm: unsafe {
@@ -1169,12 +1179,11 @@ pub mod arm {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(destroy_tensor_arm)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyTensorARM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyTensorARM");
                         if val.is_null() {
                             destroy_tensor_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyTensorARM>(val)
                         }
                     },
                     create_tensor_view_arm: unsafe {
@@ -1189,12 +1198,11 @@ pub mod arm {
                                 stringify!(create_tensor_view_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateTensorViewARM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateTensorViewARM");
                         if val.is_null() {
                             create_tensor_view_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateTensorViewARM>(val)
                         }
                     },
                     destroy_tensor_view_arm: unsafe {
@@ -1208,13 +1216,11 @@ pub mod arm {
                                 stringify!(destroy_tensor_view_arm)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyTensorViewARM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyTensorViewARM");
                         if val.is_null() {
                             destroy_tensor_view_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyTensorViewARM>(val)
                         }
                     },
                     get_tensor_memory_requirements_arm: unsafe {
@@ -1228,14 +1234,14 @@ pub mod arm {
                                 stringify!(get_tensor_memory_requirements_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetTensorMemoryRequirementsARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetTensorMemoryRequirementsARM");
                         if val.is_null() {
                             get_tensor_memory_requirements_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetTensorMemoryRequirementsARM,
+                            >(val)
                         }
                     },
                     bind_tensor_memory_arm: unsafe {
@@ -1249,12 +1255,11 @@ pub mod arm {
                                 stringify!(bind_tensor_memory_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindTensorMemoryARM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkBindTensorMemoryARM");
                         if val.is_null() {
                             bind_tensor_memory_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkBindTensorMemoryARM>(val)
                         }
                     },
                     get_device_tensor_memory_requirements_arm: unsafe {
@@ -1268,14 +1273,14 @@ pub mod arm {
                                 stringify!(get_device_tensor_memory_requirements_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceTensorMemoryRequirementsARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceTensorMemoryRequirementsARM");
                         if val.is_null() {
                             get_device_tensor_memory_requirements_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceTensorMemoryRequirementsARM,
+                            >(val)
                         }
                     },
                     cmd_copy_tensor_arm: unsafe {
@@ -1285,12 +1290,11 @@ pub mod arm {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_copy_tensor_arm)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyTensorARM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyTensorARM");
                         if val.is_null() {
                             cmd_copy_tensor_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyTensorARM>(val)
                         }
                     },
                     get_tensor_opaque_capture_descriptor_data_arm: unsafe {
@@ -1304,14 +1308,14 @@ pub mod arm {
                                 stringify!(get_tensor_opaque_capture_descriptor_data_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetTensorOpaqueCaptureDescriptorDataARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetTensorOpaqueCaptureDescriptorDataARM");
                         if val.is_null() {
                             get_tensor_opaque_capture_descriptor_data_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetTensorOpaqueCaptureDescriptorDataARM,
+                            >(val)
                         }
                     },
                     get_tensor_view_opaque_capture_descriptor_data_arm: unsafe {
@@ -1325,14 +1329,14 @@ pub mod arm {
                                 stringify!(get_tensor_view_opaque_capture_descriptor_data_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetTensorViewOpaqueCaptureDescriptorDataARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetTensorViewOpaqueCaptureDescriptorDataARM");
                         if val.is_null() {
                             get_tensor_view_opaque_capture_descriptor_data_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetTensorViewOpaqueCaptureDescriptorDataARM,
+                            >(val)
                         }
                     },
                 }
@@ -1364,7 +1368,9 @@ pub mod arm {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -1407,14 +1413,14 @@ pub mod arm {
                                 )
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM");
                         if val.is_null() {
                             get_physical_device_queue_family_data_graph_properties_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM,
+                            >(val)
                         }
                     },
                     get_physical_device_queue_family_data_graph_processing_engine_properties_arm: unsafe {
@@ -1425,12 +1431,13 @@ pub mod arm {
                         ) {
                             panic ! (concat ! ("Unable to load " , stringify ! (get_physical_device_queue_family_data_graph_processing_engine_properties_arm)))
                         }
-                        let cname = CStr :: from_bytes_with_nul_unchecked (b"vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM\0") ;
-                        let val = _f(cname);
+                        let val = _f(
+                            c"vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM",
+                        );
                         if val.is_null() {
                             get_physical_device_queue_family_data_graph_processing_engine_properties_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            :: core :: mem :: transmute :: < * const c_void , PFN_vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM > (val)
                         }
                     },
                 }
@@ -1446,7 +1453,9 @@ pub mod arm {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -1499,13 +1508,13 @@ pub mod arm {
                                 stringify!(create_data_graph_pipelines_arm)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateDataGraphPipelinesARM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDataGraphPipelinesARM");
                         if val.is_null() {
                             create_data_graph_pipelines_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateDataGraphPipelinesARM>(
+                                val,
+                            )
                         }
                     },
                     create_data_graph_pipeline_session_arm: unsafe {
@@ -1520,14 +1529,14 @@ pub mod arm {
                                 stringify!(create_data_graph_pipeline_session_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateDataGraphPipelineSessionARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDataGraphPipelineSessionARM");
                         if val.is_null() {
                             create_data_graph_pipeline_session_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateDataGraphPipelineSessionARM,
+                            >(val)
                         }
                     },
                     get_data_graph_pipeline_session_bind_point_requirements_arm: unsafe {
@@ -1546,14 +1555,14 @@ pub mod arm {
                                 )
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDataGraphPipelineSessionBindPointRequirementsARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDataGraphPipelineSessionBindPointRequirementsARM");
                         if val.is_null() {
                             get_data_graph_pipeline_session_bind_point_requirements_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDataGraphPipelineSessionBindPointRequirementsARM,
+                            >(val)
                         }
                     },
                     get_data_graph_pipeline_session_memory_requirements_arm: unsafe {
@@ -1567,14 +1576,14 @@ pub mod arm {
                                 stringify!(get_data_graph_pipeline_session_memory_requirements_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDataGraphPipelineSessionMemoryRequirementsARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDataGraphPipelineSessionMemoryRequirementsARM");
                         if val.is_null() {
                             get_data_graph_pipeline_session_memory_requirements_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDataGraphPipelineSessionMemoryRequirementsARM,
+                            >(val)
                         }
                     },
                     bind_data_graph_pipeline_session_memory_arm: unsafe {
@@ -1588,14 +1597,14 @@ pub mod arm {
                                 stringify!(bind_data_graph_pipeline_session_memory_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkBindDataGraphPipelineSessionMemoryARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkBindDataGraphPipelineSessionMemoryARM");
                         if val.is_null() {
                             bind_data_graph_pipeline_session_memory_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkBindDataGraphPipelineSessionMemoryARM,
+                            >(val)
                         }
                     },
                     destroy_data_graph_pipeline_session_arm: unsafe {
@@ -1609,14 +1618,14 @@ pub mod arm {
                                 stringify!(destroy_data_graph_pipeline_session_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyDataGraphPipelineSessionARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyDataGraphPipelineSessionARM");
                         if val.is_null() {
                             destroy_data_graph_pipeline_session_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyDataGraphPipelineSessionARM,
+                            >(val)
                         }
                     },
                     cmd_dispatch_data_graph_arm: unsafe {
@@ -1630,13 +1639,13 @@ pub mod arm {
                                 stringify!(cmd_dispatch_data_graph_arm)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchDataGraphARM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDispatchDataGraphARM");
                         if val.is_null() {
                             cmd_dispatch_data_graph_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDispatchDataGraphARM>(
+                                val,
+                            )
                         }
                     },
                     get_data_graph_pipeline_available_properties_arm: unsafe {
@@ -1651,14 +1660,14 @@ pub mod arm {
                                 stringify!(get_data_graph_pipeline_available_properties_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDataGraphPipelineAvailablePropertiesARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDataGraphPipelineAvailablePropertiesARM");
                         if val.is_null() {
                             get_data_graph_pipeline_available_properties_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDataGraphPipelineAvailablePropertiesARM,
+                            >(val)
                         }
                     },
                     get_data_graph_pipeline_properties_arm: unsafe {
@@ -1673,14 +1682,14 @@ pub mod arm {
                                 stringify!(get_data_graph_pipeline_properties_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDataGraphPipelinePropertiesARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDataGraphPipelinePropertiesARM");
                         if val.is_null() {
                             get_data_graph_pipeline_properties_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDataGraphPipelinePropertiesARM,
+                            >(val)
                         }
                     },
                 }
@@ -1712,7 +1721,9 @@ pub mod arm {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -1749,14 +1760,13 @@ pub mod arm {
                         ) -> Result {
                             panic ! (concat ! ("Unable to load " , stringify ! (enumerate_physical_device_queue_family_performance_counters_by_region_arm)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM\0",
+                        let val = _f(
+                            c"vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM",
                         );
-                        let val = _f(cname);
                         if val.is_null() {
                             enumerate_physical_device_queue_family_performance_counters_by_region_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            :: core :: mem :: transmute :: < * const c_void , PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM > (val)
                         }
                     },
                 }
@@ -1791,7 +1801,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -1831,14 +1843,14 @@ pub mod ext {
                                 stringify!(create_debug_report_callback_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateDebugReportCallbackEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDebugReportCallbackEXT");
                         if val.is_null() {
                             create_debug_report_callback_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateDebugReportCallbackEXT,
+                            >(val)
                         }
                     },
                     destroy_debug_report_callback_ext: unsafe {
@@ -1852,14 +1864,14 @@ pub mod ext {
                                 stringify!(destroy_debug_report_callback_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyDebugReportCallbackEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyDebugReportCallbackEXT");
                         if val.is_null() {
                             destroy_debug_report_callback_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyDebugReportCallbackEXT,
+                            >(val)
                         }
                     },
                     debug_report_message_ext: unsafe {
@@ -1878,13 +1890,13 @@ pub mod ext {
                                 stringify!(debug_report_message_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDebugReportMessageEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDebugReportMessageEXT");
                         if val.is_null() {
                             debug_report_message_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDebugReportMessageEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -1916,7 +1928,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -1956,13 +1970,13 @@ pub mod ext {
                                 stringify!(debug_marker_set_object_tag_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDebugMarkerSetObjectTagEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDebugMarkerSetObjectTagEXT");
                         if val.is_null() {
                             debug_marker_set_object_tag_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDebugMarkerSetObjectTagEXT>(
+                                val,
+                            )
                         }
                     },
                     debug_marker_set_object_name_ext: unsafe {
@@ -1975,13 +1989,13 @@ pub mod ext {
                                 stringify!(debug_marker_set_object_name_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDebugMarkerSetObjectNameEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDebugMarkerSetObjectNameEXT");
                         if val.is_null() {
                             debug_marker_set_object_name_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDebugMarkerSetObjectNameEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_debug_marker_begin_ext: unsafe {
@@ -1994,13 +2008,13 @@ pub mod ext {
                                 stringify!(cmd_debug_marker_begin_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDebugMarkerBeginEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDebugMarkerBeginEXT");
                         if val.is_null() {
                             cmd_debug_marker_begin_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDebugMarkerBeginEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_debug_marker_end_ext: unsafe {
@@ -2012,13 +2026,11 @@ pub mod ext {
                                 stringify!(cmd_debug_marker_end_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDebugMarkerEndEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDebugMarkerEndEXT");
                         if val.is_null() {
                             cmd_debug_marker_end_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDebugMarkerEndEXT>(val)
                         }
                     },
                     cmd_debug_marker_insert_ext: unsafe {
@@ -2031,13 +2043,13 @@ pub mod ext {
                                 stringify!(cmd_debug_marker_insert_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDebugMarkerInsertEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDebugMarkerInsertEXT");
                         if val.is_null() {
                             cmd_debug_marker_insert_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDebugMarkerInsertEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -2061,7 +2073,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2106,14 +2120,14 @@ pub mod ext {
                                 stringify!(cmd_bind_transform_feedback_buffers_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBindTransformFeedbackBuffersEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindTransformFeedbackBuffersEXT");
                         if val.is_null() {
                             cmd_bind_transform_feedback_buffers_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBindTransformFeedbackBuffersEXT,
+                            >(val)
                         }
                     },
                     cmd_begin_transform_feedback_ext: unsafe {
@@ -2129,14 +2143,14 @@ pub mod ext {
                                 stringify!(cmd_begin_transform_feedback_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBeginTransformFeedbackEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginTransformFeedbackEXT");
                         if val.is_null() {
                             cmd_begin_transform_feedback_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBeginTransformFeedbackEXT,
+                            >(val)
                         }
                     },
                     cmd_end_transform_feedback_ext: unsafe {
@@ -2152,13 +2166,13 @@ pub mod ext {
                                 stringify!(cmd_end_transform_feedback_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdEndTransformFeedbackEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndTransformFeedbackEXT");
                         if val.is_null() {
                             cmd_end_transform_feedback_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndTransformFeedbackEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_begin_query_indexed_ext: unsafe {
@@ -2174,13 +2188,13 @@ pub mod ext {
                                 stringify!(cmd_begin_query_indexed_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginQueryIndexedEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginQueryIndexedEXT");
                         if val.is_null() {
                             cmd_begin_query_indexed_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginQueryIndexedEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_end_query_indexed_ext: unsafe {
@@ -2195,13 +2209,13 @@ pub mod ext {
                                 stringify!(cmd_end_query_indexed_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdEndQueryIndexedEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndQueryIndexedEXT");
                         if val.is_null() {
                             cmd_end_query_indexed_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndQueryIndexedEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_draw_indirect_byte_count_ext: unsafe {
@@ -2219,13 +2233,13 @@ pub mod ext {
                                 stringify!(cmd_draw_indirect_byte_count_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirectByteCountEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawIndirectByteCountEXT");
                         if val.is_null() {
                             cmd_draw_indirect_byte_count_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndirectByteCountEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -2297,7 +2311,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2336,14 +2352,14 @@ pub mod ext {
                                 stringify!(cmd_begin_conditional_rendering_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBeginConditionalRenderingEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginConditionalRenderingEXT");
                         if val.is_null() {
                             cmd_begin_conditional_rendering_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBeginConditionalRenderingEXT,
+                            >(val)
                         }
                     },
                     cmd_end_conditional_rendering_ext: unsafe {
@@ -2355,14 +2371,14 @@ pub mod ext {
                                 stringify!(cmd_end_conditional_rendering_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdEndConditionalRenderingEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndConditionalRenderingEXT");
                         if val.is_null() {
                             cmd_end_conditional_rendering_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdEndConditionalRenderingEXT,
+                            >(val)
                         }
                     },
                 }
@@ -2386,7 +2402,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2419,12 +2437,11 @@ pub mod ext {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(release_display_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkReleaseDisplayEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkReleaseDisplayEXT");
                         if val.is_null() {
                             release_display_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkReleaseDisplayEXT>(val)
                         }
                     },
                 }
@@ -2448,7 +2465,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2486,13 +2505,13 @@ pub mod ext {
                                 stringify!(acquire_xlib_display_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkAcquireXlibDisplayEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireXlibDisplayEXT");
                         if val.is_null() {
                             acquire_xlib_display_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAcquireXlibDisplayEXT>(
+                                val,
+                            )
                         }
                     },
                     get_rand_r_output_display_ext: unsafe {
@@ -2507,13 +2526,13 @@ pub mod ext {
                                 stringify!(get_rand_r_output_display_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetRandROutputDisplayEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetRandROutputDisplayEXT");
                         if val.is_null() {
                             get_rand_r_output_display_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetRandROutputDisplayEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -2537,7 +2556,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2575,14 +2596,14 @@ pub mod ext {
                                 stringify!(get_physical_device_surface_capabilities2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSurfaceCapabilities2EXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSurfaceCapabilities2EXT");
                         if val.is_null() {
                             get_physical_device_surface_capabilities2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
+                            >(val)
                         }
                     },
                 }
@@ -2606,7 +2627,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2646,13 +2669,13 @@ pub mod ext {
                                 stringify!(display_power_control_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDisplayPowerControlEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDisplayPowerControlEXT");
                         if val.is_null() {
                             display_power_control_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDisplayPowerControlEXT>(
+                                val,
+                            )
                         }
                     },
                     register_device_event_ext: unsafe {
@@ -2667,13 +2690,13 @@ pub mod ext {
                                 stringify!(register_device_event_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkRegisterDeviceEventEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkRegisterDeviceEventEXT");
                         if val.is_null() {
                             register_device_event_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkRegisterDeviceEventEXT>(
+                                val,
+                            )
                         }
                     },
                     register_display_event_ext: unsafe {
@@ -2689,13 +2712,13 @@ pub mod ext {
                                 stringify!(register_display_event_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkRegisterDisplayEventEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkRegisterDisplayEventEXT");
                         if val.is_null() {
                             register_display_event_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkRegisterDisplayEventEXT>(
+                                val,
+                            )
                         }
                     },
                     get_swapchain_counter_ext: unsafe {
@@ -2710,13 +2733,13 @@ pub mod ext {
                                 stringify!(get_swapchain_counter_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetSwapchainCounterEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSwapchainCounterEXT");
                         if val.is_null() {
                             get_swapchain_counter_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetSwapchainCounterEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -2740,7 +2763,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2780,13 +2805,13 @@ pub mod ext {
                                 stringify!(cmd_set_discard_rectangle_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDiscardRectangleEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDiscardRectangleEXT");
                         if val.is_null() {
                             cmd_set_discard_rectangle_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDiscardRectangleEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_discard_rectangle_enable_ext: unsafe {
@@ -2799,14 +2824,14 @@ pub mod ext {
                                 stringify!(cmd_set_discard_rectangle_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetDiscardRectangleEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDiscardRectangleEnableEXT");
                         if val.is_null() {
                             cmd_set_discard_rectangle_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetDiscardRectangleEnableEXT,
+                            >(val)
                         }
                     },
                     cmd_set_discard_rectangle_mode_ext: unsafe {
@@ -2819,14 +2844,14 @@ pub mod ext {
                                 stringify!(cmd_set_discard_rectangle_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetDiscardRectangleModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDiscardRectangleModeEXT");
                         if val.is_null() {
                             cmd_set_discard_rectangle_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetDiscardRectangleModeEXT,
+                            >(val)
                         }
                     },
                 }
@@ -2874,7 +2899,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2909,12 +2936,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(set_hdr_metadata_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetHdrMetadataEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSetHdrMetadataEXT");
                         if val.is_null() {
                             set_hdr_metadata_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSetHdrMetadataEXT>(val)
                         }
                     },
                 }
@@ -2954,7 +2980,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -2994,14 +3022,14 @@ pub mod ext {
                                 stringify!(create_debug_utils_messenger_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateDebugUtilsMessengerEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDebugUtilsMessengerEXT");
                         if val.is_null() {
                             create_debug_utils_messenger_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateDebugUtilsMessengerEXT,
+                            >(val)
                         }
                     },
                     destroy_debug_utils_messenger_ext: unsafe {
@@ -3015,14 +3043,14 @@ pub mod ext {
                                 stringify!(destroy_debug_utils_messenger_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyDebugUtilsMessengerEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyDebugUtilsMessengerEXT");
                         if val.is_null() {
                             destroy_debug_utils_messenger_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyDebugUtilsMessengerEXT,
+                            >(val)
                         }
                     },
                     submit_debug_utils_message_ext: unsafe {
@@ -3037,13 +3065,13 @@ pub mod ext {
                                 stringify!(submit_debug_utils_message_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkSubmitDebugUtilsMessageEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSubmitDebugUtilsMessageEXT");
                         if val.is_null() {
                             submit_debug_utils_message_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSubmitDebugUtilsMessageEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -3059,7 +3087,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -3102,13 +3132,13 @@ pub mod ext {
                                 stringify!(set_debug_utils_object_name_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkSetDebugUtilsObjectNameEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSetDebugUtilsObjectNameEXT");
                         if val.is_null() {
                             set_debug_utils_object_name_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSetDebugUtilsObjectNameEXT>(
+                                val,
+                            )
                         }
                     },
                     set_debug_utils_object_tag_ext: unsafe {
@@ -3121,13 +3151,13 @@ pub mod ext {
                                 stringify!(set_debug_utils_object_tag_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkSetDebugUtilsObjectTagEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSetDebugUtilsObjectTagEXT");
                         if val.is_null() {
                             set_debug_utils_object_tag_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSetDebugUtilsObjectTagEXT>(
+                                val,
+                            )
                         }
                     },
                     queue_begin_debug_utils_label_ext: unsafe {
@@ -3140,14 +3170,14 @@ pub mod ext {
                                 stringify!(queue_begin_debug_utils_label_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkQueueBeginDebugUtilsLabelEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkQueueBeginDebugUtilsLabelEXT");
                         if val.is_null() {
                             queue_begin_debug_utils_label_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkQueueBeginDebugUtilsLabelEXT,
+                            >(val)
                         }
                     },
                     queue_end_debug_utils_label_ext: unsafe {
@@ -3157,13 +3187,13 @@ pub mod ext {
                                 stringify!(queue_end_debug_utils_label_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkQueueEndDebugUtilsLabelEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkQueueEndDebugUtilsLabelEXT");
                         if val.is_null() {
                             queue_end_debug_utils_label_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkQueueEndDebugUtilsLabelEXT>(
+                                val,
+                            )
                         }
                     },
                     queue_insert_debug_utils_label_ext: unsafe {
@@ -3176,14 +3206,14 @@ pub mod ext {
                                 stringify!(queue_insert_debug_utils_label_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkQueueInsertDebugUtilsLabelEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkQueueInsertDebugUtilsLabelEXT");
                         if val.is_null() {
                             queue_insert_debug_utils_label_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkQueueInsertDebugUtilsLabelEXT,
+                            >(val)
                         }
                     },
                     cmd_begin_debug_utils_label_ext: unsafe {
@@ -3196,13 +3226,13 @@ pub mod ext {
                                 stringify!(cmd_begin_debug_utils_label_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginDebugUtilsLabelEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginDebugUtilsLabelEXT");
                         if val.is_null() {
                             cmd_begin_debug_utils_label_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginDebugUtilsLabelEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_end_debug_utils_label_ext: unsafe {
@@ -3214,13 +3244,13 @@ pub mod ext {
                                 stringify!(cmd_end_debug_utils_label_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdEndDebugUtilsLabelEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndDebugUtilsLabelEXT");
                         if val.is_null() {
                             cmd_end_debug_utils_label_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndDebugUtilsLabelEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_insert_debug_utils_label_ext: unsafe {
@@ -3233,13 +3263,13 @@ pub mod ext {
                                 stringify!(cmd_insert_debug_utils_label_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdInsertDebugUtilsLabelEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdInsertDebugUtilsLabelEXT");
                         if val.is_null() {
                             cmd_insert_debug_utils_label_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdInsertDebugUtilsLabelEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -3271,7 +3301,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -3307,14 +3339,14 @@ pub mod ext {
                                 stringify!(get_physical_device_descriptor_size_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceDescriptorSizeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceDescriptorSizeEXT");
                         if val.is_null() {
                             get_physical_device_descriptor_size_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceDescriptorSizeEXT,
+                            >(val)
                         }
                     },
                 }
@@ -3330,7 +3362,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -3376,13 +3410,13 @@ pub mod ext {
                                 stringify!(write_sampler_descriptors_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkWriteSamplerDescriptorsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkWriteSamplerDescriptorsEXT");
                         if val.is_null() {
                             write_sampler_descriptors_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkWriteSamplerDescriptorsEXT>(
+                                val,
+                            )
                         }
                     },
                     write_resource_descriptors_ext: unsafe {
@@ -3397,13 +3431,13 @@ pub mod ext {
                                 stringify!(write_resource_descriptors_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkWriteResourceDescriptorsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkWriteResourceDescriptorsEXT");
                         if val.is_null() {
                             write_resource_descriptors_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkWriteResourceDescriptorsEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_bind_sampler_heap_ext: unsafe {
@@ -3416,13 +3450,13 @@ pub mod ext {
                                 stringify!(cmd_bind_sampler_heap_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindSamplerHeapEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindSamplerHeapEXT");
                         if val.is_null() {
                             cmd_bind_sampler_heap_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindSamplerHeapEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_bind_resource_heap_ext: unsafe {
@@ -3435,13 +3469,13 @@ pub mod ext {
                                 stringify!(cmd_bind_resource_heap_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindResourceHeapEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindResourceHeapEXT");
                         if val.is_null() {
                             cmd_bind_resource_heap_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindResourceHeapEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_push_data_ext: unsafe {
@@ -3451,12 +3485,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_push_data_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDataEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPushDataEXT");
                         if val.is_null() {
                             cmd_push_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdPushDataEXT>(val)
                         }
                     },
                     get_image_opaque_capture_data_ext: unsafe {
@@ -3471,14 +3504,14 @@ pub mod ext {
                                 stringify!(get_image_opaque_capture_data_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageOpaqueCaptureDataEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageOpaqueCaptureDataEXT");
                         if val.is_null() {
                             get_image_opaque_capture_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetImageOpaqueCaptureDataEXT,
+                            >(val)
                         }
                     },
                     register_custom_border_color_ext: unsafe {
@@ -3493,14 +3526,14 @@ pub mod ext {
                                 stringify!(register_custom_border_color_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkRegisterCustomBorderColorEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkRegisterCustomBorderColorEXT");
                         if val.is_null() {
                             register_custom_border_color_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkRegisterCustomBorderColorEXT,
+                            >(val)
                         }
                     },
                     unregister_custom_border_color_ext: unsafe {
@@ -3513,14 +3546,14 @@ pub mod ext {
                                 stringify!(unregister_custom_border_color_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkUnregisterCustomBorderColorEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkUnregisterCustomBorderColorEXT");
                         if val.is_null() {
                             unregister_custom_border_color_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkUnregisterCustomBorderColorEXT,
+                            >(val)
                         }
                     },
                     get_tensor_opaque_capture_data_arm: unsafe {
@@ -3535,14 +3568,14 @@ pub mod ext {
                                 stringify!(get_tensor_opaque_capture_data_arm)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetTensorOpaqueCaptureDataARM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetTensorOpaqueCaptureDataARM");
                         if val.is_null() {
                             get_tensor_opaque_capture_data_arm
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetTensorOpaqueCaptureDataARM,
+                            >(val)
                         }
                     },
                 }
@@ -3582,7 +3615,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -3620,14 +3655,14 @@ pub mod ext {
                                 stringify!(get_physical_device_multisample_properties_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceMultisamplePropertiesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceMultisamplePropertiesEXT");
                         if val.is_null() {
                             get_physical_device_multisample_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT,
+                            >(val)
                         }
                     },
                 }
@@ -3643,7 +3678,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -3679,13 +3716,13 @@ pub mod ext {
                                 stringify!(cmd_set_sample_locations_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetSampleLocationsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetSampleLocationsEXT");
                         if val.is_null() {
                             cmd_set_sample_locations_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetSampleLocationsEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -3725,7 +3762,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -3763,14 +3802,14 @@ pub mod ext {
                                 stringify!(get_image_drm_format_modifier_properties_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageDrmFormatModifierPropertiesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageDrmFormatModifierPropertiesEXT");
                         if val.is_null() {
                             get_image_drm_format_modifier_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetImageDrmFormatModifierPropertiesEXT,
+                            >(val)
                         }
                     },
                 }
@@ -3794,7 +3833,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -3835,13 +3876,13 @@ pub mod ext {
                                 stringify!(create_validation_cache_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateValidationCacheEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateValidationCacheEXT");
                         if val.is_null() {
                             create_validation_cache_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateValidationCacheEXT>(
+                                val,
+                            )
                         }
                     },
                     destroy_validation_cache_ext: unsafe {
@@ -3855,13 +3896,13 @@ pub mod ext {
                                 stringify!(destroy_validation_cache_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyValidationCacheEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyValidationCacheEXT");
                         if val.is_null() {
                             destroy_validation_cache_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyValidationCacheEXT>(
+                                val,
+                            )
                         }
                     },
                     merge_validation_caches_ext: unsafe {
@@ -3876,13 +3917,13 @@ pub mod ext {
                                 stringify!(merge_validation_caches_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkMergeValidationCachesEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkMergeValidationCachesEXT");
                         if val.is_null() {
                             merge_validation_caches_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkMergeValidationCachesEXT>(
+                                val,
+                            )
                         }
                     },
                     get_validation_cache_data_ext: unsafe {
@@ -3897,13 +3938,13 @@ pub mod ext {
                                 stringify!(get_validation_cache_data_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetValidationCacheDataEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetValidationCacheDataEXT");
                         if val.is_null() {
                             get_validation_cache_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetValidationCacheDataEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -3959,7 +4000,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -3999,14 +4042,14 @@ pub mod ext {
                                 stringify!(get_memory_host_pointer_properties_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetMemoryHostPointerPropertiesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryHostPointerPropertiesEXT");
                         if val.is_null() {
                             get_memory_host_pointer_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetMemoryHostPointerPropertiesEXT,
+                            >(val)
                         }
                     },
                 }
@@ -4030,7 +4073,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4068,14 +4113,14 @@ pub mod ext {
                                 stringify!(get_physical_device_calibrateable_time_domains_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceCalibrateableTimeDomainsEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceCalibrateableTimeDomainsEXT");
                         if val.is_null() {
                             get_physical_device_calibrateable_time_domains_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR,
+                            >(val)
                         }
                     },
                 }
@@ -4091,7 +4136,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4130,13 +4177,13 @@ pub mod ext {
                                 stringify!(get_calibrated_timestamps_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetCalibratedTimestampsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetCalibratedTimestampsEXT");
                         if val.is_null() {
                             get_calibrated_timestamps_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetCalibratedTimestampsKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -4176,7 +4223,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4217,14 +4266,14 @@ pub mod ext {
                                 stringify!(set_swapchain_present_timing_queue_size_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkSetSwapchainPresentTimingQueueSizeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkSetSwapchainPresentTimingQueueSizeEXT");
                         if val.is_null() {
                             set_swapchain_present_timing_queue_size_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkSetSwapchainPresentTimingQueueSizeEXT,
+                            >(val)
                         }
                     },
                     get_swapchain_timing_properties_ext: unsafe {
@@ -4239,14 +4288,14 @@ pub mod ext {
                                 stringify!(get_swapchain_timing_properties_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetSwapchainTimingPropertiesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSwapchainTimingPropertiesEXT");
                         if val.is_null() {
                             get_swapchain_timing_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetSwapchainTimingPropertiesEXT,
+                            >(val)
                         }
                     },
                     get_swapchain_time_domain_properties_ext: unsafe {
@@ -4261,14 +4310,14 @@ pub mod ext {
                                 stringify!(get_swapchain_time_domain_properties_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetSwapchainTimeDomainPropertiesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSwapchainTimeDomainPropertiesEXT");
                         if val.is_null() {
                             get_swapchain_time_domain_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetSwapchainTimeDomainPropertiesEXT,
+                            >(val)
                         }
                     },
                     get_past_presentation_timing_ext: unsafe {
@@ -4284,14 +4333,14 @@ pub mod ext {
                                 stringify!(get_past_presentation_timing_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPastPresentationTimingEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPastPresentationTimingEXT");
                         if val.is_null() {
                             get_past_presentation_timing_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPastPresentationTimingEXT,
+                            >(val)
                         }
                     },
                 }
@@ -4323,7 +4372,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4361,13 +4412,13 @@ pub mod ext {
                                 stringify!(create_metal_surface_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateMetalSurfaceEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateMetalSurfaceEXT");
                         if val.is_null() {
                             create_metal_surface_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateMetalSurfaceEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -4439,7 +4490,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4475,13 +4528,13 @@ pub mod ext {
                                 stringify!(get_buffer_device_address_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetBufferDeviceAddressEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetBufferDeviceAddressEXT");
                         if val.is_null() {
                             get_buffer_device_address_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetBufferDeviceAddress>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -4505,7 +4558,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4542,14 +4597,14 @@ pub mod ext {
                                 stringify!(get_physical_device_tool_properties_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceToolPropertiesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceToolPropertiesEXT");
                         if val.is_null() {
                             get_physical_device_tool_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceToolProperties,
+                            >(val)
                         }
                     },
                 }
@@ -4613,7 +4668,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4652,14 +4709,14 @@ pub mod ext {
                                 stringify!(get_physical_device_surface_present_modes2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSurfacePresentModes2EXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSurfacePresentModes2EXT");
                         if val.is_null() {
                             get_physical_device_surface_present_modes2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT,
+                            >(val)
                         }
                     },
                 }
@@ -4675,7 +4732,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4714,14 +4773,14 @@ pub mod ext {
                                 stringify!(acquire_full_screen_exclusive_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkAcquireFullScreenExclusiveModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireFullScreenExclusiveModeEXT");
                         if val.is_null() {
                             acquire_full_screen_exclusive_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkAcquireFullScreenExclusiveModeEXT,
+                            >(val)
                         }
                     },
                     release_full_screen_exclusive_mode_ext: unsafe {
@@ -4734,14 +4793,14 @@ pub mod ext {
                                 stringify!(release_full_screen_exclusive_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkReleaseFullScreenExclusiveModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkReleaseFullScreenExclusiveModeEXT");
                         if val.is_null() {
                             release_full_screen_exclusive_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkReleaseFullScreenExclusiveModeEXT,
+                            >(val)
                         }
                     },
                     get_device_group_surface_present_modes2_ext: unsafe {
@@ -4755,14 +4814,14 @@ pub mod ext {
                                 stringify!(get_device_group_surface_present_modes2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceGroupSurfacePresentModes2EXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceGroupSurfacePresentModes2EXT");
                         if val.is_null() {
                             get_device_group_surface_present_modes2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceGroupSurfacePresentModes2EXT,
+                            >(val)
                         }
                     },
                 }
@@ -4786,7 +4845,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4824,13 +4885,13 @@ pub mod ext {
                                 stringify!(create_headless_surface_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateHeadlessSurfaceEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateHeadlessSurfaceEXT");
                         if val.is_null() {
                             create_headless_surface_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateHeadlessSurfaceEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -4854,7 +4915,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4891,13 +4954,11 @@ pub mod ext {
                                 stringify!(cmd_set_line_stipple_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStippleEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLineStippleEXT");
                         if val.is_null() {
                             cmd_set_line_stipple_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLineStipple>(val)
                         }
                     },
                 }
@@ -4929,7 +4990,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -4964,12 +5027,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(reset_query_pool_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetQueryPoolEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkResetQueryPoolEXT");
                         if val.is_null() {
                             reset_query_pool_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkResetQueryPool>(val)
                         }
                     },
                 }
@@ -5001,7 +5063,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -5048,12 +5112,11 @@ pub mod ext {
                                 stringify!(cmd_set_cull_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetCullModeEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCullModeEXT");
                         if val.is_null() {
                             cmd_set_cull_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetCullMode>(val)
                         }
                     },
                     cmd_set_front_face_ext: unsafe {
@@ -5066,12 +5129,11 @@ pub mod ext {
                                 stringify!(cmd_set_front_face_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetFrontFaceEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetFrontFaceEXT");
                         if val.is_null() {
                             cmd_set_front_face_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetFrontFace>(val)
                         }
                     },
                     cmd_set_primitive_topology_ext: unsafe {
@@ -5084,13 +5146,13 @@ pub mod ext {
                                 stringify!(cmd_set_primitive_topology_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPrimitiveTopologyEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPrimitiveTopologyEXT");
                         if val.is_null() {
                             cmd_set_primitive_topology_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetPrimitiveTopology>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_viewport_with_count_ext: unsafe {
@@ -5104,13 +5166,13 @@ pub mod ext {
                                 stringify!(cmd_set_viewport_with_count_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportWithCountEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetViewportWithCountEXT");
                         if val.is_null() {
                             cmd_set_viewport_with_count_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetViewportWithCount>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_scissor_with_count_ext: unsafe {
@@ -5124,13 +5186,13 @@ pub mod ext {
                                 stringify!(cmd_set_scissor_with_count_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissorWithCountEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetScissorWithCountEXT");
                         if val.is_null() {
                             cmd_set_scissor_with_count_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetScissorWithCount>(
+                                val,
+                            )
                         }
                     },
                     cmd_bind_vertex_buffers2_ext: unsafe {
@@ -5148,13 +5210,13 @@ pub mod ext {
                                 stringify!(cmd_bind_vertex_buffers2_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers2EXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindVertexBuffers2EXT");
                         if val.is_null() {
                             cmd_bind_vertex_buffers2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindVertexBuffers2>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_depth_test_enable_ext: unsafe {
@@ -5167,13 +5229,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_test_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthTestEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthTestEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_test_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthTestEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_depth_write_enable_ext: unsafe {
@@ -5186,13 +5248,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_write_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthWriteEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthWriteEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_write_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthWriteEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_depth_compare_op_ext: unsafe {
@@ -5205,13 +5267,11 @@ pub mod ext {
                                 stringify!(cmd_set_depth_compare_op_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthCompareOpEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthCompareOpEXT");
                         if val.is_null() {
                             cmd_set_depth_compare_op_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthCompareOp>(val)
                         }
                     },
                     cmd_set_depth_bounds_test_enable_ext: unsafe {
@@ -5224,14 +5284,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_bounds_test_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetDepthBoundsTestEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthBoundsTestEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_bounds_test_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBoundsTestEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_stencil_test_enable_ext: unsafe {
@@ -5244,13 +5303,13 @@ pub mod ext {
                                 stringify!(cmd_set_stencil_test_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilTestEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetStencilTestEnableEXT");
                         if val.is_null() {
                             cmd_set_stencil_test_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilTestEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_stencil_op_ext: unsafe {
@@ -5267,12 +5326,11 @@ pub mod ext {
                                 stringify!(cmd_set_stencil_op_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilOpEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetStencilOpEXT");
                         if val.is_null() {
                             cmd_set_stencil_op_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilOp>(val)
                         }
                     },
                 }
@@ -5296,7 +5354,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -5336,13 +5396,11 @@ pub mod ext {
                                 stringify!(copy_memory_to_image_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToImageEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyMemoryToImageEXT");
                         if val.is_null() {
                             copy_memory_to_image_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCopyMemoryToImage>(val)
                         }
                     },
                     copy_image_to_memory_ext: unsafe {
@@ -5355,13 +5413,11 @@ pub mod ext {
                                 stringify!(copy_image_to_memory_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToMemoryEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyImageToMemoryEXT");
                         if val.is_null() {
                             copy_image_to_memory_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCopyImageToMemory>(val)
                         }
                     },
                     copy_image_to_image_ext: unsafe {
@@ -5374,12 +5430,11 @@ pub mod ext {
                                 stringify!(copy_image_to_image_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToImageEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyImageToImageEXT");
                         if val.is_null() {
                             copy_image_to_image_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCopyImageToImage>(val)
                         }
                     },
                     transition_image_layout_ext: unsafe {
@@ -5393,13 +5448,13 @@ pub mod ext {
                                 stringify!(transition_image_layout_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkTransitionImageLayoutEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkTransitionImageLayoutEXT");
                         if val.is_null() {
                             transition_image_layout_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkTransitionImageLayout>(
+                                val,
+                            )
                         }
                     },
                     get_image_subresource_layout2_ext: unsafe {
@@ -5414,14 +5469,13 @@ pub mod ext {
                                 stringify!(get_image_subresource_layout2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageSubresourceLayout2EXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageSubresourceLayout2EXT");
                         if val.is_null() {
                             get_image_subresource_layout2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetImageSubresourceLayout2>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -5469,7 +5523,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -5505,13 +5561,13 @@ pub mod ext {
                                 stringify!(release_swapchain_images_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkReleaseSwapchainImagesEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkReleaseSwapchainImagesEXT");
                         if val.is_null() {
                             release_swapchain_images_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkReleaseSwapchainImagesKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -5551,7 +5607,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -5587,12 +5645,11 @@ pub mod ext {
                                 stringify!(cmd_set_depth_bias2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBias2EXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthBias2EXT");
                         if val.is_null() {
                             cmd_set_depth_bias2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBias2EXT>(val)
                         }
                     },
                 }
@@ -5624,7 +5681,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -5662,13 +5721,11 @@ pub mod ext {
                                 stringify!(acquire_drm_display_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkAcquireDrmDisplayEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireDrmDisplayEXT");
                         if val.is_null() {
                             acquire_drm_display_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAcquireDrmDisplayEXT>(val)
                         }
                     },
                     get_drm_display_ext: unsafe {
@@ -5680,12 +5737,11 @@ pub mod ext {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(get_drm_display_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDrmDisplayEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDrmDisplayEXT");
                         if val.is_null() {
                             get_drm_display_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetDrmDisplayEXT>(val)
                         }
                     },
                 }
@@ -5733,7 +5789,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -5774,13 +5832,13 @@ pub mod ext {
                                 stringify!(create_private_data_slot_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreatePrivateDataSlotEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreatePrivateDataSlotEXT");
                         if val.is_null() {
                             create_private_data_slot_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreatePrivateDataSlot>(
+                                val,
+                            )
                         }
                     },
                     destroy_private_data_slot_ext: unsafe {
@@ -5794,13 +5852,13 @@ pub mod ext {
                                 stringify!(destroy_private_data_slot_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyPrivateDataSlotEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyPrivateDataSlotEXT");
                         if val.is_null() {
                             destroy_private_data_slot_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyPrivateDataSlot>(
+                                val,
+                            )
                         }
                     },
                     set_private_data_ext: unsafe {
@@ -5813,12 +5871,11 @@ pub mod ext {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(set_private_data_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetPrivateDataEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSetPrivateDataEXT");
                         if val.is_null() {
                             set_private_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSetPrivateData>(val)
                         }
                     },
                     get_private_data_ext: unsafe {
@@ -5831,12 +5888,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(get_private_data_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPrivateDataEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPrivateDataEXT");
                         if val.is_null() {
                             get_private_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetPrivateData>(val)
                         }
                     },
                 }
@@ -5868,7 +5924,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -5904,13 +5962,13 @@ pub mod ext {
                                 stringify!(export_metal_objects_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkExportMetalObjectsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkExportMetalObjectsEXT");
                         if val.is_null() {
                             export_metal_objects_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkExportMetalObjectsEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -5934,7 +5992,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -5988,14 +6048,14 @@ pub mod ext {
                                 stringify!(get_descriptor_set_layout_size_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDescriptorSetLayoutSizeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDescriptorSetLayoutSizeEXT");
                         if val.is_null() {
                             get_descriptor_set_layout_size_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDescriptorSetLayoutSizeEXT,
+                            >(val)
                         }
                     },
                     get_descriptor_set_layout_binding_offset_ext: unsafe {
@@ -6010,14 +6070,14 @@ pub mod ext {
                                 stringify!(get_descriptor_set_layout_binding_offset_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDescriptorSetLayoutBindingOffsetEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDescriptorSetLayoutBindingOffsetEXT");
                         if val.is_null() {
                             get_descriptor_set_layout_binding_offset_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDescriptorSetLayoutBindingOffsetEXT,
+                            >(val)
                         }
                     },
                     get_descriptor_ext: unsafe {
@@ -6029,12 +6089,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(get_descriptor_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDescriptorEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDescriptorEXT");
                         if val.is_null() {
                             get_descriptor_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetDescriptorEXT>(val)
                         }
                     },
                     cmd_bind_descriptor_buffers_ext: unsafe {
@@ -6048,13 +6107,13 @@ pub mod ext {
                                 stringify!(cmd_bind_descriptor_buffers_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorBuffersEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindDescriptorBuffersEXT");
                         if val.is_null() {
                             cmd_bind_descriptor_buffers_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindDescriptorBuffersEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_descriptor_buffer_offsets_ext: unsafe {
@@ -6072,14 +6131,14 @@ pub mod ext {
                                 stringify!(cmd_set_descriptor_buffer_offsets_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetDescriptorBufferOffsetsEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDescriptorBufferOffsetsEXT");
                         if val.is_null() {
                             cmd_set_descriptor_buffer_offsets_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetDescriptorBufferOffsetsEXT,
+                            >(val)
                         }
                     },
                     cmd_bind_descriptor_buffer_embedded_samplers_ext: unsafe {
@@ -6094,14 +6153,14 @@ pub mod ext {
                                 stringify!(cmd_bind_descriptor_buffer_embedded_samplers_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBindDescriptorBufferEmbeddedSamplersEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindDescriptorBufferEmbeddedSamplersEXT");
                         if val.is_null() {
                             cmd_bind_descriptor_buffer_embedded_samplers_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT,
+                            >(val)
                         }
                     },
                     get_buffer_opaque_capture_descriptor_data_ext: unsafe {
@@ -6115,14 +6174,14 @@ pub mod ext {
                                 stringify!(get_buffer_opaque_capture_descriptor_data_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetBufferOpaqueCaptureDescriptorDataEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetBufferOpaqueCaptureDescriptorDataEXT");
                         if val.is_null() {
                             get_buffer_opaque_capture_descriptor_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT,
+                            >(val)
                         }
                     },
                     get_image_opaque_capture_descriptor_data_ext: unsafe {
@@ -6136,14 +6195,14 @@ pub mod ext {
                                 stringify!(get_image_opaque_capture_descriptor_data_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageOpaqueCaptureDescriptorDataEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageOpaqueCaptureDescriptorDataEXT");
                         if val.is_null() {
                             get_image_opaque_capture_descriptor_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetImageOpaqueCaptureDescriptorDataEXT,
+                            >(val)
                         }
                     },
                     get_image_view_opaque_capture_descriptor_data_ext: unsafe {
@@ -6157,14 +6216,14 @@ pub mod ext {
                                 stringify!(get_image_view_opaque_capture_descriptor_data_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageViewOpaqueCaptureDescriptorDataEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageViewOpaqueCaptureDescriptorDataEXT");
                         if val.is_null() {
                             get_image_view_opaque_capture_descriptor_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT,
+                            >(val)
                         }
                     },
                     get_sampler_opaque_capture_descriptor_data_ext: unsafe {
@@ -6178,14 +6237,14 @@ pub mod ext {
                                 stringify!(get_sampler_opaque_capture_descriptor_data_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetSamplerOpaqueCaptureDescriptorDataEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSamplerOpaqueCaptureDescriptorDataEXT");
                         if val.is_null() {
                             get_sampler_opaque_capture_descriptor_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT,
+                            >(val)
                         }
                     },
                     get_acceleration_structure_opaque_capture_descriptor_data_ext: unsafe {
@@ -6201,14 +6260,14 @@ pub mod ext {
                                 )
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT");
                         if val.is_null() {
                             get_acceleration_structure_opaque_capture_descriptor_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT,
+                            >(val)
                         }
                     },
                 }
@@ -6240,7 +6299,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -6280,12 +6341,11 @@ pub mod ext {
                                 stringify!(cmd_draw_mesh_tasks_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMeshTasksEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawMeshTasksEXT");
                         if val.is_null() {
                             cmd_draw_mesh_tasks_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawMeshTasksEXT>(val)
                         }
                     },
                     cmd_draw_mesh_tasks_indirect_ext: unsafe {
@@ -6301,13 +6361,13 @@ pub mod ext {
                                 stringify!(cmd_draw_mesh_tasks_indirect_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMeshTasksIndirectEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawMeshTasksIndirectEXT");
                         if val.is_null() {
                             cmd_draw_mesh_tasks_indirect_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawMeshTasksIndirectEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_draw_mesh_tasks_indirect_count_ext: unsafe {
@@ -6325,14 +6385,14 @@ pub mod ext {
                                 stringify!(cmd_draw_mesh_tasks_indirect_count_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDrawMeshTasksIndirectCountEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawMeshTasksIndirectCountEXT");
                         if val.is_null() {
                             cmd_draw_mesh_tasks_indirect_count_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDrawMeshTasksIndirectCountEXT,
+                            >(val)
                         }
                     },
                 }
@@ -6380,7 +6440,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -6418,14 +6480,13 @@ pub mod ext {
                                 stringify!(get_image_subresource_layout2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageSubresourceLayout2EXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageSubresourceLayout2EXT");
                         if val.is_null() {
                             get_image_subresource_layout2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetImageSubresourceLayout2>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -6465,7 +6526,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -6502,13 +6565,13 @@ pub mod ext {
                                 stringify!(get_device_fault_info_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceFaultInfoEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceFaultInfoEXT");
                         if val.is_null() {
                             get_device_fault_info_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceFaultInfoEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -6540,7 +6603,9 @@ pub mod ext {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -6580,13 +6645,13 @@ pub mod ext {
                                 stringify!(create_direct_fb_surface_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateDirectFBSurfaceEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDirectFBSurfaceEXT");
                         if val.is_null() {
                             create_direct_fb_surface_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateDirectFBSurfaceEXT>(
+                                val,
+                            )
                         }
                     },
                     get_physical_device_direct_fb_presentation_support_ext: unsafe {
@@ -6600,14 +6665,14 @@ pub mod ext {
                                 stringify!(get_physical_device_direct_fb_presentation_support_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceDirectFBPresentationSupportEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceDirectFBPresentationSupportEXT");
                         if val.is_null() {
                             get_physical_device_direct_fb_presentation_support_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT,
+                            >(val)
                         }
                     },
                 }
@@ -6631,7 +6696,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -6670,13 +6737,11 @@ pub mod ext {
                                 stringify!(cmd_set_vertex_input_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetVertexInputEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetVertexInputEXT");
                         if val.is_null() {
                             cmd_set_vertex_input_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetVertexInputEXT>(val)
                         }
                     },
                 }
@@ -6740,7 +6805,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -6784,13 +6851,13 @@ pub mod ext {
                                 stringify!(get_pipeline_properties_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetPipelinePropertiesEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPipelinePropertiesEXT");
                         if val.is_null() {
                             get_pipeline_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetPipelinePropertiesEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -6830,7 +6897,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -6870,13 +6939,13 @@ pub mod ext {
                                 stringify!(cmd_set_patch_control_points_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPatchControlPointsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPatchControlPointsEXT");
                         if val.is_null() {
                             cmd_set_patch_control_points_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetPatchControlPointsEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_rasterizer_discard_enable_ext: unsafe {
@@ -6889,14 +6958,14 @@ pub mod ext {
                                 stringify!(cmd_set_rasterizer_discard_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRasterizerDiscardEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRasterizerDiscardEnableEXT");
                         if val.is_null() {
                             cmd_set_rasterizer_discard_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRasterizerDiscardEnable,
+                            >(val)
                         }
                     },
                     cmd_set_depth_bias_enable_ext: unsafe {
@@ -6909,13 +6978,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_bias_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBiasEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthBiasEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_bias_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBiasEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_logic_op_ext: unsafe {
@@ -6925,12 +6994,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_set_logic_op_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLogicOpEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLogicOpEXT");
                         if val.is_null() {
                             cmd_set_logic_op_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLogicOpEXT>(val)
                         }
                     },
                     cmd_set_primitive_restart_enable_ext: unsafe {
@@ -6943,14 +7011,14 @@ pub mod ext {
                                 stringify!(cmd_set_primitive_restart_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetPrimitiveRestartEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPrimitiveRestartEnableEXT");
                         if val.is_null() {
                             cmd_set_primitive_restart_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetPrimitiveRestartEnable,
+                            >(val)
                         }
                     },
                 }
@@ -6974,7 +7042,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -7011,13 +7081,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_write_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorWriteEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorWriteEnableEXT");
                         if val.is_null() {
                             cmd_set_color_write_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorWriteEnableEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -7065,7 +7135,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -7103,12 +7175,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_draw_multi_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMultiEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawMultiEXT");
                         if val.is_null() {
                             cmd_draw_multi_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawMultiEXT>(val)
                         }
                     },
                     cmd_draw_multi_indexed_ext: unsafe {
@@ -7126,13 +7197,13 @@ pub mod ext {
                                 stringify!(cmd_draw_multi_indexed_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMultiIndexedEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawMultiIndexedEXT");
                         if val.is_null() {
                             cmd_draw_multi_indexed_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawMultiIndexedEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -7172,7 +7243,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -7220,12 +7293,11 @@ pub mod ext {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_micromap_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateMicromapEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateMicromapEXT");
                         if val.is_null() {
                             create_micromap_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateMicromapEXT>(val)
                         }
                     },
                     destroy_micromap_ext: unsafe {
@@ -7236,12 +7308,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(destroy_micromap_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyMicromapEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyMicromapEXT");
                         if val.is_null() {
                             destroy_micromap_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyMicromapEXT>(val)
                         }
                     },
                     cmd_build_micromaps_ext: unsafe {
@@ -7255,13 +7326,11 @@ pub mod ext {
                                 stringify!(cmd_build_micromaps_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBuildMicromapsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBuildMicromapsEXT");
                         if val.is_null() {
                             cmd_build_micromaps_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBuildMicromapsEXT>(val)
                         }
                     },
                     build_micromaps_ext: unsafe {
@@ -7273,12 +7342,11 @@ pub mod ext {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(build_micromaps_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkBuildMicromapsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkBuildMicromapsEXT");
                         if val.is_null() {
                             build_micromaps_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkBuildMicromapsEXT>(val)
                         }
                     },
                     copy_micromap_ext: unsafe {
@@ -7289,12 +7357,11 @@ pub mod ext {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(copy_micromap_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyMicromapEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyMicromapEXT");
                         if val.is_null() {
                             copy_micromap_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCopyMicromapEXT>(val)
                         }
                     },
                     copy_micromap_to_memory_ext: unsafe {
@@ -7308,13 +7375,13 @@ pub mod ext {
                                 stringify!(copy_micromap_to_memory_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCopyMicromapToMemoryEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyMicromapToMemoryEXT");
                         if val.is_null() {
                             copy_micromap_to_memory_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCopyMicromapToMemoryEXT>(
+                                val,
+                            )
                         }
                     },
                     copy_memory_to_micromap_ext: unsafe {
@@ -7328,13 +7395,13 @@ pub mod ext {
                                 stringify!(copy_memory_to_micromap_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToMicromapEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyMemoryToMicromapEXT");
                         if val.is_null() {
                             copy_memory_to_micromap_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCopyMemoryToMicromapEXT>(
+                                val,
+                            )
                         }
                     },
                     write_micromaps_properties_ext: unsafe {
@@ -7352,13 +7419,13 @@ pub mod ext {
                                 stringify!(write_micromaps_properties_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkWriteMicromapsPropertiesEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkWriteMicromapsPropertiesEXT");
                         if val.is_null() {
                             write_micromaps_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkWriteMicromapsPropertiesEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_copy_micromap_ext: unsafe {
@@ -7371,12 +7438,11 @@ pub mod ext {
                                 stringify!(cmd_copy_micromap_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyMicromapEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyMicromapEXT");
                         if val.is_null() {
                             cmd_copy_micromap_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyMicromapEXT>(val)
                         }
                     },
                     cmd_copy_micromap_to_memory_ext: unsafe {
@@ -7389,13 +7455,13 @@ pub mod ext {
                                 stringify!(cmd_copy_micromap_to_memory_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyMicromapToMemoryEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyMicromapToMemoryEXT");
                         if val.is_null() {
                             cmd_copy_micromap_to_memory_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyMicromapToMemoryEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_copy_memory_to_micromap_ext: unsafe {
@@ -7408,13 +7474,13 @@ pub mod ext {
                                 stringify!(cmd_copy_memory_to_micromap_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyMemoryToMicromapEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyMemoryToMicromapEXT");
                         if val.is_null() {
                             cmd_copy_memory_to_micromap_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyMemoryToMicromapEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_write_micromaps_properties_ext: unsafe {
@@ -7431,14 +7497,14 @@ pub mod ext {
                                 stringify!(cmd_write_micromaps_properties_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdWriteMicromapsPropertiesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdWriteMicromapsPropertiesEXT");
                         if val.is_null() {
                             cmd_write_micromaps_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdWriteMicromapsPropertiesEXT,
+                            >(val)
                         }
                     },
                     get_device_micromap_compatibility_ext: unsafe {
@@ -7452,14 +7518,14 @@ pub mod ext {
                                 stringify!(get_device_micromap_compatibility_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceMicromapCompatibilityEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceMicromapCompatibilityEXT");
                         if val.is_null() {
                             get_device_micromap_compatibility_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceMicromapCompatibilityEXT,
+                            >(val)
                         }
                     },
                     get_micromap_build_sizes_ext: unsafe {
@@ -7474,13 +7540,13 @@ pub mod ext {
                                 stringify!(get_micromap_build_sizes_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetMicromapBuildSizesEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMicromapBuildSizesEXT");
                         if val.is_null() {
                             get_micromap_build_sizes_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetMicromapBuildSizesEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -7520,7 +7586,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -7557,13 +7625,13 @@ pub mod ext {
                                 stringify!(set_device_memory_priority_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkSetDeviceMemoryPriorityEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSetDeviceMemoryPriorityEXT");
                         if val.is_null() {
                             set_device_memory_priority_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSetDeviceMemoryPriorityEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -7635,7 +7703,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -7706,13 +7776,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_clamp_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthClampEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthClampEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_clamp_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthClampEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_polygon_mode_ext: unsafe {
@@ -7725,13 +7795,11 @@ pub mod ext {
                                 stringify!(cmd_set_polygon_mode_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPolygonModeEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPolygonModeEXT");
                         if val.is_null() {
                             cmd_set_polygon_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetPolygonModeEXT>(val)
                         }
                     },
                     cmd_set_rasterization_samples_ext: unsafe {
@@ -7744,14 +7812,14 @@ pub mod ext {
                                 stringify!(cmd_set_rasterization_samples_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRasterizationSamplesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRasterizationSamplesEXT");
                         if val.is_null() {
                             cmd_set_rasterization_samples_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRasterizationSamplesEXT,
+                            >(val)
                         }
                     },
                     cmd_set_sample_mask_ext: unsafe {
@@ -7765,12 +7833,11 @@ pub mod ext {
                                 stringify!(cmd_set_sample_mask_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetSampleMaskEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetSampleMaskEXT");
                         if val.is_null() {
                             cmd_set_sample_mask_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetSampleMaskEXT>(val)
                         }
                     },
                     cmd_set_alpha_to_coverage_enable_ext: unsafe {
@@ -7783,14 +7850,14 @@ pub mod ext {
                                 stringify!(cmd_set_alpha_to_coverage_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetAlphaToCoverageEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetAlphaToCoverageEnableEXT");
                         if val.is_null() {
                             cmd_set_alpha_to_coverage_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetAlphaToCoverageEnableEXT,
+                            >(val)
                         }
                     },
                     cmd_set_alpha_to_one_enable_ext: unsafe {
@@ -7803,13 +7870,13 @@ pub mod ext {
                                 stringify!(cmd_set_alpha_to_one_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetAlphaToOneEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetAlphaToOneEnableEXT");
                         if val.is_null() {
                             cmd_set_alpha_to_one_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetAlphaToOneEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_logic_op_enable_ext: unsafe {
@@ -7822,13 +7889,13 @@ pub mod ext {
                                 stringify!(cmd_set_logic_op_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLogicOpEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLogicOpEnableEXT");
                         if val.is_null() {
                             cmd_set_logic_op_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLogicOpEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_color_blend_enable_ext: unsafe {
@@ -7843,13 +7910,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_blend_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorBlendEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorBlendEnableEXT");
                         if val.is_null() {
                             cmd_set_color_blend_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorBlendEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_color_blend_equation_ext: unsafe {
@@ -7864,13 +7931,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_blend_equation_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorBlendEquationEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorBlendEquationEXT");
                         if val.is_null() {
                             cmd_set_color_blend_equation_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorBlendEquationEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_color_write_mask_ext: unsafe {
@@ -7885,13 +7952,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_write_mask_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorWriteMaskEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorWriteMaskEXT");
                         if val.is_null() {
                             cmd_set_color_write_mask_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorWriteMaskEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_tessellation_domain_origin_ext: unsafe {
@@ -7904,14 +7971,14 @@ pub mod ext {
                                 stringify!(cmd_set_tessellation_domain_origin_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetTessellationDomainOriginEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetTessellationDomainOriginEXT");
                         if val.is_null() {
                             cmd_set_tessellation_domain_origin_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetTessellationDomainOriginEXT,
+                            >(val)
                         }
                     },
                     cmd_set_rasterization_stream_ext: unsafe {
@@ -7924,14 +7991,14 @@ pub mod ext {
                                 stringify!(cmd_set_rasterization_stream_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRasterizationStreamEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRasterizationStreamEXT");
                         if val.is_null() {
                             cmd_set_rasterization_stream_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRasterizationStreamEXT,
+                            >(val)
                         }
                     },
                     cmd_set_conservative_rasterization_mode_ext: unsafe {
@@ -7944,14 +8011,14 @@ pub mod ext {
                                 stringify!(cmd_set_conservative_rasterization_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetConservativeRasterizationModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetConservativeRasterizationModeEXT");
                         if val.is_null() {
                             cmd_set_conservative_rasterization_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetConservativeRasterizationModeEXT,
+                            >(val)
                         }
                     },
                     cmd_set_extra_primitive_overestimation_size_ext: unsafe {
@@ -7964,14 +8031,14 @@ pub mod ext {
                                 stringify!(cmd_set_extra_primitive_overestimation_size_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetExtraPrimitiveOverestimationSizeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetExtraPrimitiveOverestimationSizeEXT");
                         if val.is_null() {
                             cmd_set_extra_primitive_overestimation_size_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetExtraPrimitiveOverestimationSizeEXT,
+                            >(val)
                         }
                     },
                     cmd_set_depth_clip_enable_ext: unsafe {
@@ -7984,13 +8051,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_clip_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthClipEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthClipEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_clip_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthClipEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_sample_locations_enable_ext: unsafe {
@@ -8003,14 +8070,14 @@ pub mod ext {
                                 stringify!(cmd_set_sample_locations_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetSampleLocationsEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetSampleLocationsEnableEXT");
                         if val.is_null() {
                             cmd_set_sample_locations_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetSampleLocationsEnableEXT,
+                            >(val)
                         }
                     },
                     cmd_set_color_blend_advanced_ext: unsafe {
@@ -8025,13 +8092,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_blend_advanced_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorBlendAdvancedEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorBlendAdvancedEXT");
                         if val.is_null() {
                             cmd_set_color_blend_advanced_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorBlendAdvancedEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_provoking_vertex_mode_ext: unsafe {
@@ -8044,14 +8111,14 @@ pub mod ext {
                                 stringify!(cmd_set_provoking_vertex_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetProvokingVertexModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetProvokingVertexModeEXT");
                         if val.is_null() {
                             cmd_set_provoking_vertex_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetProvokingVertexModeEXT,
+                            >(val)
                         }
                     },
                     cmd_set_line_rasterization_mode_ext: unsafe {
@@ -8064,14 +8131,14 @@ pub mod ext {
                                 stringify!(cmd_set_line_rasterization_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetLineRasterizationModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLineRasterizationModeEXT");
                         if val.is_null() {
                             cmd_set_line_rasterization_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetLineRasterizationModeEXT,
+                            >(val)
                         }
                     },
                     cmd_set_line_stipple_enable_ext: unsafe {
@@ -8084,13 +8151,13 @@ pub mod ext {
                                 stringify!(cmd_set_line_stipple_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStippleEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLineStippleEnableEXT");
                         if val.is_null() {
                             cmd_set_line_stipple_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLineStippleEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_depth_clip_negative_one_to_one_ext: unsafe {
@@ -8103,14 +8170,14 @@ pub mod ext {
                                 stringify!(cmd_set_depth_clip_negative_one_to_one_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetDepthClipNegativeOneToOneEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthClipNegativeOneToOneEXT");
                         if val.is_null() {
                             cmd_set_depth_clip_negative_one_to_one_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetDepthClipNegativeOneToOneEXT,
+                            >(val)
                         }
                     },
                     cmd_set_viewport_w_scaling_enable_nv: unsafe {
@@ -8123,14 +8190,14 @@ pub mod ext {
                                 stringify!(cmd_set_viewport_w_scaling_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetViewportWScalingEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetViewportWScalingEnableNV");
                         if val.is_null() {
                             cmd_set_viewport_w_scaling_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetViewportWScalingEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_viewport_swizzle_nv: unsafe {
@@ -8145,13 +8212,13 @@ pub mod ext {
                                 stringify!(cmd_set_viewport_swizzle_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportSwizzleNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetViewportSwizzleNV");
                         if val.is_null() {
                             cmd_set_viewport_swizzle_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetViewportSwizzleNV>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_coverage_to_color_enable_nv: unsafe {
@@ -8164,14 +8231,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_to_color_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageToColorEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageToColorEnableNV");
                         if val.is_null() {
                             cmd_set_coverage_to_color_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageToColorEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_to_color_location_nv: unsafe {
@@ -8184,14 +8251,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_to_color_location_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageToColorLocationNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageToColorLocationNV");
                         if val.is_null() {
                             cmd_set_coverage_to_color_location_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageToColorLocationNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_modulation_mode_nv: unsafe {
@@ -8204,14 +8271,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_modulation_mode_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageModulationModeNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageModulationModeNV");
                         if val.is_null() {
                             cmd_set_coverage_modulation_mode_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageModulationModeNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_modulation_table_enable_nv: unsafe {
@@ -8224,14 +8291,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_modulation_table_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageModulationTableEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageModulationTableEnableNV");
                         if val.is_null() {
                             cmd_set_coverage_modulation_table_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageModulationTableEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_modulation_table_nv: unsafe {
@@ -8245,14 +8312,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_modulation_table_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageModulationTableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageModulationTableNV");
                         if val.is_null() {
                             cmd_set_coverage_modulation_table_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageModulationTableNV,
+                            >(val)
                         }
                     },
                     cmd_set_shading_rate_image_enable_nv: unsafe {
@@ -8265,14 +8332,14 @@ pub mod ext {
                                 stringify!(cmd_set_shading_rate_image_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetShadingRateImageEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetShadingRateImageEnableNV");
                         if val.is_null() {
                             cmd_set_shading_rate_image_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetShadingRateImageEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_representative_fragment_test_enable_nv: unsafe {
@@ -8285,14 +8352,14 @@ pub mod ext {
                                 stringify!(cmd_set_representative_fragment_test_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRepresentativeFragmentTestEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRepresentativeFragmentTestEnableNV");
                         if val.is_null() {
                             cmd_set_representative_fragment_test_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRepresentativeFragmentTestEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_reduction_mode_nv: unsafe {
@@ -8305,14 +8372,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_reduction_mode_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageReductionModeNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageReductionModeNV");
                         if val.is_null() {
                             cmd_set_coverage_reduction_mode_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageReductionModeNV,
+                            >(val)
                         }
                     },
                 }
@@ -8344,7 +8411,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -8383,14 +8452,14 @@ pub mod ext {
                                 stringify!(get_shader_module_identifier_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetShaderModuleIdentifierEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetShaderModuleIdentifierEXT");
                         if val.is_null() {
                             get_shader_module_identifier_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetShaderModuleIdentifierEXT,
+                            >(val)
                         }
                     },
                     get_shader_module_create_info_identifier_ext: unsafe {
@@ -8404,14 +8473,14 @@ pub mod ext {
                                 stringify!(get_shader_module_create_info_identifier_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetShaderModuleCreateInfoIdentifierEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetShaderModuleCreateInfoIdentifierEXT");
                         if val.is_null() {
                             get_shader_module_create_info_identifier_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetShaderModuleCreateInfoIdentifierEXT,
+                            >(val)
                         }
                     },
                 }
@@ -8459,7 +8528,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -8553,12 +8624,11 @@ pub mod ext {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_shaders_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateShadersEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateShadersEXT");
                         if val.is_null() {
                             create_shaders_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateShadersEXT>(val)
                         }
                     },
                     destroy_shader_ext: unsafe {
@@ -8569,12 +8639,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(destroy_shader_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyShaderEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyShaderEXT");
                         if val.is_null() {
                             destroy_shader_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyShaderEXT>(val)
                         }
                     },
                     get_shader_binary_data_ext: unsafe {
@@ -8589,13 +8658,13 @@ pub mod ext {
                                 stringify!(get_shader_binary_data_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetShaderBinaryDataEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetShaderBinaryDataEXT");
                         if val.is_null() {
                             get_shader_binary_data_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetShaderBinaryDataEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_bind_shaders_ext: unsafe {
@@ -8607,12 +8676,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_bind_shaders_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindShadersEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindShadersEXT");
                         if val.is_null() {
                             cmd_bind_shaders_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindShadersEXT>(val)
                         }
                     },
                     cmd_set_cull_mode_ext: unsafe {
@@ -8625,12 +8693,11 @@ pub mod ext {
                                 stringify!(cmd_set_cull_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetCullModeEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCullModeEXT");
                         if val.is_null() {
                             cmd_set_cull_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetCullMode>(val)
                         }
                     },
                     cmd_set_front_face_ext: unsafe {
@@ -8643,12 +8710,11 @@ pub mod ext {
                                 stringify!(cmd_set_front_face_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetFrontFaceEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetFrontFaceEXT");
                         if val.is_null() {
                             cmd_set_front_face_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetFrontFace>(val)
                         }
                     },
                     cmd_set_primitive_topology_ext: unsafe {
@@ -8661,13 +8727,13 @@ pub mod ext {
                                 stringify!(cmd_set_primitive_topology_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPrimitiveTopologyEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPrimitiveTopologyEXT");
                         if val.is_null() {
                             cmd_set_primitive_topology_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetPrimitiveTopology>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_viewport_with_count_ext: unsafe {
@@ -8681,13 +8747,13 @@ pub mod ext {
                                 stringify!(cmd_set_viewport_with_count_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportWithCountEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetViewportWithCountEXT");
                         if val.is_null() {
                             cmd_set_viewport_with_count_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetViewportWithCount>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_scissor_with_count_ext: unsafe {
@@ -8701,13 +8767,13 @@ pub mod ext {
                                 stringify!(cmd_set_scissor_with_count_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissorWithCountEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetScissorWithCountEXT");
                         if val.is_null() {
                             cmd_set_scissor_with_count_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetScissorWithCount>(
+                                val,
+                            )
                         }
                     },
                     cmd_bind_vertex_buffers2_ext: unsafe {
@@ -8725,13 +8791,13 @@ pub mod ext {
                                 stringify!(cmd_bind_vertex_buffers2_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers2EXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindVertexBuffers2EXT");
                         if val.is_null() {
                             cmd_bind_vertex_buffers2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindVertexBuffers2>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_depth_test_enable_ext: unsafe {
@@ -8744,13 +8810,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_test_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthTestEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthTestEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_test_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthTestEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_depth_write_enable_ext: unsafe {
@@ -8763,13 +8829,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_write_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthWriteEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthWriteEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_write_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthWriteEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_depth_compare_op_ext: unsafe {
@@ -8782,13 +8848,11 @@ pub mod ext {
                                 stringify!(cmd_set_depth_compare_op_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthCompareOpEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthCompareOpEXT");
                         if val.is_null() {
                             cmd_set_depth_compare_op_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthCompareOp>(val)
                         }
                     },
                     cmd_set_depth_bounds_test_enable_ext: unsafe {
@@ -8801,14 +8865,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_bounds_test_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetDepthBoundsTestEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthBoundsTestEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_bounds_test_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBoundsTestEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_stencil_test_enable_ext: unsafe {
@@ -8821,13 +8884,13 @@ pub mod ext {
                                 stringify!(cmd_set_stencil_test_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilTestEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetStencilTestEnableEXT");
                         if val.is_null() {
                             cmd_set_stencil_test_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilTestEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_stencil_op_ext: unsafe {
@@ -8844,12 +8907,11 @@ pub mod ext {
                                 stringify!(cmd_set_stencil_op_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilOpEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetStencilOpEXT");
                         if val.is_null() {
                             cmd_set_stencil_op_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilOp>(val)
                         }
                     },
                     cmd_set_vertex_input_ext: unsafe {
@@ -8865,13 +8927,11 @@ pub mod ext {
                                 stringify!(cmd_set_vertex_input_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetVertexInputEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetVertexInputEXT");
                         if val.is_null() {
                             cmd_set_vertex_input_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetVertexInputEXT>(val)
                         }
                     },
                     cmd_set_patch_control_points_ext: unsafe {
@@ -8884,13 +8944,13 @@ pub mod ext {
                                 stringify!(cmd_set_patch_control_points_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPatchControlPointsEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPatchControlPointsEXT");
                         if val.is_null() {
                             cmd_set_patch_control_points_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetPatchControlPointsEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_rasterizer_discard_enable_ext: unsafe {
@@ -8903,14 +8963,14 @@ pub mod ext {
                                 stringify!(cmd_set_rasterizer_discard_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRasterizerDiscardEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRasterizerDiscardEnableEXT");
                         if val.is_null() {
                             cmd_set_rasterizer_discard_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRasterizerDiscardEnable,
+                            >(val)
                         }
                     },
                     cmd_set_depth_bias_enable_ext: unsafe {
@@ -8923,13 +8983,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_bias_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBiasEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthBiasEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_bias_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBiasEnable>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_logic_op_ext: unsafe {
@@ -8939,12 +8999,11 @@ pub mod ext {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_set_logic_op_ext)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLogicOpEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLogicOpEXT");
                         if val.is_null() {
                             cmd_set_logic_op_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLogicOpEXT>(val)
                         }
                     },
                     cmd_set_primitive_restart_enable_ext: unsafe {
@@ -8957,14 +9016,14 @@ pub mod ext {
                                 stringify!(cmd_set_primitive_restart_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetPrimitiveRestartEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPrimitiveRestartEnableEXT");
                         if val.is_null() {
                             cmd_set_primitive_restart_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetPrimitiveRestartEnable,
+                            >(val)
                         }
                     },
                     cmd_set_tessellation_domain_origin_ext: unsafe {
@@ -8977,14 +9036,14 @@ pub mod ext {
                                 stringify!(cmd_set_tessellation_domain_origin_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetTessellationDomainOriginEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetTessellationDomainOriginEXT");
                         if val.is_null() {
                             cmd_set_tessellation_domain_origin_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetTessellationDomainOriginEXT,
+                            >(val)
                         }
                     },
                     cmd_set_depth_clamp_enable_ext: unsafe {
@@ -8997,13 +9056,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_clamp_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthClampEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthClampEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_clamp_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthClampEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_polygon_mode_ext: unsafe {
@@ -9016,13 +9075,11 @@ pub mod ext {
                                 stringify!(cmd_set_polygon_mode_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPolygonModeEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPolygonModeEXT");
                         if val.is_null() {
                             cmd_set_polygon_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetPolygonModeEXT>(val)
                         }
                     },
                     cmd_set_rasterization_samples_ext: unsafe {
@@ -9035,14 +9092,14 @@ pub mod ext {
                                 stringify!(cmd_set_rasterization_samples_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRasterizationSamplesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRasterizationSamplesEXT");
                         if val.is_null() {
                             cmd_set_rasterization_samples_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRasterizationSamplesEXT,
+                            >(val)
                         }
                     },
                     cmd_set_sample_mask_ext: unsafe {
@@ -9056,12 +9113,11 @@ pub mod ext {
                                 stringify!(cmd_set_sample_mask_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetSampleMaskEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetSampleMaskEXT");
                         if val.is_null() {
                             cmd_set_sample_mask_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetSampleMaskEXT>(val)
                         }
                     },
                     cmd_set_alpha_to_coverage_enable_ext: unsafe {
@@ -9074,14 +9130,14 @@ pub mod ext {
                                 stringify!(cmd_set_alpha_to_coverage_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetAlphaToCoverageEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetAlphaToCoverageEnableEXT");
                         if val.is_null() {
                             cmd_set_alpha_to_coverage_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetAlphaToCoverageEnableEXT,
+                            >(val)
                         }
                     },
                     cmd_set_alpha_to_one_enable_ext: unsafe {
@@ -9094,13 +9150,13 @@ pub mod ext {
                                 stringify!(cmd_set_alpha_to_one_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetAlphaToOneEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetAlphaToOneEnableEXT");
                         if val.is_null() {
                             cmd_set_alpha_to_one_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetAlphaToOneEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_logic_op_enable_ext: unsafe {
@@ -9113,13 +9169,13 @@ pub mod ext {
                                 stringify!(cmd_set_logic_op_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLogicOpEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLogicOpEnableEXT");
                         if val.is_null() {
                             cmd_set_logic_op_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLogicOpEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_color_blend_enable_ext: unsafe {
@@ -9134,13 +9190,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_blend_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorBlendEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorBlendEnableEXT");
                         if val.is_null() {
                             cmd_set_color_blend_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorBlendEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_color_blend_equation_ext: unsafe {
@@ -9155,13 +9211,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_blend_equation_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorBlendEquationEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorBlendEquationEXT");
                         if val.is_null() {
                             cmd_set_color_blend_equation_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorBlendEquationEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_color_write_mask_ext: unsafe {
@@ -9176,13 +9232,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_write_mask_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorWriteMaskEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorWriteMaskEXT");
                         if val.is_null() {
                             cmd_set_color_write_mask_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorWriteMaskEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_rasterization_stream_ext: unsafe {
@@ -9195,14 +9251,14 @@ pub mod ext {
                                 stringify!(cmd_set_rasterization_stream_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRasterizationStreamEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRasterizationStreamEXT");
                         if val.is_null() {
                             cmd_set_rasterization_stream_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRasterizationStreamEXT,
+                            >(val)
                         }
                     },
                     cmd_set_conservative_rasterization_mode_ext: unsafe {
@@ -9215,14 +9271,14 @@ pub mod ext {
                                 stringify!(cmd_set_conservative_rasterization_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetConservativeRasterizationModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetConservativeRasterizationModeEXT");
                         if val.is_null() {
                             cmd_set_conservative_rasterization_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetConservativeRasterizationModeEXT,
+                            >(val)
                         }
                     },
                     cmd_set_extra_primitive_overestimation_size_ext: unsafe {
@@ -9235,14 +9291,14 @@ pub mod ext {
                                 stringify!(cmd_set_extra_primitive_overestimation_size_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetExtraPrimitiveOverestimationSizeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetExtraPrimitiveOverestimationSizeEXT");
                         if val.is_null() {
                             cmd_set_extra_primitive_overestimation_size_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetExtraPrimitiveOverestimationSizeEXT,
+                            >(val)
                         }
                     },
                     cmd_set_depth_clip_enable_ext: unsafe {
@@ -9255,13 +9311,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_clip_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthClipEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthClipEnableEXT");
                         if val.is_null() {
                             cmd_set_depth_clip_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthClipEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_sample_locations_enable_ext: unsafe {
@@ -9274,14 +9330,14 @@ pub mod ext {
                                 stringify!(cmd_set_sample_locations_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetSampleLocationsEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetSampleLocationsEnableEXT");
                         if val.is_null() {
                             cmd_set_sample_locations_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetSampleLocationsEnableEXT,
+                            >(val)
                         }
                     },
                     cmd_set_color_blend_advanced_ext: unsafe {
@@ -9296,13 +9352,13 @@ pub mod ext {
                                 stringify!(cmd_set_color_blend_advanced_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorBlendAdvancedEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetColorBlendAdvancedEXT");
                         if val.is_null() {
                             cmd_set_color_blend_advanced_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetColorBlendAdvancedEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_provoking_vertex_mode_ext: unsafe {
@@ -9315,14 +9371,14 @@ pub mod ext {
                                 stringify!(cmd_set_provoking_vertex_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetProvokingVertexModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetProvokingVertexModeEXT");
                         if val.is_null() {
                             cmd_set_provoking_vertex_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetProvokingVertexModeEXT,
+                            >(val)
                         }
                     },
                     cmd_set_line_rasterization_mode_ext: unsafe {
@@ -9335,14 +9391,14 @@ pub mod ext {
                                 stringify!(cmd_set_line_rasterization_mode_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetLineRasterizationModeEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLineRasterizationModeEXT");
                         if val.is_null() {
                             cmd_set_line_rasterization_mode_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetLineRasterizationModeEXT,
+                            >(val)
                         }
                     },
                     cmd_set_line_stipple_enable_ext: unsafe {
@@ -9355,13 +9411,13 @@ pub mod ext {
                                 stringify!(cmd_set_line_stipple_enable_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStippleEnableEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLineStippleEnableEXT");
                         if val.is_null() {
                             cmd_set_line_stipple_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLineStippleEnableEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_depth_clip_negative_one_to_one_ext: unsafe {
@@ -9374,14 +9430,14 @@ pub mod ext {
                                 stringify!(cmd_set_depth_clip_negative_one_to_one_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetDepthClipNegativeOneToOneEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthClipNegativeOneToOneEXT");
                         if val.is_null() {
                             cmd_set_depth_clip_negative_one_to_one_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetDepthClipNegativeOneToOneEXT,
+                            >(val)
                         }
                     },
                     cmd_set_viewport_w_scaling_enable_nv: unsafe {
@@ -9394,14 +9450,14 @@ pub mod ext {
                                 stringify!(cmd_set_viewport_w_scaling_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetViewportWScalingEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetViewportWScalingEnableNV");
                         if val.is_null() {
                             cmd_set_viewport_w_scaling_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetViewportWScalingEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_viewport_swizzle_nv: unsafe {
@@ -9416,13 +9472,13 @@ pub mod ext {
                                 stringify!(cmd_set_viewport_swizzle_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportSwizzleNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetViewportSwizzleNV");
                         if val.is_null() {
                             cmd_set_viewport_swizzle_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetViewportSwizzleNV>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_coverage_to_color_enable_nv: unsafe {
@@ -9435,14 +9491,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_to_color_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageToColorEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageToColorEnableNV");
                         if val.is_null() {
                             cmd_set_coverage_to_color_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageToColorEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_to_color_location_nv: unsafe {
@@ -9455,14 +9511,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_to_color_location_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageToColorLocationNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageToColorLocationNV");
                         if val.is_null() {
                             cmd_set_coverage_to_color_location_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageToColorLocationNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_modulation_mode_nv: unsafe {
@@ -9475,14 +9531,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_modulation_mode_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageModulationModeNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageModulationModeNV");
                         if val.is_null() {
                             cmd_set_coverage_modulation_mode_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageModulationModeNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_modulation_table_enable_nv: unsafe {
@@ -9495,14 +9551,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_modulation_table_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageModulationTableEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageModulationTableEnableNV");
                         if val.is_null() {
                             cmd_set_coverage_modulation_table_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageModulationTableEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_modulation_table_nv: unsafe {
@@ -9516,14 +9572,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_modulation_table_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageModulationTableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageModulationTableNV");
                         if val.is_null() {
                             cmd_set_coverage_modulation_table_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageModulationTableNV,
+                            >(val)
                         }
                     },
                     cmd_set_shading_rate_image_enable_nv: unsafe {
@@ -9536,14 +9592,14 @@ pub mod ext {
                                 stringify!(cmd_set_shading_rate_image_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetShadingRateImageEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetShadingRateImageEnableNV");
                         if val.is_null() {
                             cmd_set_shading_rate_image_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetShadingRateImageEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_representative_fragment_test_enable_nv: unsafe {
@@ -9556,14 +9612,14 @@ pub mod ext {
                                 stringify!(cmd_set_representative_fragment_test_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRepresentativeFragmentTestEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRepresentativeFragmentTestEnableNV");
                         if val.is_null() {
                             cmd_set_representative_fragment_test_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRepresentativeFragmentTestEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_coverage_reduction_mode_nv: unsafe {
@@ -9576,14 +9632,14 @@ pub mod ext {
                                 stringify!(cmd_set_coverage_reduction_mode_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetCoverageReductionModeNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoverageReductionModeNV");
                         if val.is_null() {
                             cmd_set_coverage_reduction_mode_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetCoverageReductionModeNV,
+                            >(val)
                         }
                     },
                     cmd_set_depth_clamp_range_ext: unsafe {
@@ -9597,13 +9653,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_clamp_range_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthClampRangeEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthClampRangeEXT");
                         if val.is_null() {
                             cmd_set_depth_clamp_range_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthClampRangeEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -9667,7 +9723,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -9704,14 +9762,14 @@ pub mod ext {
                                 stringify!(cmd_set_attachment_feedback_loop_enable_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetAttachmentFeedbackLoopEnableEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetAttachmentFeedbackLoopEnableEXT");
                         if val.is_null() {
                             cmd_set_attachment_feedback_loop_enable_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT,
+                            >(val)
                         }
                     },
                 }
@@ -9735,7 +9793,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -9772,13 +9832,13 @@ pub mod ext {
                                 stringify!(cmd_decompress_memory_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDecompressMemoryEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDecompressMemoryEXT");
                         if val.is_null() {
                             cmd_decompress_memory_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDecompressMemoryEXT>(
+                                val,
+                            )
                         }
                     },
                     cmd_decompress_memory_indirect_count_ext: unsafe {
@@ -9795,14 +9855,14 @@ pub mod ext {
                                 stringify!(cmd_decompress_memory_indirect_count_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDecompressMemoryIndirectCountEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDecompressMemoryIndirectCountEXT");
                         if val.is_null() {
                             cmd_decompress_memory_indirect_count_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDecompressMemoryIndirectCountEXT,
+                            >(val)
                         }
                     },
                 }
@@ -9842,7 +9902,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -9889,14 +9951,14 @@ pub mod ext {
                                 stringify!(get_generated_commands_memory_requirements_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetGeneratedCommandsMemoryRequirementsEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetGeneratedCommandsMemoryRequirementsEXT");
                         if val.is_null() {
                             get_generated_commands_memory_requirements_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetGeneratedCommandsMemoryRequirementsEXT,
+                            >(val)
                         }
                     },
                     cmd_preprocess_generated_commands_ext: unsafe {
@@ -9910,14 +9972,14 @@ pub mod ext {
                                 stringify!(cmd_preprocess_generated_commands_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdPreprocessGeneratedCommandsEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPreprocessGeneratedCommandsEXT");
                         if val.is_null() {
                             cmd_preprocess_generated_commands_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdPreprocessGeneratedCommandsEXT,
+                            >(val)
                         }
                     },
                     cmd_execute_generated_commands_ext: unsafe {
@@ -9931,14 +9993,14 @@ pub mod ext {
                                 stringify!(cmd_execute_generated_commands_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdExecuteGeneratedCommandsEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdExecuteGeneratedCommandsEXT");
                         if val.is_null() {
                             cmd_execute_generated_commands_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdExecuteGeneratedCommandsEXT,
+                            >(val)
                         }
                     },
                     create_indirect_commands_layout_ext: unsafe {
@@ -9953,14 +10015,14 @@ pub mod ext {
                                 stringify!(create_indirect_commands_layout_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateIndirectCommandsLayoutEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateIndirectCommandsLayoutEXT");
                         if val.is_null() {
                             create_indirect_commands_layout_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateIndirectCommandsLayoutEXT,
+                            >(val)
                         }
                     },
                     destroy_indirect_commands_layout_ext: unsafe {
@@ -9974,14 +10036,14 @@ pub mod ext {
                                 stringify!(destroy_indirect_commands_layout_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyIndirectCommandsLayoutEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyIndirectCommandsLayoutEXT");
                         if val.is_null() {
                             destroy_indirect_commands_layout_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyIndirectCommandsLayoutEXT,
+                            >(val)
                         }
                     },
                     create_indirect_execution_set_ext: unsafe {
@@ -9996,14 +10058,14 @@ pub mod ext {
                                 stringify!(create_indirect_execution_set_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateIndirectExecutionSetEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateIndirectExecutionSetEXT");
                         if val.is_null() {
                             create_indirect_execution_set_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateIndirectExecutionSetEXT,
+                            >(val)
                         }
                     },
                     destroy_indirect_execution_set_ext: unsafe {
@@ -10017,14 +10079,14 @@ pub mod ext {
                                 stringify!(destroy_indirect_execution_set_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyIndirectExecutionSetEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyIndirectExecutionSetEXT");
                         if val.is_null() {
                             destroy_indirect_execution_set_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyIndirectExecutionSetEXT,
+                            >(val)
                         }
                     },
                     update_indirect_execution_set_pipeline_ext: unsafe {
@@ -10041,14 +10103,14 @@ pub mod ext {
                                 stringify!(update_indirect_execution_set_pipeline_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkUpdateIndirectExecutionSetPipelineEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkUpdateIndirectExecutionSetPipelineEXT");
                         if val.is_null() {
                             update_indirect_execution_set_pipeline_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkUpdateIndirectExecutionSetPipelineEXT,
+                            >(val)
                         }
                     },
                     update_indirect_execution_set_shader_ext: unsafe {
@@ -10063,14 +10125,14 @@ pub mod ext {
                                 stringify!(update_indirect_execution_set_shader_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkUpdateIndirectExecutionSetShaderEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkUpdateIndirectExecutionSetShaderEXT");
                         if val.is_null() {
                             update_indirect_execution_set_shader_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkUpdateIndirectExecutionSetShaderEXT,
+                            >(val)
                         }
                     },
                 }
@@ -10102,7 +10164,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10139,13 +10203,13 @@ pub mod ext {
                                 stringify!(cmd_set_depth_clamp_range_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthClampRangeEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDepthClampRangeEXT");
                         if val.is_null() {
                             cmd_set_depth_clamp_range_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthClampRangeEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -10169,7 +10233,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10207,13 +10273,13 @@ pub mod ext {
                                 stringify!(get_memory_metal_handle_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryMetalHandleEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryMetalHandleEXT");
                         if val.is_null() {
                             get_memory_metal_handle_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetMemoryMetalHandleEXT>(
+                                val,
+                            )
                         }
                     },
                     get_memory_metal_handle_properties_ext: unsafe {
@@ -10230,14 +10296,14 @@ pub mod ext {
                                 stringify!(get_memory_metal_handle_properties_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetMemoryMetalHandlePropertiesEXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryMetalHandlePropertiesEXT");
                         if val.is_null() {
                             get_memory_metal_handle_properties_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetMemoryMetalHandlePropertiesEXT,
+                            >(val)
                         }
                     },
                 }
@@ -10269,7 +10335,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10305,12 +10373,11 @@ pub mod ext {
                                 stringify!(cmd_end_rendering2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRendering2EXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndRendering2EXT");
                         if val.is_null() {
                             cmd_end_rendering2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndRendering2KHR>(val)
                         }
                     },
                 }
@@ -10350,7 +10417,9 @@ pub mod ext {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10386,13 +10455,13 @@ pub mod ext {
                                 stringify!(cmd_begin_custom_resolve_ext)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginCustomResolveEXT\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginCustomResolveEXT");
                         if val.is_null() {
                             cmd_begin_custom_resolve_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginCustomResolveEXT>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -10443,7 +10512,9 @@ pub mod fuchsia {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10481,14 +10552,14 @@ pub mod fuchsia {
                                 stringify!(create_image_pipe_surface_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateImagePipeSurfaceFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateImagePipeSurfaceFUCHSIA");
                         if val.is_null() {
                             create_image_pipe_surface_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateImagePipeSurfaceFUCHSIA,
+                            >(val)
                         }
                     },
                 }
@@ -10512,7 +10583,9 @@ pub mod fuchsia {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10551,14 +10624,14 @@ pub mod fuchsia {
                                 stringify!(get_memory_zircon_handle_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetMemoryZirconHandleFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryZirconHandleFUCHSIA");
                         if val.is_null() {
                             get_memory_zircon_handle_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetMemoryZirconHandleFUCHSIA,
+                            >(val)
                         }
                     },
                     get_memory_zircon_handle_properties_fuchsia: unsafe {
@@ -10573,14 +10646,14 @@ pub mod fuchsia {
                                 stringify!(get_memory_zircon_handle_properties_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetMemoryZirconHandlePropertiesFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryZirconHandlePropertiesFUCHSIA");
                         if val.is_null() {
                             get_memory_zircon_handle_properties_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA,
+                            >(val)
                         }
                     },
                 }
@@ -10604,7 +10677,9 @@ pub mod fuchsia {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10641,14 +10716,14 @@ pub mod fuchsia {
                                 stringify!(import_semaphore_zircon_handle_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkImportSemaphoreZirconHandleFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkImportSemaphoreZirconHandleFUCHSIA");
                         if val.is_null() {
                             import_semaphore_zircon_handle_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkImportSemaphoreZirconHandleFUCHSIA,
+                            >(val)
                         }
                     },
                     get_semaphore_zircon_handle_fuchsia: unsafe {
@@ -10664,14 +10739,14 @@ pub mod fuchsia {
                                 stringify!(get_semaphore_zircon_handle_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetSemaphoreZirconHandleFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSemaphoreZirconHandleFUCHSIA");
                         if val.is_null() {
                             get_semaphore_zircon_handle_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetSemaphoreZirconHandleFUCHSIA,
+                            >(val)
                         }
                     },
                 }
@@ -10695,7 +10770,9 @@ pub mod fuchsia {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10740,14 +10817,14 @@ pub mod fuchsia {
                                 stringify!(create_buffer_collection_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateBufferCollectionFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateBufferCollectionFUCHSIA");
                         if val.is_null() {
                             create_buffer_collection_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateBufferCollectionFUCHSIA,
+                            >(val)
                         }
                     },
                     set_buffer_collection_image_constraints_fuchsia: unsafe {
@@ -10761,14 +10838,14 @@ pub mod fuchsia {
                                 stringify!(set_buffer_collection_image_constraints_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkSetBufferCollectionImageConstraintsFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkSetBufferCollectionImageConstraintsFUCHSIA");
                         if val.is_null() {
                             set_buffer_collection_image_constraints_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkSetBufferCollectionImageConstraintsFUCHSIA,
+                            >(val)
                         }
                     },
                     set_buffer_collection_buffer_constraints_fuchsia: unsafe {
@@ -10782,14 +10859,14 @@ pub mod fuchsia {
                                 stringify!(set_buffer_collection_buffer_constraints_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkSetBufferCollectionBufferConstraintsFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkSetBufferCollectionBufferConstraintsFUCHSIA");
                         if val.is_null() {
                             set_buffer_collection_buffer_constraints_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA,
+                            >(val)
                         }
                     },
                     destroy_buffer_collection_fuchsia: unsafe {
@@ -10803,14 +10880,14 @@ pub mod fuchsia {
                                 stringify!(destroy_buffer_collection_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyBufferCollectionFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyBufferCollectionFUCHSIA");
                         if val.is_null() {
                             destroy_buffer_collection_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyBufferCollectionFUCHSIA,
+                            >(val)
                         }
                     },
                     get_buffer_collection_properties_fuchsia: unsafe {
@@ -10824,14 +10901,14 @@ pub mod fuchsia {
                                 stringify!(get_buffer_collection_properties_fuchsia)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetBufferCollectionPropertiesFUCHSIA\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetBufferCollectionPropertiesFUCHSIA");
                         if val.is_null() {
                             get_buffer_collection_properties_fuchsia
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetBufferCollectionPropertiesFUCHSIA,
+                            >(val)
                         }
                     },
                 }
@@ -10858,7 +10935,9 @@ pub mod ggp {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10896,14 +10975,14 @@ pub mod ggp {
                                 stringify!(create_stream_descriptor_surface_ggp)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateStreamDescriptorSurfaceGGP\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateStreamDescriptorSurfaceGGP");
                         if val.is_null() {
                             create_stream_descriptor_surface_ggp
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateStreamDescriptorSurfaceGGP,
+                            >(val)
                         }
                     },
                 }
@@ -10938,7 +11017,9 @@ pub mod google {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -10976,14 +11057,14 @@ pub mod google {
                                 stringify!(get_refresh_cycle_duration_google)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetRefreshCycleDurationGOOGLE\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetRefreshCycleDurationGOOGLE");
                         if val.is_null() {
                             get_refresh_cycle_duration_google
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetRefreshCycleDurationGOOGLE,
+                            >(val)
                         }
                     },
                     get_past_presentation_timing_google: unsafe {
@@ -10998,14 +11079,14 @@ pub mod google {
                                 stringify!(get_past_presentation_timing_google)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPastPresentationTimingGOOGLE\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPastPresentationTimingGOOGLE");
                         if val.is_null() {
                             get_past_presentation_timing_google
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPastPresentationTimingGOOGLE,
+                            >(val)
                         }
                     },
                 }
@@ -11064,7 +11145,9 @@ pub mod huawei {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -11103,14 +11186,14 @@ pub mod huawei {
                                 stringify!(get_device_subpass_shading_max_workgroup_size_huawei)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI");
                         if val.is_null() {
                             get_device_subpass_shading_max_workgroup_size_huawei
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI,
+                            >(val)
                         }
                     },
                     cmd_subpass_shading_huawei: unsafe {
@@ -11122,13 +11205,13 @@ pub mod huawei {
                                 stringify!(cmd_subpass_shading_huawei)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSubpassShadingHUAWEI\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSubpassShadingHUAWEI");
                         if val.is_null() {
                             cmd_subpass_shading_huawei
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSubpassShadingHUAWEI>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -11152,7 +11235,9 @@ pub mod huawei {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -11189,13 +11274,13 @@ pub mod huawei {
                                 stringify!(cmd_bind_invocation_mask_huawei)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindInvocationMaskHUAWEI\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindInvocationMaskHUAWEI");
                         if val.is_null() {
                             cmd_bind_invocation_mask_huawei
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindInvocationMaskHUAWEI>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -11219,7 +11304,9 @@ pub mod huawei {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -11258,13 +11345,11 @@ pub mod huawei {
                                 stringify!(cmd_draw_cluster_huawei)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawClusterHUAWEI\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawClusterHUAWEI");
                         if val.is_null() {
                             cmd_draw_cluster_huawei
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawClusterHUAWEI>(val)
                         }
                     },
                     cmd_draw_cluster_indirect_huawei: unsafe {
@@ -11278,14 +11363,14 @@ pub mod huawei {
                                 stringify!(cmd_draw_cluster_indirect_huawei)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDrawClusterIndirectHUAWEI\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawClusterIndirectHUAWEI");
                         if val.is_null() {
                             cmd_draw_cluster_indirect_huawei
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDrawClusterIndirectHUAWEI,
+                            >(val)
                         }
                     },
                 }
@@ -11355,7 +11440,9 @@ pub mod intel {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -11400,14 +11487,14 @@ pub mod intel {
                                 stringify!(initialize_performance_api_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkInitializePerformanceApiINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkInitializePerformanceApiINTEL");
                         if val.is_null() {
                             initialize_performance_api_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkInitializePerformanceApiINTEL,
+                            >(val)
                         }
                     },
                     uninitialize_performance_api_intel: unsafe {
@@ -11419,14 +11506,14 @@ pub mod intel {
                                 stringify!(uninitialize_performance_api_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkUninitializePerformanceApiINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkUninitializePerformanceApiINTEL");
                         if val.is_null() {
                             uninitialize_performance_api_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkUninitializePerformanceApiINTEL,
+                            >(val)
                         }
                     },
                     cmd_set_performance_marker_intel: unsafe {
@@ -11439,14 +11526,14 @@ pub mod intel {
                                 stringify!(cmd_set_performance_marker_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetPerformanceMarkerINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPerformanceMarkerINTEL");
                         if val.is_null() {
                             cmd_set_performance_marker_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetPerformanceMarkerINTEL,
+                            >(val)
                         }
                     },
                     cmd_set_performance_stream_marker_intel: unsafe {
@@ -11459,14 +11546,14 @@ pub mod intel {
                                 stringify!(cmd_set_performance_stream_marker_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetPerformanceStreamMarkerINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPerformanceStreamMarkerINTEL");
                         if val.is_null() {
                             cmd_set_performance_stream_marker_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetPerformanceStreamMarkerINTEL,
+                            >(val)
                         }
                     },
                     cmd_set_performance_override_intel: unsafe {
@@ -11479,14 +11566,14 @@ pub mod intel {
                                 stringify!(cmd_set_performance_override_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetPerformanceOverrideINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetPerformanceOverrideINTEL");
                         if val.is_null() {
                             cmd_set_performance_override_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetPerformanceOverrideINTEL,
+                            >(val)
                         }
                     },
                     acquire_performance_configuration_intel: unsafe {
@@ -11500,14 +11587,14 @@ pub mod intel {
                                 stringify!(acquire_performance_configuration_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkAcquirePerformanceConfigurationINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquirePerformanceConfigurationINTEL");
                         if val.is_null() {
                             acquire_performance_configuration_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkAcquirePerformanceConfigurationINTEL,
+                            >(val)
                         }
                     },
                     release_performance_configuration_intel: unsafe {
@@ -11520,14 +11607,14 @@ pub mod intel {
                                 stringify!(release_performance_configuration_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkReleasePerformanceConfigurationINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkReleasePerformanceConfigurationINTEL");
                         if val.is_null() {
                             release_performance_configuration_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkReleasePerformanceConfigurationINTEL,
+                            >(val)
                         }
                     },
                     queue_set_performance_configuration_intel: unsafe {
@@ -11540,14 +11627,14 @@ pub mod intel {
                                 stringify!(queue_set_performance_configuration_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkQueueSetPerformanceConfigurationINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkQueueSetPerformanceConfigurationINTEL");
                         if val.is_null() {
                             queue_set_performance_configuration_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkQueueSetPerformanceConfigurationINTEL,
+                            >(val)
                         }
                     },
                     get_performance_parameter_intel: unsafe {
@@ -11561,14 +11648,14 @@ pub mod intel {
                                 stringify!(get_performance_parameter_intel)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPerformanceParameterINTEL\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPerformanceParameterINTEL");
                         if val.is_null() {
                             get_performance_parameter_intel
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPerformanceParameterINTEL,
+                            >(val)
                         }
                     },
                 }
@@ -11595,7 +11682,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -11635,12 +11724,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(destroy_surface_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroySurfaceKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroySurfaceKHR");
                         if val.is_null() {
                             destroy_surface_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroySurfaceKHR>(val)
                         }
                     },
                     get_physical_device_surface_support_khr: unsafe {
@@ -11655,14 +11743,14 @@ pub mod khr {
                                 stringify!(get_physical_device_surface_support_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSurfaceSupportKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSurfaceSupportKHR");
                         if val.is_null() {
                             get_physical_device_surface_support_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSurfaceSupportKHR,
+                            >(val)
                         }
                     },
                     get_physical_device_surface_capabilities_khr: unsafe {
@@ -11676,14 +11764,14 @@ pub mod khr {
                                 stringify!(get_physical_device_surface_capabilities_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSurfaceCapabilitiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSurfaceCapabilitiesKHR");
                         if val.is_null() {
                             get_physical_device_surface_capabilities_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR,
+                            >(val)
                         }
                     },
                     get_physical_device_surface_formats_khr: unsafe {
@@ -11698,14 +11786,14 @@ pub mod khr {
                                 stringify!(get_physical_device_surface_formats_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSurfaceFormatsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSurfaceFormatsKHR");
                         if val.is_null() {
                             get_physical_device_surface_formats_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSurfaceFormatsKHR,
+                            >(val)
                         }
                     },
                     get_physical_device_surface_present_modes_khr: unsafe {
@@ -11720,14 +11808,14 @@ pub mod khr {
                                 stringify!(get_physical_device_surface_present_modes_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSurfacePresentModesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSurfacePresentModesKHR");
                         if val.is_null() {
                             get_physical_device_surface_present_modes_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSurfacePresentModesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -11751,7 +11839,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -11790,14 +11880,14 @@ pub mod khr {
                                 stringify!(get_physical_device_present_rectangles_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDevicePresentRectanglesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDevicePresentRectanglesKHR");
                         if val.is_null() {
                             get_physical_device_present_rectangles_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -11813,7 +11903,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -11857,12 +11949,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_swapchain_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateSwapchainKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateSwapchainKHR");
                         if val.is_null() {
                             create_swapchain_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateSwapchainKHR>(val)
                         }
                     },
                     destroy_swapchain_khr: unsafe {
@@ -11876,12 +11967,11 @@ pub mod khr {
                                 stringify!(destroy_swapchain_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroySwapchainKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroySwapchainKHR");
                         if val.is_null() {
                             destroy_swapchain_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroySwapchainKHR>(val)
                         }
                     },
                     get_swapchain_images_khr: unsafe {
@@ -11896,13 +11986,13 @@ pub mod khr {
                                 stringify!(get_swapchain_images_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetSwapchainImagesKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSwapchainImagesKHR");
                         if val.is_null() {
                             get_swapchain_images_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetSwapchainImagesKHR>(
+                                val,
+                            )
                         }
                     },
                     acquire_next_image_khr: unsafe {
@@ -11919,12 +12009,11 @@ pub mod khr {
                                 stringify!(acquire_next_image_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkAcquireNextImageKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireNextImageKHR");
                         if val.is_null() {
                             acquire_next_image_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAcquireNextImageKHR>(val)
                         }
                     },
                     queue_present_khr: unsafe {
@@ -11934,12 +12023,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(queue_present_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueuePresentKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkQueuePresentKHR");
                         if val.is_null() {
                             queue_present_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkQueuePresentKHR>(val)
                         }
                     },
                     get_device_group_present_capabilities_khr: unsafe {
@@ -11952,14 +12040,14 @@ pub mod khr {
                                 stringify!(get_device_group_present_capabilities_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceGroupPresentCapabilitiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceGroupPresentCapabilitiesKHR");
                         if val.is_null() {
                             get_device_group_present_capabilities_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+                            >(val)
                         }
                     },
                     get_device_group_surface_present_modes_khr: unsafe {
@@ -11973,14 +12061,14 @@ pub mod khr {
                                 stringify!(get_device_group_surface_present_modes_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceGroupSurfacePresentModesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceGroupSurfacePresentModesKHR");
                         if val.is_null() {
                             get_device_group_surface_present_modes_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+                            >(val)
                         }
                     },
                     acquire_next_image2_khr: unsafe {
@@ -11994,13 +12082,11 @@ pub mod khr {
                                 stringify!(acquire_next_image2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkAcquireNextImage2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireNextImage2KHR");
                         if val.is_null() {
                             acquire_next_image2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAcquireNextImage2KHR>(val)
                         }
                     },
                 }
@@ -12024,7 +12110,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12069,14 +12157,14 @@ pub mod khr {
                                 stringify!(get_physical_device_display_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceDisplayPropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceDisplayPropertiesKHR");
                         if val.is_null() {
                             get_physical_device_display_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceDisplayPropertiesKHR,
+                            >(val)
                         }
                     },
                     get_physical_device_display_plane_properties_khr: unsafe {
@@ -12090,14 +12178,14 @@ pub mod khr {
                                 stringify!(get_physical_device_display_plane_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceDisplayPlanePropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceDisplayPlanePropertiesKHR");
                         if val.is_null() {
                             get_physical_device_display_plane_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
+                            >(val)
                         }
                     },
                     get_display_plane_supported_displays_khr: unsafe {
@@ -12112,14 +12200,14 @@ pub mod khr {
                                 stringify!(get_display_plane_supported_displays_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDisplayPlaneSupportedDisplaysKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDisplayPlaneSupportedDisplaysKHR");
                         if val.is_null() {
                             get_display_plane_supported_displays_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDisplayPlaneSupportedDisplaysKHR,
+                            >(val)
                         }
                     },
                     get_display_mode_properties_khr: unsafe {
@@ -12134,13 +12222,13 @@ pub mod khr {
                                 stringify!(get_display_mode_properties_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetDisplayModePropertiesKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDisplayModePropertiesKHR");
                         if val.is_null() {
                             get_display_mode_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetDisplayModePropertiesKHR>(
+                                val,
+                            )
                         }
                     },
                     create_display_mode_khr: unsafe {
@@ -12156,13 +12244,11 @@ pub mod khr {
                                 stringify!(create_display_mode_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateDisplayModeKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDisplayModeKHR");
                         if val.is_null() {
                             create_display_mode_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateDisplayModeKHR>(val)
                         }
                     },
                     get_display_plane_capabilities_khr: unsafe {
@@ -12177,14 +12263,14 @@ pub mod khr {
                                 stringify!(get_display_plane_capabilities_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDisplayPlaneCapabilitiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDisplayPlaneCapabilitiesKHR");
                         if val.is_null() {
                             get_display_plane_capabilities_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDisplayPlaneCapabilitiesKHR,
+                            >(val)
                         }
                     },
                     create_display_plane_surface_khr: unsafe {
@@ -12199,14 +12285,14 @@ pub mod khr {
                                 stringify!(create_display_plane_surface_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateDisplayPlaneSurfaceKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDisplayPlaneSurfaceKHR");
                         if val.is_null() {
                             create_display_plane_surface_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateDisplayPlaneSurfaceKHR,
+                            >(val)
                         }
                     },
                 }
@@ -12230,7 +12316,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12269,13 +12357,13 @@ pub mod khr {
                                 stringify!(create_shared_swapchains_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateSharedSwapchainsKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateSharedSwapchainsKHR");
                         if val.is_null() {
                             create_shared_swapchains_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateSharedSwapchainsKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -12299,7 +12387,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12339,13 +12429,11 @@ pub mod khr {
                                 stringify!(create_xlib_surface_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateXlibSurfaceKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateXlibSurfaceKHR");
                         if val.is_null() {
                             create_xlib_surface_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateXlibSurfaceKHR>(val)
                         }
                     },
                     get_physical_device_xlib_presentation_support_khr: unsafe {
@@ -12360,14 +12448,14 @@ pub mod khr {
                                 stringify!(get_physical_device_xlib_presentation_support_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceXlibPresentationSupportKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceXlibPresentationSupportKHR");
                         if val.is_null() {
                             get_physical_device_xlib_presentation_support_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR,
+                            >(val)
                         }
                     },
                 }
@@ -12391,7 +12479,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12431,12 +12521,11 @@ pub mod khr {
                                 stringify!(create_xcb_surface_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateXcbSurfaceKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateXcbSurfaceKHR");
                         if val.is_null() {
                             create_xcb_surface_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateXcbSurfaceKHR>(val)
                         }
                     },
                     get_physical_device_xcb_presentation_support_khr: unsafe {
@@ -12451,14 +12540,14 @@ pub mod khr {
                                 stringify!(get_physical_device_xcb_presentation_support_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceXcbPresentationSupportKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceXcbPresentationSupportKHR");
                         if val.is_null() {
                             get_physical_device_xcb_presentation_support_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR,
+                            >(val)
                         }
                     },
                 }
@@ -12482,7 +12571,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12522,13 +12613,13 @@ pub mod khr {
                                 stringify!(create_wayland_surface_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateWaylandSurfaceKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateWaylandSurfaceKHR");
                         if val.is_null() {
                             create_wayland_surface_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateWaylandSurfaceKHR>(
+                                val,
+                            )
                         }
                     },
                     get_physical_device_wayland_presentation_support_khr: unsafe {
@@ -12542,14 +12633,14 @@ pub mod khr {
                                 stringify!(get_physical_device_wayland_presentation_support_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceWaylandPresentationSupportKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceWaylandPresentationSupportKHR");
                         if val.is_null() {
                             get_physical_device_wayland_presentation_support_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR,
+                            >(val)
                         }
                     },
                 }
@@ -12573,7 +12664,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12611,13 +12704,13 @@ pub mod khr {
                                 stringify!(create_android_surface_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateAndroidSurfaceKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateAndroidSurfaceKHR");
                         if val.is_null() {
                             create_android_surface_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateAndroidSurfaceKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -12641,7 +12734,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12681,13 +12776,13 @@ pub mod khr {
                                 stringify!(create_win32_surface_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateWin32SurfaceKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateWin32SurfaceKHR");
                         if val.is_null() {
                             create_win32_surface_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateWin32SurfaceKHR>(
+                                val,
+                            )
                         }
                     },
                     get_physical_device_win32_presentation_support_khr: unsafe {
@@ -12700,14 +12795,14 @@ pub mod khr {
                                 stringify!(get_physical_device_win32_presentation_support_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceWin32PresentationSupportKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceWin32PresentationSupportKHR");
                         if val.is_null() {
                             get_physical_device_win32_presentation_support_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR,
+                            >(val)
                         }
                     },
                 }
@@ -12739,7 +12834,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12779,14 +12876,14 @@ pub mod khr {
                                 stringify!(get_physical_device_video_capabilities_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceVideoCapabilitiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceVideoCapabilitiesKHR");
                         if val.is_null() {
                             get_physical_device_video_capabilities_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR,
+                            >(val)
                         }
                     },
                     get_physical_device_video_format_properties_khr: unsafe {
@@ -12801,14 +12898,14 @@ pub mod khr {
                                 stringify!(get_physical_device_video_format_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceVideoFormatPropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceVideoFormatPropertiesKHR");
                         if val.is_null() {
                             get_physical_device_video_format_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -12824,7 +12921,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -12872,13 +12971,13 @@ pub mod khr {
                                 stringify!(create_video_session_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateVideoSessionKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateVideoSessionKHR");
                         if val.is_null() {
                             create_video_session_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateVideoSessionKHR>(
+                                val,
+                            )
                         }
                     },
                     destroy_video_session_khr: unsafe {
@@ -12892,13 +12991,13 @@ pub mod khr {
                                 stringify!(destroy_video_session_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyVideoSessionKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyVideoSessionKHR");
                         if val.is_null() {
                             destroy_video_session_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyVideoSessionKHR>(
+                                val,
+                            )
                         }
                     },
                     get_video_session_memory_requirements_khr: unsafe {
@@ -12913,14 +13012,14 @@ pub mod khr {
                                 stringify!(get_video_session_memory_requirements_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetVideoSessionMemoryRequirementsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetVideoSessionMemoryRequirementsKHR");
                         if val.is_null() {
                             get_video_session_memory_requirements_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetVideoSessionMemoryRequirementsKHR,
+                            >(val)
                         }
                     },
                     bind_video_session_memory_khr: unsafe {
@@ -12935,13 +13034,13 @@ pub mod khr {
                                 stringify!(bind_video_session_memory_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkBindVideoSessionMemoryKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkBindVideoSessionMemoryKHR");
                         if val.is_null() {
                             bind_video_session_memory_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkBindVideoSessionMemoryKHR>(
+                                val,
+                            )
                         }
                     },
                     create_video_session_parameters_khr: unsafe {
@@ -12956,14 +13055,14 @@ pub mod khr {
                                 stringify!(create_video_session_parameters_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateVideoSessionParametersKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateVideoSessionParametersKHR");
                         if val.is_null() {
                             create_video_session_parameters_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateVideoSessionParametersKHR,
+                            >(val)
                         }
                     },
                     update_video_session_parameters_khr: unsafe {
@@ -12977,14 +13076,14 @@ pub mod khr {
                                 stringify!(update_video_session_parameters_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkUpdateVideoSessionParametersKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkUpdateVideoSessionParametersKHR");
                         if val.is_null() {
                             update_video_session_parameters_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkUpdateVideoSessionParametersKHR,
+                            >(val)
                         }
                     },
                     destroy_video_session_parameters_khr: unsafe {
@@ -12998,14 +13097,14 @@ pub mod khr {
                                 stringify!(destroy_video_session_parameters_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyVideoSessionParametersKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyVideoSessionParametersKHR");
                         if val.is_null() {
                             destroy_video_session_parameters_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyVideoSessionParametersKHR,
+                            >(val)
                         }
                     },
                     cmd_begin_video_coding_khr: unsafe {
@@ -13018,13 +13117,13 @@ pub mod khr {
                                 stringify!(cmd_begin_video_coding_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginVideoCodingKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginVideoCodingKHR");
                         if val.is_null() {
                             cmd_begin_video_coding_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginVideoCodingKHR>(
+                                val,
+                            )
                         }
                     },
                     cmd_end_video_coding_khr: unsafe {
@@ -13037,13 +13136,11 @@ pub mod khr {
                                 stringify!(cmd_end_video_coding_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdEndVideoCodingKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndVideoCodingKHR");
                         if val.is_null() {
                             cmd_end_video_coding_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndVideoCodingKHR>(val)
                         }
                     },
                     cmd_control_video_coding_khr: unsafe {
@@ -13056,13 +13153,13 @@ pub mod khr {
                                 stringify!(cmd_control_video_coding_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdControlVideoCodingKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdControlVideoCodingKHR");
                         if val.is_null() {
                             cmd_control_video_coding_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdControlVideoCodingKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -13086,7 +13183,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13119,12 +13218,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_decode_video_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDecodeVideoKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDecodeVideoKHR");
                         if val.is_null() {
                             cmd_decode_video_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDecodeVideoKHR>(val)
                         }
                     },
                 }
@@ -13172,7 +13270,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13209,13 +13309,11 @@ pub mod khr {
                                 stringify!(cmd_begin_rendering_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderingKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginRenderingKHR");
                         if val.is_null() {
                             cmd_begin_rendering_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginRendering>(val)
                         }
                     },
                     cmd_end_rendering_khr: unsafe {
@@ -13227,12 +13325,11 @@ pub mod khr {
                                 stringify!(cmd_end_rendering_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderingKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndRenderingKHR");
                         if val.is_null() {
                             cmd_end_rendering_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndRendering>(val)
                         }
                     },
                 }
@@ -13264,7 +13361,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13311,14 +13410,13 @@ pub mod khr {
                                 stringify!(get_physical_device_features2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceFeatures2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceFeatures2KHR");
                         if val.is_null() {
                             get_physical_device_features2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceFeatures2>(
+                                val,
+                            )
                         }
                     },
                     get_physical_device_properties2_khr: unsafe {
@@ -13331,14 +13429,14 @@ pub mod khr {
                                 stringify!(get_physical_device_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceProperties2KHR");
                         if val.is_null() {
                             get_physical_device_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceProperties2,
+                            >(val)
                         }
                     },
                     get_physical_device_format_properties2_khr: unsafe {
@@ -13352,14 +13450,14 @@ pub mod khr {
                                 stringify!(get_physical_device_format_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceFormatProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceFormatProperties2KHR");
                         if val.is_null() {
                             get_physical_device_format_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceFormatProperties2,
+                            >(val)
                         }
                     },
                     get_physical_device_image_format_properties2_khr: unsafe {
@@ -13373,14 +13471,14 @@ pub mod khr {
                                 stringify!(get_physical_device_image_format_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceImageFormatProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceImageFormatProperties2KHR");
                         if val.is_null() {
                             get_physical_device_image_format_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceImageFormatProperties2,
+                            >(val)
                         }
                     },
                     get_physical_device_queue_family_properties2_khr: unsafe {
@@ -13394,14 +13492,14 @@ pub mod khr {
                                 stringify!(get_physical_device_queue_family_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceQueueFamilyProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceQueueFamilyProperties2KHR");
                         if val.is_null() {
                             get_physical_device_queue_family_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceQueueFamilyProperties2,
+                            >(val)
                         }
                     },
                     get_physical_device_memory_properties2_khr: unsafe {
@@ -13414,14 +13512,14 @@ pub mod khr {
                                 stringify!(get_physical_device_memory_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceMemoryProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceMemoryProperties2KHR");
                         if val.is_null() {
                             get_physical_device_memory_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceMemoryProperties2,
+                            >(val)
                         }
                     },
                     get_physical_device_sparse_image_format_properties2_khr: unsafe {
@@ -13436,14 +13534,14 @@ pub mod khr {
                                 stringify!(get_physical_device_sparse_image_format_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSparseImageFormatProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSparseImageFormatProperties2KHR");
                         if val.is_null() {
                             get_physical_device_sparse_image_format_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSparseImageFormatProperties2,
+                            >(val)
                         }
                     },
                 }
@@ -13467,7 +13565,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13506,14 +13606,14 @@ pub mod khr {
                                 stringify!(get_physical_device_present_rectangles_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDevicePresentRectanglesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDevicePresentRectanglesKHR");
                         if val.is_null() {
                             get_physical_device_present_rectangles_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -13529,7 +13629,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13575,14 +13677,14 @@ pub mod khr {
                                 stringify!(get_device_group_peer_memory_features_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceGroupPeerMemoryFeaturesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceGroupPeerMemoryFeaturesKHR");
                         if val.is_null() {
                             get_device_group_peer_memory_features_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceGroupPeerMemoryFeatures,
+                            >(val)
                         }
                     },
                     cmd_set_device_mask_khr: unsafe {
@@ -13595,12 +13697,11 @@ pub mod khr {
                                 stringify!(cmd_set_device_mask_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDeviceMaskKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDeviceMaskKHR");
                         if val.is_null() {
                             cmd_set_device_mask_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDeviceMask>(val)
                         }
                     },
                     cmd_dispatch_base_khr: unsafe {
@@ -13618,12 +13719,11 @@ pub mod khr {
                                 stringify!(cmd_dispatch_base_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchBaseKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDispatchBaseKHR");
                         if val.is_null() {
                             cmd_dispatch_base_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDispatchBase>(val)
                         }
                     },
                     get_device_group_present_capabilities_khr: unsafe {
@@ -13636,14 +13736,14 @@ pub mod khr {
                                 stringify!(get_device_group_present_capabilities_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceGroupPresentCapabilitiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceGroupPresentCapabilitiesKHR");
                         if val.is_null() {
                             get_device_group_present_capabilities_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+                            >(val)
                         }
                     },
                     get_device_group_surface_present_modes_khr: unsafe {
@@ -13657,14 +13757,14 @@ pub mod khr {
                                 stringify!(get_device_group_surface_present_modes_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceGroupSurfacePresentModesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceGroupSurfacePresentModesKHR");
                         if val.is_null() {
                             get_device_group_surface_present_modes_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+                            >(val)
                         }
                     },
                     acquire_next_image2_khr: unsafe {
@@ -13678,13 +13778,11 @@ pub mod khr {
                                 stringify!(acquire_next_image2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkAcquireNextImage2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireNextImage2KHR");
                         if val.is_null() {
                             acquire_next_image2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAcquireNextImage2KHR>(val)
                         }
                     },
                 }
@@ -13716,7 +13814,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13753,12 +13853,11 @@ pub mod khr {
                                 stringify!(trim_command_pool_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkTrimCommandPoolKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkTrimCommandPoolKHR");
                         if val.is_null() {
                             trim_command_pool_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkTrimCommandPool>(val)
                         }
                     },
                 }
@@ -13782,7 +13881,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13821,14 +13922,14 @@ pub mod khr {
                                 stringify!(enumerate_physical_device_groups_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkEnumeratePhysicalDeviceGroupsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkEnumeratePhysicalDeviceGroupsKHR");
                         if val.is_null() {
                             enumerate_physical_device_groups_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkEnumeratePhysicalDeviceGroups,
+                            >(val)
                         }
                     },
                 }
@@ -13852,7 +13953,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13890,14 +13993,14 @@ pub mod khr {
                                 stringify!(get_physical_device_external_buffer_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceExternalBufferPropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceExternalBufferPropertiesKHR");
                         if val.is_null() {
                             get_physical_device_external_buffer_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceExternalBufferProperties,
+                            >(val)
                         }
                     },
                 }
@@ -13929,7 +14032,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -13967,13 +14072,13 @@ pub mod khr {
                                 stringify!(get_memory_win32_handle_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryWin32HandleKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryWin32HandleKHR");
                         if val.is_null() {
                             get_memory_win32_handle_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetMemoryWin32HandleKHR>(
+                                val,
+                            )
                         }
                     },
                     get_memory_win32_handle_properties_khr: unsafe {
@@ -13990,14 +14095,14 @@ pub mod khr {
                                 stringify!(get_memory_win32_handle_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetMemoryWin32HandlePropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryWin32HandlePropertiesKHR");
                         if val.is_null() {
                             get_memory_win32_handle_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetMemoryWin32HandlePropertiesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -14021,7 +14126,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14056,12 +14163,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(get_memory_fd_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryFdKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryFdKHR");
                         if val.is_null() {
                             get_memory_fd_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetMemoryFdKHR>(val)
                         }
                     },
                     get_memory_fd_properties_khr: unsafe {
@@ -14076,13 +14182,13 @@ pub mod khr {
                                 stringify!(get_memory_fd_properties_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryFdPropertiesKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryFdPropertiesKHR");
                         if val.is_null() {
                             get_memory_fd_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetMemoryFdPropertiesKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -14114,7 +14220,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14154,14 +14262,14 @@ pub mod khr {
                                 stringify!(get_physical_device_external_semaphore_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceExternalSemaphorePropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceExternalSemaphorePropertiesKHR");
                         if val.is_null() {
                             get_physical_device_external_semaphore_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceExternalSemaphoreProperties,
+                            >(val)
                         }
                     },
                 }
@@ -14193,7 +14301,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14230,14 +14340,14 @@ pub mod khr {
                                 stringify!(import_semaphore_win32_handle_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkImportSemaphoreWin32HandleKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkImportSemaphoreWin32HandleKHR");
                         if val.is_null() {
                             import_semaphore_win32_handle_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkImportSemaphoreWin32HandleKHR,
+                            >(val)
                         }
                     },
                     get_semaphore_win32_handle_khr: unsafe {
@@ -14251,13 +14361,13 @@ pub mod khr {
                                 stringify!(get_semaphore_win32_handle_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetSemaphoreWin32HandleKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSemaphoreWin32HandleKHR");
                         if val.is_null() {
                             get_semaphore_win32_handle_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetSemaphoreWin32HandleKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -14281,7 +14391,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14318,13 +14430,11 @@ pub mod khr {
                                 stringify!(import_semaphore_fd_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkImportSemaphoreFdKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkImportSemaphoreFdKHR");
                         if val.is_null() {
                             import_semaphore_fd_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkImportSemaphoreFdKHR>(val)
                         }
                     },
                     get_semaphore_fd_khr: unsafe {
@@ -14335,12 +14445,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(get_semaphore_fd_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetSemaphoreFdKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSemaphoreFdKHR");
                         if val.is_null() {
                             get_semaphore_fd_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetSemaphoreFdKHR>(val)
                         }
                     },
                 }
@@ -14364,7 +14473,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14405,13 +14516,11 @@ pub mod khr {
                                 stringify!(cmd_push_descriptor_set_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSetKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPushDescriptorSetKHR");
                         if val.is_null() {
                             cmd_push_descriptor_set_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdPushDescriptorSet>(val)
                         }
                     },
                     cmd_push_descriptor_set_with_template_khr: unsafe {
@@ -14427,14 +14536,14 @@ pub mod khr {
                                 stringify!(cmd_push_descriptor_set_with_template_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdPushDescriptorSetWithTemplateKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPushDescriptorSetWithTemplateKHR");
                         if val.is_null() {
                             cmd_push_descriptor_set_with_template_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdPushDescriptorSetWithTemplate,
+                            >(val)
                         }
                     },
                 }
@@ -14482,7 +14591,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14523,14 +14634,14 @@ pub mod khr {
                                 stringify!(create_descriptor_update_template_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateDescriptorUpdateTemplateKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDescriptorUpdateTemplateKHR");
                         if val.is_null() {
                             create_descriptor_update_template_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateDescriptorUpdateTemplate,
+                            >(val)
                         }
                     },
                     destroy_descriptor_update_template_khr: unsafe {
@@ -14544,14 +14655,14 @@ pub mod khr {
                                 stringify!(destroy_descriptor_update_template_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyDescriptorUpdateTemplateKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyDescriptorUpdateTemplateKHR");
                         if val.is_null() {
                             destroy_descriptor_update_template_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyDescriptorUpdateTemplate,
+                            >(val)
                         }
                     },
                     update_descriptor_set_with_template_khr: unsafe {
@@ -14566,14 +14677,14 @@ pub mod khr {
                                 stringify!(update_descriptor_set_with_template_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkUpdateDescriptorSetWithTemplateKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkUpdateDescriptorSetWithTemplateKHR");
                         if val.is_null() {
                             update_descriptor_set_with_template_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkUpdateDescriptorSetWithTemplate,
+                            >(val)
                         }
                     },
                     cmd_push_descriptor_set_with_template_khr: unsafe {
@@ -14589,14 +14700,14 @@ pub mod khr {
                                 stringify!(cmd_push_descriptor_set_with_template_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdPushDescriptorSetWithTemplateKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPushDescriptorSetWithTemplateKHR");
                         if val.is_null() {
                             cmd_push_descriptor_set_with_template_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdPushDescriptorSetWithTemplate,
+                            >(val)
                         }
                     },
                 }
@@ -14628,7 +14739,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14669,13 +14782,11 @@ pub mod khr {
                                 stringify!(create_render_pass2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateRenderPass2KHR");
                         if val.is_null() {
                             create_render_pass2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateRenderPass2>(val)
                         }
                     },
                     cmd_begin_render_pass2_khr: unsafe {
@@ -14689,13 +14800,11 @@ pub mod khr {
                                 stringify!(cmd_begin_render_pass2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginRenderPass2KHR");
                         if val.is_null() {
                             cmd_begin_render_pass2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginRenderPass2>(val)
                         }
                     },
                     cmd_next_subpass2_khr: unsafe {
@@ -14709,12 +14818,11 @@ pub mod khr {
                                 stringify!(cmd_next_subpass2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdNextSubpass2KHR");
                         if val.is_null() {
                             cmd_next_subpass2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdNextSubpass2>(val)
                         }
                     },
                     cmd_end_render_pass2_khr: unsafe {
@@ -14727,13 +14835,11 @@ pub mod khr {
                                 stringify!(cmd_end_render_pass2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndRenderPass2KHR");
                         if val.is_null() {
                             cmd_end_render_pass2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndRenderPass2>(val)
                         }
                     },
                 }
@@ -14757,7 +14863,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14793,13 +14901,13 @@ pub mod khr {
                                 stringify!(get_swapchain_status_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetSwapchainStatusKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSwapchainStatusKHR");
                         if val.is_null() {
                             get_swapchain_status_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetSwapchainStatusKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -14823,7 +14931,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14861,14 +14971,14 @@ pub mod khr {
                                 stringify!(get_physical_device_external_fence_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceExternalFencePropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceExternalFencePropertiesKHR");
                         if val.is_null() {
                             get_physical_device_external_fence_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceExternalFenceProperties,
+                            >(val)
                         }
                     },
                 }
@@ -14900,7 +15010,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -14939,13 +15051,13 @@ pub mod khr {
                                 stringify!(import_fence_win32_handle_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkImportFenceWin32HandleKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkImportFenceWin32HandleKHR");
                         if val.is_null() {
                             import_fence_win32_handle_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkImportFenceWin32HandleKHR>(
+                                val,
+                            )
                         }
                     },
                     get_fence_win32_handle_khr: unsafe {
@@ -14959,13 +15071,13 @@ pub mod khr {
                                 stringify!(get_fence_win32_handle_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetFenceWin32HandleKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetFenceWin32HandleKHR");
                         if val.is_null() {
                             get_fence_win32_handle_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetFenceWin32HandleKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -14989,7 +15101,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -15023,12 +15137,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(import_fence_fd_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkImportFenceFdKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkImportFenceFdKHR");
                         if val.is_null() {
                             import_fence_fd_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkImportFenceFdKHR>(val)
                         }
                     },
                     get_fence_fd_khr: unsafe {
@@ -15039,12 +15152,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(get_fence_fd_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetFenceFdKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetFenceFdKHR");
                         if val.is_null() {
                             get_fence_fd_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetFenceFdKHR>(val)
                         }
                     },
                 }
@@ -15068,7 +15180,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -15107,14 +15221,15 @@ pub mod khr {
                         ) -> Result {
                             panic ! (concat ! ("Unable to load " , stringify ! (enumerate_physical_device_queue_family_performance_query_counters_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val =
+                            _f(c"vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR");
                         if val.is_null() {
                             enumerate_physical_device_queue_family_performance_query_counters_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR,
+                            >(val)
                         }
                     },
                     get_physical_device_queue_family_performance_query_passes_khr: unsafe {
@@ -15130,14 +15245,14 @@ pub mod khr {
                                 )
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR");
                         if val.is_null() {
                             get_physical_device_queue_family_performance_query_passes_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -15153,7 +15268,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -15190,13 +15307,13 @@ pub mod khr {
                                 stringify!(acquire_profiling_lock_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkAcquireProfilingLockKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireProfilingLockKHR");
                         if val.is_null() {
                             acquire_profiling_lock_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAcquireProfilingLockKHR>(
+                                val,
+                            )
                         }
                     },
                     release_profiling_lock_khr: unsafe {
@@ -15208,13 +15325,13 @@ pub mod khr {
                                 stringify!(release_profiling_lock_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkReleaseProfilingLockKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkReleaseProfilingLockKHR");
                         if val.is_null() {
                             release_profiling_lock_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkReleaseProfilingLockKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -15246,7 +15363,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -15285,14 +15404,14 @@ pub mod khr {
                                 stringify!(get_physical_device_surface_capabilities2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSurfaceCapabilities2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSurfaceCapabilities2KHR");
                         if val.is_null() {
                             get_physical_device_surface_capabilities2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR,
+                            >(val)
                         }
                     },
                     get_physical_device_surface_formats2_khr: unsafe {
@@ -15307,14 +15426,14 @@ pub mod khr {
                                 stringify!(get_physical_device_surface_formats2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSurfaceFormats2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceSurfaceFormats2KHR");
                         if val.is_null() {
                             get_physical_device_surface_formats2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceSurfaceFormats2KHR,
+                            >(val)
                         }
                     },
                 }
@@ -15346,7 +15465,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -15388,14 +15509,14 @@ pub mod khr {
                                 stringify!(get_physical_device_display_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceDisplayProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceDisplayProperties2KHR");
                         if val.is_null() {
                             get_physical_device_display_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceDisplayProperties2KHR,
+                            >(val)
                         }
                     },
                     get_physical_device_display_plane_properties2_khr: unsafe {
@@ -15409,14 +15530,14 @@ pub mod khr {
                                 stringify!(get_physical_device_display_plane_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceDisplayPlaneProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceDisplayPlaneProperties2KHR");
                         if val.is_null() {
                             get_physical_device_display_plane_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR,
+                            >(val)
                         }
                     },
                     get_display_mode_properties2_khr: unsafe {
@@ -15431,14 +15552,14 @@ pub mod khr {
                                 stringify!(get_display_mode_properties2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDisplayModeProperties2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDisplayModeProperties2KHR");
                         if val.is_null() {
                             get_display_mode_properties2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDisplayModeProperties2KHR,
+                            >(val)
                         }
                     },
                     get_display_plane_capabilities2_khr: unsafe {
@@ -15452,14 +15573,14 @@ pub mod khr {
                                 stringify!(get_display_plane_capabilities2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDisplayPlaneCapabilities2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDisplayPlaneCapabilities2KHR");
                         if val.is_null() {
                             get_display_plane_capabilities2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDisplayPlaneCapabilities2KHR,
+                            >(val)
                         }
                     },
                 }
@@ -15515,7 +15636,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -15554,14 +15677,13 @@ pub mod khr {
                                 stringify!(get_image_memory_requirements2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageMemoryRequirements2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageMemoryRequirements2KHR");
                         if val.is_null() {
                             get_image_memory_requirements2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetImageMemoryRequirements2>(
+                                val,
+                            )
                         }
                     },
                     get_buffer_memory_requirements2_khr: unsafe {
@@ -15575,14 +15697,14 @@ pub mod khr {
                                 stringify!(get_buffer_memory_requirements2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetBufferMemoryRequirements2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetBufferMemoryRequirements2KHR");
                         if val.is_null() {
                             get_buffer_memory_requirements2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetBufferMemoryRequirements2,
+                            >(val)
                         }
                     },
                     get_image_sparse_memory_requirements2_khr: unsafe {
@@ -15597,14 +15719,14 @@ pub mod khr {
                                 stringify!(get_image_sparse_memory_requirements2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageSparseMemoryRequirements2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageSparseMemoryRequirements2KHR");
                         if val.is_null() {
                             get_image_sparse_memory_requirements2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetImageSparseMemoryRequirements2,
+                            >(val)
                         }
                     },
                 }
@@ -15636,7 +15758,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -15699,14 +15823,14 @@ pub mod khr {
                                 stringify!(create_acceleration_structure_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateAccelerationStructureKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateAccelerationStructureKHR");
                         if val.is_null() {
                             create_acceleration_structure_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateAccelerationStructureKHR,
+                            >(val)
                         }
                     },
                     destroy_acceleration_structure_khr: unsafe {
@@ -15720,14 +15844,14 @@ pub mod khr {
                                 stringify!(destroy_acceleration_structure_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyAccelerationStructureKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyAccelerationStructureKHR");
                         if val.is_null() {
                             destroy_acceleration_structure_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyAccelerationStructureKHR,
+                            >(val)
                         }
                     },
                     cmd_build_acceleration_structures_khr: unsafe {
@@ -15742,14 +15866,14 @@ pub mod khr {
                                 stringify!(cmd_build_acceleration_structures_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBuildAccelerationStructuresKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBuildAccelerationStructuresKHR");
                         if val.is_null() {
                             cmd_build_acceleration_structures_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBuildAccelerationStructuresKHR,
+                            >(val)
                         }
                     },
                     cmd_build_acceleration_structures_indirect_khr: unsafe {
@@ -15766,14 +15890,14 @@ pub mod khr {
                                 stringify!(cmd_build_acceleration_structures_indirect_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBuildAccelerationStructuresIndirectKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBuildAccelerationStructuresIndirectKHR");
                         if val.is_null() {
                             cmd_build_acceleration_structures_indirect_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBuildAccelerationStructuresIndirectKHR,
+                            >(val)
                         }
                     },
                     build_acceleration_structures_khr: unsafe {
@@ -15789,14 +15913,14 @@ pub mod khr {
                                 stringify!(build_acceleration_structures_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkBuildAccelerationStructuresKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkBuildAccelerationStructuresKHR");
                         if val.is_null() {
                             build_acceleration_structures_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkBuildAccelerationStructuresKHR,
+                            >(val)
                         }
                     },
                     copy_acceleration_structure_khr: unsafe {
@@ -15810,14 +15934,14 @@ pub mod khr {
                                 stringify!(copy_acceleration_structure_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCopyAccelerationStructureKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyAccelerationStructureKHR");
                         if val.is_null() {
                             copy_acceleration_structure_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCopyAccelerationStructureKHR,
+                            >(val)
                         }
                     },
                     copy_acceleration_structure_to_memory_khr: unsafe {
@@ -15831,14 +15955,14 @@ pub mod khr {
                                 stringify!(copy_acceleration_structure_to_memory_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCopyAccelerationStructureToMemoryKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyAccelerationStructureToMemoryKHR");
                         if val.is_null() {
                             copy_acceleration_structure_to_memory_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCopyAccelerationStructureToMemoryKHR,
+                            >(val)
                         }
                     },
                     copy_memory_to_acceleration_structure_khr: unsafe {
@@ -15852,14 +15976,14 @@ pub mod khr {
                                 stringify!(copy_memory_to_acceleration_structure_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCopyMemoryToAccelerationStructureKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCopyMemoryToAccelerationStructureKHR");
                         if val.is_null() {
                             copy_memory_to_acceleration_structure_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCopyMemoryToAccelerationStructureKHR,
+                            >(val)
                         }
                     },
                     write_acceleration_structures_properties_khr: unsafe {
@@ -15877,14 +16001,14 @@ pub mod khr {
                                 stringify!(write_acceleration_structures_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkWriteAccelerationStructuresPropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkWriteAccelerationStructuresPropertiesKHR");
                         if val.is_null() {
                             write_acceleration_structures_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkWriteAccelerationStructuresPropertiesKHR,
+                            >(val)
                         }
                     },
                     cmd_copy_acceleration_structure_khr: unsafe {
@@ -15897,14 +16021,14 @@ pub mod khr {
                                 stringify!(cmd_copy_acceleration_structure_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdCopyAccelerationStructureKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyAccelerationStructureKHR");
                         if val.is_null() {
                             cmd_copy_acceleration_structure_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdCopyAccelerationStructureKHR,
+                            >(val)
                         }
                     },
                     cmd_copy_acceleration_structure_to_memory_khr: unsafe {
@@ -15917,14 +16041,14 @@ pub mod khr {
                                 stringify!(cmd_copy_acceleration_structure_to_memory_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdCopyAccelerationStructureToMemoryKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyAccelerationStructureToMemoryKHR");
                         if val.is_null() {
                             cmd_copy_acceleration_structure_to_memory_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdCopyAccelerationStructureToMemoryKHR,
+                            >(val)
                         }
                     },
                     cmd_copy_memory_to_acceleration_structure_khr: unsafe {
@@ -15937,14 +16061,14 @@ pub mod khr {
                                 stringify!(cmd_copy_memory_to_acceleration_structure_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdCopyMemoryToAccelerationStructureKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyMemoryToAccelerationStructureKHR");
                         if val.is_null() {
                             cmd_copy_memory_to_acceleration_structure_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdCopyMemoryToAccelerationStructureKHR,
+                            >(val)
                         }
                     },
                     get_acceleration_structure_device_address_khr: unsafe {
@@ -15957,14 +16081,14 @@ pub mod khr {
                                 stringify!(get_acceleration_structure_device_address_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetAccelerationStructureDeviceAddressKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetAccelerationStructureDeviceAddressKHR");
                         if val.is_null() {
                             get_acceleration_structure_device_address_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetAccelerationStructureDeviceAddressKHR,
+                            >(val)
                         }
                     },
                     cmd_write_acceleration_structures_properties_khr: unsafe {
@@ -15981,14 +16105,14 @@ pub mod khr {
                                 stringify!(cmd_write_acceleration_structures_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdWriteAccelerationStructuresPropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdWriteAccelerationStructuresPropertiesKHR");
                         if val.is_null() {
                             cmd_write_acceleration_structures_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdWriteAccelerationStructuresPropertiesKHR,
+                            >(val)
                         }
                     },
                     get_device_acceleration_structure_compatibility_khr: unsafe {
@@ -16002,14 +16126,14 @@ pub mod khr {
                                 stringify!(get_device_acceleration_structure_compatibility_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceAccelerationStructureCompatibilityKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceAccelerationStructureCompatibilityKHR");
                         if val.is_null() {
                             get_device_acceleration_structure_compatibility_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceAccelerationStructureCompatibilityKHR,
+                            >(val)
                         }
                     },
                     get_acceleration_structure_build_sizes_khr: unsafe {
@@ -16025,14 +16149,14 @@ pub mod khr {
                                 stringify!(get_acceleration_structure_build_sizes_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetAccelerationStructureBuildSizesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetAccelerationStructureBuildSizesKHR");
                         if val.is_null() {
                             get_acceleration_structure_build_sizes_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetAccelerationStructureBuildSizesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -16056,7 +16180,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16104,12 +16230,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_trace_rays_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdTraceRaysKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdTraceRaysKHR");
                         if val.is_null() {
                             cmd_trace_rays_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdTraceRaysKHR>(val)
                         }
                     },
                     create_ray_tracing_pipelines_khr: unsafe {
@@ -16127,14 +16252,14 @@ pub mod khr {
                                 stringify!(create_ray_tracing_pipelines_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateRayTracingPipelinesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateRayTracingPipelinesKHR");
                         if val.is_null() {
                             create_ray_tracing_pipelines_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateRayTracingPipelinesKHR,
+                            >(val)
                         }
                     },
                     get_ray_tracing_shader_group_handles_khr: unsafe {
@@ -16151,14 +16276,14 @@ pub mod khr {
                                 stringify!(get_ray_tracing_shader_group_handles_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetRayTracingShaderGroupHandlesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetRayTracingShaderGroupHandlesKHR");
                         if val.is_null() {
                             get_ray_tracing_shader_group_handles_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetRayTracingShaderGroupHandlesKHR,
+                            >(val)
                         }
                     },
                     get_ray_tracing_capture_replay_shader_group_handles_khr: unsafe {
@@ -16175,14 +16300,14 @@ pub mod khr {
                                 stringify!(get_ray_tracing_capture_replay_shader_group_handles_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetRayTracingCaptureReplayShaderGroupHandlesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetRayTracingCaptureReplayShaderGroupHandlesKHR");
                         if val.is_null() {
                             get_ray_tracing_capture_replay_shader_group_handles_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR,
+                            >(val)
                         }
                     },
                     cmd_trace_rays_indirect_khr: unsafe {
@@ -16199,13 +16324,13 @@ pub mod khr {
                                 stringify!(cmd_trace_rays_indirect_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdTraceRaysIndirectKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdTraceRaysIndirectKHR");
                         if val.is_null() {
                             cmd_trace_rays_indirect_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdTraceRaysIndirectKHR>(
+                                val,
+                            )
                         }
                     },
                     get_ray_tracing_shader_group_stack_size_khr: unsafe {
@@ -16220,14 +16345,14 @@ pub mod khr {
                                 stringify!(get_ray_tracing_shader_group_stack_size_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetRayTracingShaderGroupStackSizeKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetRayTracingShaderGroupStackSizeKHR");
                         if val.is_null() {
                             get_ray_tracing_shader_group_stack_size_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetRayTracingShaderGroupStackSizeKHR,
+                            >(val)
                         }
                     },
                     cmd_set_ray_tracing_pipeline_stack_size_khr: unsafe {
@@ -16240,14 +16365,14 @@ pub mod khr {
                                 stringify!(cmd_set_ray_tracing_pipeline_stack_size_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRayTracingPipelineStackSizeKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRayTracingPipelineStackSizeKHR");
                         if val.is_null() {
                             cmd_set_ray_tracing_pipeline_stack_size_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRayTracingPipelineStackSizeKHR,
+                            >(val)
                         }
                     },
                 }
@@ -16279,7 +16404,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16318,14 +16445,14 @@ pub mod khr {
                                 stringify!(create_sampler_ycbcr_conversion_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateSamplerYcbcrConversionKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateSamplerYcbcrConversionKHR");
                         if val.is_null() {
                             create_sampler_ycbcr_conversion_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateSamplerYcbcrConversion,
+                            >(val)
                         }
                     },
                     destroy_sampler_ycbcr_conversion_khr: unsafe {
@@ -16339,14 +16466,14 @@ pub mod khr {
                                 stringify!(destroy_sampler_ycbcr_conversion_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroySamplerYcbcrConversionKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroySamplerYcbcrConversionKHR");
                         if val.is_null() {
                             destroy_sampler_ycbcr_conversion_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroySamplerYcbcrConversion,
+                            >(val)
                         }
                     },
                 }
@@ -16370,7 +16497,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16408,13 +16537,11 @@ pub mod khr {
                                 stringify!(bind_buffer_memory2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkBindBufferMemory2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkBindBufferMemory2KHR");
                         if val.is_null() {
                             bind_buffer_memory2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkBindBufferMemory2>(val)
                         }
                     },
                     bind_image_memory2_khr: unsafe {
@@ -16428,12 +16555,11 @@ pub mod khr {
                                 stringify!(bind_image_memory2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindImageMemory2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkBindImageMemory2KHR");
                         if val.is_null() {
                             bind_image_memory2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkBindImageMemory2>(val)
                         }
                     },
                 }
@@ -16465,7 +16591,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16502,14 +16630,14 @@ pub mod khr {
                                 stringify!(get_descriptor_set_layout_support_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDescriptorSetLayoutSupportKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDescriptorSetLayoutSupportKHR");
                         if val.is_null() {
                             get_descriptor_set_layout_support_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDescriptorSetLayoutSupport,
+                            >(val)
                         }
                     },
                 }
@@ -16533,7 +16661,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16575,13 +16705,11 @@ pub mod khr {
                                 stringify!(cmd_draw_indirect_count_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirectCountKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawIndirectCountKHR");
                         if val.is_null() {
                             cmd_draw_indirect_count_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndirectCount>(val)
                         }
                     },
                     cmd_draw_indexed_indirect_count_khr: unsafe {
@@ -16599,14 +16727,13 @@ pub mod khr {
                                 stringify!(cmd_draw_indexed_indirect_count_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDrawIndexedIndirectCountKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawIndexedIndirectCountKHR");
                         if val.is_null() {
                             cmd_draw_indexed_indirect_count_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndexedIndirectCount>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -16710,7 +16837,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16749,13 +16878,13 @@ pub mod khr {
                                 stringify!(get_semaphore_counter_value_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetSemaphoreCounterValueKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetSemaphoreCounterValueKHR");
                         if val.is_null() {
                             get_semaphore_counter_value_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetSemaphoreCounterValue>(
+                                val,
+                            )
                         }
                     },
                     wait_semaphores_khr: unsafe {
@@ -16766,12 +16895,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(wait_semaphores_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkWaitSemaphoresKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkWaitSemaphoresKHR");
                         if val.is_null() {
                             wait_semaphores_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkWaitSemaphores>(val)
                         }
                     },
                     signal_semaphore_khr: unsafe {
@@ -16781,12 +16909,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(signal_semaphore_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkSignalSemaphoreKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSignalSemaphoreKHR");
                         if val.is_null() {
                             signal_semaphore_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSignalSemaphore>(val)
                         }
                     },
                 }
@@ -16826,7 +16953,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16866,14 +16995,14 @@ pub mod khr {
                                 stringify!(get_physical_device_fragment_shading_rates_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceFragmentShadingRatesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceFragmentShadingRatesKHR");
                         if val.is_null() {
                             get_physical_device_fragment_shading_rates_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -16889,7 +17018,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16926,14 +17057,14 @@ pub mod khr {
                                 stringify!(cmd_set_fragment_shading_rate_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetFragmentShadingRateKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetFragmentShadingRateKHR");
                         if val.is_null() {
                             cmd_set_fragment_shading_rate_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetFragmentShadingRateKHR,
+                            >(val)
                         }
                     },
                 }
@@ -16957,7 +17088,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -16996,14 +17129,14 @@ pub mod khr {
                                 stringify!(cmd_set_rendering_attachment_locations_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRenderingAttachmentLocationsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRenderingAttachmentLocationsKHR");
                         if val.is_null() {
                             cmd_set_rendering_attachment_locations_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRenderingAttachmentLocations,
+                            >(val)
                         }
                     },
                     cmd_set_rendering_input_attachment_indices_khr: unsafe {
@@ -17016,14 +17149,14 @@ pub mod khr {
                                 stringify!(cmd_set_rendering_input_attachment_indices_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetRenderingInputAttachmentIndicesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetRenderingInputAttachmentIndicesKHR");
                         if val.is_null() {
                             cmd_set_rendering_input_attachment_indices_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetRenderingInputAttachmentIndices,
+                            >(val)
                         }
                     },
                 }
@@ -17079,7 +17212,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -17114,12 +17249,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(wait_for_present_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkWaitForPresentKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkWaitForPresentKHR");
                         if val.is_null() {
                             wait_for_present_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkWaitForPresentKHR>(val)
                         }
                     },
                 }
@@ -17151,7 +17285,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -17190,13 +17326,13 @@ pub mod khr {
                                 stringify!(get_buffer_device_address_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetBufferDeviceAddressKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetBufferDeviceAddressKHR");
                         if val.is_null() {
                             get_buffer_device_address_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetBufferDeviceAddress>(
+                                val,
+                            )
                         }
                     },
                     get_buffer_opaque_capture_address_khr: unsafe {
@@ -17209,14 +17345,14 @@ pub mod khr {
                                 stringify!(get_buffer_opaque_capture_address_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetBufferOpaqueCaptureAddressKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetBufferOpaqueCaptureAddressKHR");
                         if val.is_null() {
                             get_buffer_opaque_capture_address_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetBufferOpaqueCaptureAddress,
+                            >(val)
                         }
                     },
                     get_device_memory_opaque_capture_address_khr: unsafe {
@@ -17229,14 +17365,14 @@ pub mod khr {
                                 stringify!(get_device_memory_opaque_capture_address_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceMemoryOpaqueCaptureAddressKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceMemoryOpaqueCaptureAddressKHR");
                         if val.is_null() {
                             get_device_memory_opaque_capture_address_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceMemoryOpaqueCaptureAddress,
+                            >(val)
                         }
                     },
                 }
@@ -17260,7 +17396,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -17302,13 +17440,13 @@ pub mod khr {
                                 stringify!(create_deferred_operation_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateDeferredOperationKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateDeferredOperationKHR");
                         if val.is_null() {
                             create_deferred_operation_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateDeferredOperationKHR>(
+                                val,
+                            )
                         }
                     },
                     destroy_deferred_operation_khr: unsafe {
@@ -17322,13 +17460,13 @@ pub mod khr {
                                 stringify!(destroy_deferred_operation_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyDeferredOperationKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyDeferredOperationKHR");
                         if val.is_null() {
                             destroy_deferred_operation_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyDeferredOperationKHR>(
+                                val,
+                            )
                         }
                     },
                     get_deferred_operation_max_concurrency_khr: unsafe {
@@ -17341,14 +17479,14 @@ pub mod khr {
                                 stringify!(get_deferred_operation_max_concurrency_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeferredOperationMaxConcurrencyKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeferredOperationMaxConcurrencyKHR");
                         if val.is_null() {
                             get_deferred_operation_max_concurrency_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeferredOperationMaxConcurrencyKHR,
+                            >(val)
                         }
                     },
                     get_deferred_operation_result_khr: unsafe {
@@ -17361,14 +17499,14 @@ pub mod khr {
                                 stringify!(get_deferred_operation_result_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeferredOperationResultKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeferredOperationResultKHR");
                         if val.is_null() {
                             get_deferred_operation_result_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeferredOperationResultKHR,
+                            >(val)
                         }
                     },
                     deferred_operation_join_khr: unsafe {
@@ -17381,13 +17519,13 @@ pub mod khr {
                                 stringify!(deferred_operation_join_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDeferredOperationJoinKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDeferredOperationJoinKHR");
                         if val.is_null() {
                             deferred_operation_join_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDeferredOperationJoinKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -17411,7 +17549,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -17452,14 +17592,14 @@ pub mod khr {
                                 stringify!(get_pipeline_executable_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPipelineExecutablePropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPipelineExecutablePropertiesKHR");
                         if val.is_null() {
                             get_pipeline_executable_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPipelineExecutablePropertiesKHR,
+                            >(val)
                         }
                     },
                     get_pipeline_executable_statistics_khr: unsafe {
@@ -17474,14 +17614,14 @@ pub mod khr {
                                 stringify!(get_pipeline_executable_statistics_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPipelineExecutableStatisticsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPipelineExecutableStatisticsKHR");
                         if val.is_null() {
                             get_pipeline_executable_statistics_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPipelineExecutableStatisticsKHR,
+                            >(val)
                         }
                     },
                     get_pipeline_executable_internal_representations_khr: unsafe {
@@ -17496,14 +17636,14 @@ pub mod khr {
                                 stringify!(get_pipeline_executable_internal_representations_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPipelineExecutableInternalRepresentationsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPipelineExecutableInternalRepresentationsKHR");
                         if val.is_null() {
                             get_pipeline_executable_internal_representations_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPipelineExecutableInternalRepresentationsKHR,
+                            >(val)
                         }
                     },
                 }
@@ -17527,7 +17667,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -17562,12 +17704,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(map_memory2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkMapMemory2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkMapMemory2KHR");
                         if val.is_null() {
                             map_memory2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkMapMemory2>(val)
                         }
                     },
                     unmap_memory2_khr: unsafe {
@@ -17577,12 +17718,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(unmap_memory2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkUnmapMemory2KHR");
                         if val.is_null() {
                             unmap_memory2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkUnmapMemory2>(val)
                         }
                     },
                 }
@@ -17638,7 +17778,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -17680,14 +17822,14 @@ pub mod khr {
                                 )
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR");
                         if val.is_null() {
                             get_physical_device_video_encode_quality_level_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -17703,7 +17845,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -17743,14 +17887,14 @@ pub mod khr {
                                 stringify!(get_encoded_video_session_parameters_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetEncodedVideoSessionParametersKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetEncodedVideoSessionParametersKHR");
                         if val.is_null() {
                             get_encoded_video_session_parameters_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetEncodedVideoSessionParametersKHR,
+                            >(val)
                         }
                     },
                     cmd_encode_video_khr: unsafe {
@@ -17760,12 +17904,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_encode_video_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEncodeVideoKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEncodeVideoKHR");
                         if val.is_null() {
                             cmd_encode_video_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEncodeVideoKHR>(val)
                         }
                     },
                 }
@@ -17789,7 +17932,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -17828,12 +17973,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_set_event2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetEvent2KHR");
                         if val.is_null() {
                             cmd_set_event2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetEvent2>(val)
                         }
                     },
                     cmd_reset_event2_khr: unsafe {
@@ -17844,12 +17988,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_reset_event2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdResetEvent2KHR");
                         if val.is_null() {
                             cmd_reset_event2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdResetEvent2>(val)
                         }
                     },
                     cmd_wait_events2_khr: unsafe {
@@ -17861,12 +18004,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_wait_events2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdWaitEvents2KHR");
                         if val.is_null() {
                             cmd_wait_events2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdWaitEvents2>(val)
                         }
                     },
                     cmd_pipeline_barrier2_khr: unsafe {
@@ -17879,13 +18021,11 @@ pub mod khr {
                                 stringify!(cmd_pipeline_barrier2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPipelineBarrier2KHR");
                         if val.is_null() {
                             cmd_pipeline_barrier2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdPipelineBarrier2>(val)
                         }
                     },
                     cmd_write_timestamp2_khr: unsafe {
@@ -17900,13 +18040,11 @@ pub mod khr {
                                 stringify!(cmd_write_timestamp2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdWriteTimestamp2KHR");
                         if val.is_null() {
                             cmd_write_timestamp2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdWriteTimestamp2>(val)
                         }
                     },
                     queue_submit2_khr: unsafe {
@@ -17918,12 +18056,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(queue_submit2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkQueueSubmit2KHR");
                         if val.is_null() {
                             queue_submit2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkQueueSubmit2>(val)
                         }
                     },
                 }
@@ -17979,7 +18116,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18017,12 +18156,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyBuffer2KHR");
                         if val.is_null() {
                             cmd_copy_buffer2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyBuffer2>(val)
                         }
                     },
                     cmd_copy_image2_khr: unsafe {
@@ -18032,12 +18170,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_copy_image2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyImage2KHR");
                         if val.is_null() {
                             cmd_copy_image2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyImage2>(val)
                         }
                     },
                     cmd_copy_buffer_to_image2_khr: unsafe {
@@ -18050,13 +18187,13 @@ pub mod khr {
                                 stringify!(cmd_copy_buffer_to_image2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyBufferToImage2KHR");
                         if val.is_null() {
                             cmd_copy_buffer_to_image2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyBufferToImage2>(
+                                val,
+                            )
                         }
                     },
                     cmd_copy_image_to_buffer2_khr: unsafe {
@@ -18069,13 +18206,13 @@ pub mod khr {
                                 stringify!(cmd_copy_image_to_buffer2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyImageToBuffer2KHR");
                         if val.is_null() {
                             cmd_copy_image_to_buffer2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyImageToBuffer2>(
+                                val,
+                            )
                         }
                     },
                     cmd_blit_image2_khr: unsafe {
@@ -18085,12 +18222,11 @@ pub mod khr {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_blit_image2_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBlitImage2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBlitImage2KHR");
                         if val.is_null() {
                             cmd_blit_image2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBlitImage2>(val)
                         }
                     },
                     cmd_resolve_image2_khr: unsafe {
@@ -18103,12 +18239,11 @@ pub mod khr {
                                 stringify!(cmd_resolve_image2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResolveImage2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdResolveImage2KHR");
                         if val.is_null() {
                             cmd_resolve_image2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdResolveImage2>(val)
                         }
                     },
                 }
@@ -18140,7 +18275,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18176,13 +18313,13 @@ pub mod khr {
                                 stringify!(cmd_trace_rays_indirect2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdTraceRaysIndirect2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdTraceRaysIndirect2KHR");
                         if val.is_null() {
                             cmd_trace_rays_indirect2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdTraceRaysIndirect2KHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -18222,7 +18359,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18262,14 +18401,14 @@ pub mod khr {
                                 stringify!(get_device_buffer_memory_requirements_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceBufferMemoryRequirementsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceBufferMemoryRequirementsKHR");
                         if val.is_null() {
                             get_device_buffer_memory_requirements_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceBufferMemoryRequirements,
+                            >(val)
                         }
                     },
                     get_device_image_memory_requirements_khr: unsafe {
@@ -18283,14 +18422,14 @@ pub mod khr {
                                 stringify!(get_device_image_memory_requirements_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceImageMemoryRequirementsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceImageMemoryRequirementsKHR");
                         if val.is_null() {
                             get_device_image_memory_requirements_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceImageMemoryRequirements,
+                            >(val)
                         }
                     },
                     get_device_image_sparse_memory_requirements_khr: unsafe {
@@ -18305,14 +18444,14 @@ pub mod khr {
                                 stringify!(get_device_image_sparse_memory_requirements_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceImageSparseMemoryRequirementsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceImageSparseMemoryRequirementsKHR");
                         if val.is_null() {
                             get_device_image_sparse_memory_requirements_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceImageSparseMemoryRequirements,
+                            >(val)
                         }
                     },
                 }
@@ -18352,7 +18491,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18394,13 +18535,11 @@ pub mod khr {
                                 stringify!(cmd_bind_index_buffer2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindIndexBuffer2KHR");
                         if val.is_null() {
                             cmd_bind_index_buffer2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindIndexBuffer2>(val)
                         }
                     },
                     get_rendering_area_granularity_khr: unsafe {
@@ -18414,14 +18553,13 @@ pub mod khr {
                                 stringify!(get_rendering_area_granularity_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetRenderingAreaGranularityKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetRenderingAreaGranularityKHR");
                         if val.is_null() {
                             get_rendering_area_granularity_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetRenderingAreaGranularity>(
+                                val,
+                            )
                         }
                     },
                     get_device_image_subresource_layout_khr: unsafe {
@@ -18435,14 +18573,14 @@ pub mod khr {
                                 stringify!(get_device_image_subresource_layout_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceImageSubresourceLayoutKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceImageSubresourceLayoutKHR");
                         if val.is_null() {
                             get_device_image_subresource_layout_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceImageSubresourceLayout,
+                            >(val)
                         }
                     },
                     get_image_subresource_layout2_khr: unsafe {
@@ -18457,14 +18595,13 @@ pub mod khr {
                                 stringify!(get_image_subresource_layout2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetImageSubresourceLayout2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageSubresourceLayout2KHR");
                         if val.is_null() {
                             get_image_subresource_layout2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetImageSubresourceLayout2>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -18496,7 +18633,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18533,12 +18672,11 @@ pub mod khr {
                                 stringify!(wait_for_present2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkWaitForPresent2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkWaitForPresent2KHR");
                         if val.is_null() {
                             wait_for_present2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkWaitForPresent2KHR>(val)
                         }
                     },
                 }
@@ -18570,7 +18708,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18612,13 +18752,13 @@ pub mod khr {
                                 stringify!(create_pipeline_binaries_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreatePipelineBinariesKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreatePipelineBinariesKHR");
                         if val.is_null() {
                             create_pipeline_binaries_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreatePipelineBinariesKHR>(
+                                val,
+                            )
                         }
                     },
                     destroy_pipeline_binary_khr: unsafe {
@@ -18632,13 +18772,13 @@ pub mod khr {
                                 stringify!(destroy_pipeline_binary_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipelineBinaryKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyPipelineBinaryKHR");
                         if val.is_null() {
                             destroy_pipeline_binary_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyPipelineBinaryKHR>(
+                                val,
+                            )
                         }
                     },
                     get_pipeline_key_khr: unsafe {
@@ -18649,12 +18789,11 @@ pub mod khr {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(get_pipeline_key_khr)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPipelineKeyKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPipelineKeyKHR");
                         if val.is_null() {
                             get_pipeline_key_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetPipelineKeyKHR>(val)
                         }
                     },
                     get_pipeline_binary_data_khr: unsafe {
@@ -18670,13 +18809,13 @@ pub mod khr {
                                 stringify!(get_pipeline_binary_data_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetPipelineBinaryDataKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPipelineBinaryDataKHR");
                         if val.is_null() {
                             get_pipeline_binary_data_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetPipelineBinaryDataKHR>(
+                                val,
+                            )
                         }
                     },
                     release_captured_pipeline_data_khr: unsafe {
@@ -18690,14 +18829,14 @@ pub mod khr {
                                 stringify!(release_captured_pipeline_data_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkReleaseCapturedPipelineDataKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkReleaseCapturedPipelineDataKHR");
                         if val.is_null() {
                             release_captured_pipeline_data_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkReleaseCapturedPipelineDataKHR,
+                            >(val)
                         }
                     },
                 }
@@ -18729,7 +18868,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18765,13 +18906,13 @@ pub mod khr {
                                 stringify!(release_swapchain_images_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkReleaseSwapchainImagesKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkReleaseSwapchainImagesKHR");
                         if val.is_null() {
                             release_swapchain_images_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkReleaseSwapchainImagesKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -18803,7 +18944,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18841,14 +18984,14 @@ pub mod khr {
                                 stringify!(get_physical_device_cooperative_matrix_properties_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR");
                         if val.is_null() {
                             get_physical_device_cooperative_matrix_properties_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR,
+                            >(val)
                         }
                     },
                 }
@@ -18952,7 +19095,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -18989,13 +19134,11 @@ pub mod khr {
                                 stringify!(cmd_set_line_stipple_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStippleKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetLineStippleKHR");
                         if val.is_null() {
                             cmd_set_line_stipple_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLineStipple>(val)
                         }
                     },
                 }
@@ -19019,7 +19162,9 @@ pub mod khr {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19057,14 +19202,14 @@ pub mod khr {
                                 stringify!(get_physical_device_calibrateable_time_domains_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceCalibrateableTimeDomainsKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceCalibrateableTimeDomainsKHR");
                         if val.is_null() {
                             get_physical_device_calibrateable_time_domains_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR,
+                            >(val)
                         }
                     },
                 }
@@ -19080,7 +19225,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19119,13 +19266,13 @@ pub mod khr {
                                 stringify!(get_calibrated_timestamps_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetCalibratedTimestampsKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetCalibratedTimestampsKHR");
                         if val.is_null() {
                             get_calibrated_timestamps_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetCalibratedTimestampsKHR>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -19157,7 +19304,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19199,13 +19348,13 @@ pub mod khr {
                                 stringify!(cmd_bind_descriptor_sets2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorSets2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindDescriptorSets2KHR");
                         if val.is_null() {
                             cmd_bind_descriptor_sets2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindDescriptorSets2>(
+                                val,
+                            )
                         }
                     },
                     cmd_push_constants2_khr: unsafe {
@@ -19218,13 +19367,11 @@ pub mod khr {
                                 stringify!(cmd_push_constants2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPushConstants2KHR");
                         if val.is_null() {
                             cmd_push_constants2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdPushConstants2>(val)
                         }
                     },
                     cmd_push_descriptor_set2_khr: unsafe {
@@ -19237,13 +19384,13 @@ pub mod khr {
                                 stringify!(cmd_push_descriptor_set2_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSet2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPushDescriptorSet2KHR");
                         if val.is_null() {
                             cmd_push_descriptor_set2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdPushDescriptorSet2>(
+                                val,
+                            )
                         }
                     },
                     cmd_push_descriptor_set_with_template2_khr: unsafe {
@@ -19256,14 +19403,14 @@ pub mod khr {
                                 stringify!(cmd_push_descriptor_set_with_template2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdPushDescriptorSetWithTemplate2KHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPushDescriptorSetWithTemplate2KHR");
                         if val.is_null() {
                             cmd_push_descriptor_set_with_template2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdPushDescriptorSetWithTemplate2,
+                            >(val)
                         }
                     },
                     cmd_set_descriptor_buffer_offsets2_ext: unsafe {
@@ -19276,14 +19423,14 @@ pub mod khr {
                                 stringify!(cmd_set_descriptor_buffer_offsets2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetDescriptorBufferOffsets2EXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetDescriptorBufferOffsets2EXT");
                         if val.is_null() {
                             cmd_set_descriptor_buffer_offsets2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetDescriptorBufferOffsets2EXT,
+                            >(val)
                         }
                     },
                     cmd_bind_descriptor_buffer_embedded_samplers2_ext: unsafe {
@@ -19296,14 +19443,14 @@ pub mod khr {
                                 stringify!(cmd_bind_descriptor_buffer_embedded_samplers2_ext)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBindDescriptorBufferEmbeddedSamplers2EXT\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindDescriptorBufferEmbeddedSamplers2EXT");
                         if val.is_null() {
                             cmd_bind_descriptor_buffer_embedded_samplers2_ext
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT,
+                            >(val)
                         }
                     },
                 }
@@ -19327,7 +19474,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19364,13 +19513,13 @@ pub mod khr {
                                 stringify!(cmd_copy_memory_indirect_khr)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyMemoryIndirectKHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyMemoryIndirectKHR");
                         if val.is_null() {
                             cmd_copy_memory_indirect_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyMemoryIndirectKHR>(
+                                val,
+                            )
                         }
                     },
                     cmd_copy_memory_to_image_indirect_khr: unsafe {
@@ -19383,14 +19532,14 @@ pub mod khr {
                                 stringify!(cmd_copy_memory_to_image_indirect_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdCopyMemoryToImageIndirectKHR\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyMemoryToImageIndirectKHR");
                         if val.is_null() {
                             cmd_copy_memory_to_image_indirect_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdCopyMemoryToImageIndirectKHR,
+                            >(val)
                         }
                     },
                 }
@@ -19502,7 +19651,9 @@ pub mod khr {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19538,12 +19689,11 @@ pub mod khr {
                                 stringify!(cmd_end_rendering2_khr)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRendering2KHR\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndRendering2KHR");
                         if val.is_null() {
                             cmd_end_rendering2_khr
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndRendering2KHR>(val)
                         }
                     },
                 }
@@ -19603,7 +19753,9 @@ pub mod mvk {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19641,12 +19793,11 @@ pub mod mvk {
                                 stringify!(create_ios_surface_mvk)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateIOSSurfaceMVK\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateIOSSurfaceMVK");
                         if val.is_null() {
                             create_ios_surface_mvk
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateIOSSurfaceMVK>(val)
                         }
                     },
                 }
@@ -19670,7 +19821,9 @@ pub mod mvk {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19708,13 +19861,13 @@ pub mod mvk {
                                 stringify!(create_mac_os_surface_mvk)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateMacOSSurfaceMVK\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateMacOSSurfaceMVK");
                         if val.is_null() {
                             create_mac_os_surface_mvk
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateMacOSSurfaceMVK>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -19741,7 +19894,9 @@ pub mod nn {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19776,12 +19931,11 @@ pub mod nn {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_vi_surface_nn)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateViSurfaceNN\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateViSurfaceNN");
                         if val.is_null() {
                             create_vi_surface_nn
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateViSurfaceNN>(val)
                         }
                     },
                 }
@@ -19832,7 +19986,9 @@ pub mod nv {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19875,14 +20031,14 @@ pub mod nv {
                                 stringify!(get_physical_device_external_image_format_properties_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceExternalImageFormatPropertiesNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceExternalImageFormatPropertiesNV");
                         if val.is_null() {
                             get_physical_device_external_image_format_properties_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
+                            >(val)
                         }
                     },
                 }
@@ -19914,7 +20070,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -19952,13 +20110,13 @@ pub mod nv {
                                 stringify!(get_memory_win32_handle_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryWin32HandleNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryWin32HandleNV");
                         if val.is_null() {
                             get_memory_win32_handle_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetMemoryWin32HandleNV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -19990,7 +20148,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -20028,13 +20188,13 @@ pub mod nv {
                                 stringify!(cmd_set_viewport_w_scaling_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportWScalingNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetViewportWScalingNV");
                         if val.is_null() {
                             cmd_set_viewport_w_scaling_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetViewportWScalingNV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -20122,7 +20282,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -20161,13 +20323,13 @@ pub mod nv {
                                 stringify!(cmd_bind_shading_rate_image_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindShadingRateImageNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindShadingRateImageNV");
                         if val.is_null() {
                             cmd_bind_shading_rate_image_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindShadingRateImageNV>(
+                                val,
+                            )
                         }
                     },
                     cmd_set_viewport_shading_rate_palette_nv: unsafe {
@@ -20182,14 +20344,14 @@ pub mod nv {
                                 stringify!(cmd_set_viewport_shading_rate_palette_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetViewportShadingRatePaletteNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetViewportShadingRatePaletteNV");
                         if val.is_null() {
                             cmd_set_viewport_shading_rate_palette_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetViewportShadingRatePaletteNV,
+                            >(val)
                         }
                     },
                     cmd_set_coarse_sample_order_nv: unsafe {
@@ -20204,13 +20366,13 @@ pub mod nv {
                                 stringify!(cmd_set_coarse_sample_order_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetCoarseSampleOrderNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCoarseSampleOrderNV");
                         if val.is_null() {
                             cmd_set_coarse_sample_order_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetCoarseSampleOrderNV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -20234,7 +20396,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -20285,14 +20449,14 @@ pub mod nv {
                                 stringify!(create_acceleration_structure_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateAccelerationStructureNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateAccelerationStructureNV");
                         if val.is_null() {
                             create_acceleration_structure_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateAccelerationStructureNV,
+                            >(val)
                         }
                     },
                     destroy_acceleration_structure_nv: unsafe {
@@ -20306,14 +20470,14 @@ pub mod nv {
                                 stringify!(destroy_acceleration_structure_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyAccelerationStructureNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyAccelerationStructureNV");
                         if val.is_null() {
                             destroy_acceleration_structure_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyAccelerationStructureNV,
+                            >(val)
                         }
                     },
                     get_acceleration_structure_memory_requirements_nv: unsafe {
@@ -20327,14 +20491,14 @@ pub mod nv {
                                 stringify!(get_acceleration_structure_memory_requirements_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetAccelerationStructureMemoryRequirementsNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetAccelerationStructureMemoryRequirementsNV");
                         if val.is_null() {
                             get_acceleration_structure_memory_requirements_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetAccelerationStructureMemoryRequirementsNV,
+                            >(val)
                         }
                     },
                     bind_acceleration_structure_memory_nv: unsafe {
@@ -20348,14 +20512,14 @@ pub mod nv {
                                 stringify!(bind_acceleration_structure_memory_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkBindAccelerationStructureMemoryNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkBindAccelerationStructureMemoryNV");
                         if val.is_null() {
                             bind_acceleration_structure_memory_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkBindAccelerationStructureMemoryNV,
+                            >(val)
                         }
                     },
                     cmd_build_acceleration_structure_nv: unsafe {
@@ -20375,14 +20539,14 @@ pub mod nv {
                                 stringify!(cmd_build_acceleration_structure_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBuildAccelerationStructureNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBuildAccelerationStructureNV");
                         if val.is_null() {
                             cmd_build_acceleration_structure_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBuildAccelerationStructureNV,
+                            >(val)
                         }
                     },
                     cmd_copy_acceleration_structure_nv: unsafe {
@@ -20397,14 +20561,14 @@ pub mod nv {
                                 stringify!(cmd_copy_acceleration_structure_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdCopyAccelerationStructureNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyAccelerationStructureNV");
                         if val.is_null() {
                             cmd_copy_acceleration_structure_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdCopyAccelerationStructureNV,
+                            >(val)
                         }
                     },
                     cmd_trace_rays_nv: unsafe {
@@ -20427,12 +20591,11 @@ pub mod nv {
                         ) {
                             panic!(concat!("Unable to load ", stringify!(cmd_trace_rays_nv)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdTraceRaysNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdTraceRaysNV");
                         if val.is_null() {
                             cmd_trace_rays_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdTraceRaysNV>(val)
                         }
                     },
                     create_ray_tracing_pipelines_nv: unsafe {
@@ -20449,13 +20612,13 @@ pub mod nv {
                                 stringify!(create_ray_tracing_pipelines_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateRayTracingPipelinesNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateRayTracingPipelinesNV");
                         if val.is_null() {
                             create_ray_tracing_pipelines_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateRayTracingPipelinesNV>(
+                                val,
+                            )
                         }
                     },
                     get_ray_tracing_shader_group_handles_nv: unsafe {
@@ -20472,14 +20635,14 @@ pub mod nv {
                                 stringify!(get_ray_tracing_shader_group_handles_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetRayTracingShaderGroupHandlesNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetRayTracingShaderGroupHandlesNV");
                         if val.is_null() {
                             get_ray_tracing_shader_group_handles_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetRayTracingShaderGroupHandlesKHR,
+                            >(val)
                         }
                     },
                     get_acceleration_structure_handle_nv: unsafe {
@@ -20494,14 +20657,14 @@ pub mod nv {
                                 stringify!(get_acceleration_structure_handle_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetAccelerationStructureHandleNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetAccelerationStructureHandleNV");
                         if val.is_null() {
                             get_acceleration_structure_handle_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetAccelerationStructureHandleNV,
+                            >(val)
                         }
                     },
                     cmd_write_acceleration_structures_properties_nv: unsafe {
@@ -20518,14 +20681,14 @@ pub mod nv {
                                 stringify!(cmd_write_acceleration_structures_properties_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdWriteAccelerationStructuresPropertiesNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdWriteAccelerationStructuresPropertiesNV");
                         if val.is_null() {
                             cmd_write_acceleration_structures_properties_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdWriteAccelerationStructuresPropertiesNV,
+                            >(val)
                         }
                     },
                     compile_deferred_nv: unsafe {
@@ -20536,12 +20699,11 @@ pub mod nv {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(compile_deferred_nv)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCompileDeferredNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCompileDeferredNV");
                         if val.is_null() {
                             compile_deferred_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCompileDeferredNV>(val)
                         }
                     },
                 }
@@ -20589,7 +20751,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -20628,12 +20792,11 @@ pub mod nv {
                                 stringify!(cmd_draw_mesh_tasks_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMeshTasksNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawMeshTasksNV");
                         if val.is_null() {
                             cmd_draw_mesh_tasks_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawMeshTasksNV>(val)
                         }
                     },
                     cmd_draw_mesh_tasks_indirect_nv: unsafe {
@@ -20649,13 +20812,13 @@ pub mod nv {
                                 stringify!(cmd_draw_mesh_tasks_indirect_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMeshTasksIndirectNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawMeshTasksIndirectNV");
                         if val.is_null() {
                             cmd_draw_mesh_tasks_indirect_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawMeshTasksIndirectNV>(
+                                val,
+                            )
                         }
                     },
                     cmd_draw_mesh_tasks_indirect_count_nv: unsafe {
@@ -20673,14 +20836,14 @@ pub mod nv {
                                 stringify!(cmd_draw_mesh_tasks_indirect_count_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDrawMeshTasksIndirectCountNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDrawMeshTasksIndirectCountNV");
                         if val.is_null() {
                             cmd_draw_mesh_tasks_indirect_count_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDrawMeshTasksIndirectCountNV,
+                            >(val)
                         }
                     },
                 }
@@ -20720,7 +20883,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -20759,14 +20924,14 @@ pub mod nv {
                                 stringify!(cmd_set_exclusive_scissor_enable_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetExclusiveScissorEnableNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetExclusiveScissorEnableNV");
                         if val.is_null() {
                             cmd_set_exclusive_scissor_enable_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetExclusiveScissorEnableNV,
+                            >(val)
                         }
                     },
                     cmd_set_exclusive_scissor_nv: unsafe {
@@ -20781,13 +20946,13 @@ pub mod nv {
                                 stringify!(cmd_set_exclusive_scissor_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetExclusiveScissorNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetExclusiveScissorNV");
                         if val.is_null() {
                             cmd_set_exclusive_scissor_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetExclusiveScissorNV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -20811,7 +20976,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -20849,12 +21016,11 @@ pub mod nv {
                                 stringify!(cmd_set_checkpoint_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetCheckpointNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetCheckpointNV");
                         if val.is_null() {
                             cmd_set_checkpoint_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetCheckpointNV>(val)
                         }
                     },
                     get_queue_checkpoint_data_nv: unsafe {
@@ -20868,13 +21034,13 @@ pub mod nv {
                                 stringify!(get_queue_checkpoint_data_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetQueueCheckpointDataNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetQueueCheckpointDataNV");
                         if val.is_null() {
                             get_queue_checkpoint_data_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetQueueCheckpointDataNV>(
+                                val,
+                            )
                         }
                     },
                     get_queue_checkpoint_data2_nv: unsafe {
@@ -20888,13 +21054,13 @@ pub mod nv {
                                 stringify!(get_queue_checkpoint_data2_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetQueueCheckpointData2NV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetQueueCheckpointData2NV");
                         if val.is_null() {
                             get_queue_checkpoint_data2_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetQueueCheckpointData2NV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -20926,7 +21092,9 @@ pub mod nv {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -20964,14 +21132,14 @@ pub mod nv {
                                 stringify!(get_physical_device_cooperative_matrix_properties_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceCooperativeMatrixPropertiesNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceCooperativeMatrixPropertiesNV");
                         if val.is_null() {
                             get_physical_device_cooperative_matrix_properties_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV,
+                            >(val)
                         }
                     },
                 }
@@ -20995,7 +21163,9 @@ pub mod nv {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21030,14 +21200,13 @@ pub mod nv {
                         ) -> Result {
                             panic ! (concat ! ("Unable to load " , stringify ! (get_physical_device_supported_framebuffer_mixed_samples_combinations_nv)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV\0",
+                        let val = _f(
+                            c"vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV",
                         );
-                        let val = _f(cname);
                         if val.is_null() {
                             get_physical_device_supported_framebuffer_mixed_samples_combinations_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            :: core :: mem :: transmute :: < * const c_void , PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV > (val)
                         }
                     },
                 }
@@ -21061,7 +21230,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21104,14 +21275,14 @@ pub mod nv {
                                 stringify!(get_generated_commands_memory_requirements_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetGeneratedCommandsMemoryRequirementsNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetGeneratedCommandsMemoryRequirementsNV");
                         if val.is_null() {
                             get_generated_commands_memory_requirements_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetGeneratedCommandsMemoryRequirementsNV,
+                            >(val)
                         }
                     },
                     cmd_preprocess_generated_commands_nv: unsafe {
@@ -21124,14 +21295,14 @@ pub mod nv {
                                 stringify!(cmd_preprocess_generated_commands_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdPreprocessGeneratedCommandsNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdPreprocessGeneratedCommandsNV");
                         if val.is_null() {
                             cmd_preprocess_generated_commands_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdPreprocessGeneratedCommandsNV,
+                            >(val)
                         }
                     },
                     cmd_execute_generated_commands_nv: unsafe {
@@ -21145,14 +21316,14 @@ pub mod nv {
                                 stringify!(cmd_execute_generated_commands_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdExecuteGeneratedCommandsNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdExecuteGeneratedCommandsNV");
                         if val.is_null() {
                             cmd_execute_generated_commands_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdExecuteGeneratedCommandsNV,
+                            >(val)
                         }
                     },
                     cmd_bind_pipeline_shader_group_nv: unsafe {
@@ -21167,14 +21338,14 @@ pub mod nv {
                                 stringify!(cmd_bind_pipeline_shader_group_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBindPipelineShaderGroupNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindPipelineShaderGroupNV");
                         if val.is_null() {
                             cmd_bind_pipeline_shader_group_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBindPipelineShaderGroupNV,
+                            >(val)
                         }
                     },
                     create_indirect_commands_layout_nv: unsafe {
@@ -21189,14 +21360,14 @@ pub mod nv {
                                 stringify!(create_indirect_commands_layout_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateIndirectCommandsLayoutNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateIndirectCommandsLayoutNV");
                         if val.is_null() {
                             create_indirect_commands_layout_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateIndirectCommandsLayoutNV,
+                            >(val)
                         }
                     },
                     destroy_indirect_commands_layout_nv: unsafe {
@@ -21210,14 +21381,14 @@ pub mod nv {
                                 stringify!(destroy_indirect_commands_layout_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyIndirectCommandsLayoutNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyIndirectCommandsLayoutNV");
                         if val.is_null() {
                             destroy_indirect_commands_layout_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyIndirectCommandsLayoutNV,
+                            >(val)
                         }
                     },
                 }
@@ -21265,7 +21436,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21308,12 +21481,11 @@ pub mod nv {
                                 stringify!(create_cuda_module_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateCudaModuleNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateCudaModuleNV");
                         if val.is_null() {
                             create_cuda_module_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateCudaModuleNV>(val)
                         }
                     },
                     get_cuda_module_cache_nv: unsafe {
@@ -21328,13 +21500,11 @@ pub mod nv {
                                 stringify!(get_cuda_module_cache_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetCudaModuleCacheNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetCudaModuleCacheNV");
                         if val.is_null() {
                             get_cuda_module_cache_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetCudaModuleCacheNV>(val)
                         }
                     },
                     create_cuda_function_nv: unsafe {
@@ -21349,13 +21519,11 @@ pub mod nv {
                                 stringify!(create_cuda_function_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateCudaFunctionNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateCudaFunctionNV");
                         if val.is_null() {
                             create_cuda_function_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateCudaFunctionNV>(val)
                         }
                     },
                     destroy_cuda_module_nv: unsafe {
@@ -21369,12 +21537,11 @@ pub mod nv {
                                 stringify!(destroy_cuda_module_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyCudaModuleNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyCudaModuleNV");
                         if val.is_null() {
                             destroy_cuda_module_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyCudaModuleNV>(val)
                         }
                     },
                     destroy_cuda_function_nv: unsafe {
@@ -21388,13 +21555,13 @@ pub mod nv {
                                 stringify!(destroy_cuda_function_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyCudaFunctionNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyCudaFunctionNV");
                         if val.is_null() {
                             destroy_cuda_function_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyCudaFunctionNV>(
+                                val,
+                            )
                         }
                     },
                     cmd_cuda_launch_kernel_nv: unsafe {
@@ -21407,13 +21574,13 @@ pub mod nv {
                                 stringify!(cmd_cuda_launch_kernel_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCudaLaunchKernelNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCudaLaunchKernelNV");
                         if val.is_null() {
                             cmd_cuda_launch_kernel_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCudaLaunchKernelNV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -21445,7 +21612,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21482,14 +21651,14 @@ pub mod nv {
                                 stringify!(cmd_set_fragment_shading_rate_enum_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetFragmentShadingRateEnumNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetFragmentShadingRateEnumNV");
                         if val.is_null() {
                             cmd_set_fragment_shading_rate_enum_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetFragmentShadingRateEnumNV,
+                            >(val)
                         }
                     },
                 }
@@ -21521,7 +21690,9 @@ pub mod nv {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21558,13 +21729,13 @@ pub mod nv {
                                 stringify!(acquire_winrt_display_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkAcquireWinrtDisplayNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkAcquireWinrtDisplayNV");
                         if val.is_null() {
                             acquire_winrt_display_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkAcquireWinrtDisplayNV>(
+                                val,
+                            )
                         }
                     },
                     get_winrt_display_nv: unsafe {
@@ -21575,12 +21746,11 @@ pub mod nv {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(get_winrt_display_nv)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetWinrtDisplayNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetWinrtDisplayNV");
                         if val.is_null() {
                             get_winrt_display_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetWinrtDisplayNV>(val)
                         }
                     },
                 }
@@ -21604,7 +21774,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21643,13 +21815,13 @@ pub mod nv {
                                 stringify!(get_memory_remote_address_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryRemoteAddressNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryRemoteAddressNV");
                         if val.is_null() {
                             get_memory_remote_address_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetMemoryRemoteAddressNV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -21681,7 +21853,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21720,13 +21894,13 @@ pub mod nv {
                                 stringify!(cmd_copy_memory_indirect_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyMemoryIndirectNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyMemoryIndirectNV");
                         if val.is_null() {
                             cmd_copy_memory_indirect_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyMemoryIndirectNV>(
+                                val,
+                            )
                         }
                     },
                     cmd_copy_memory_to_image_indirect_nv: unsafe {
@@ -21744,14 +21918,14 @@ pub mod nv {
                                 stringify!(cmd_copy_memory_to_image_indirect_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdCopyMemoryToImageIndirectNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCopyMemoryToImageIndirectNV");
                         if val.is_null() {
                             cmd_copy_memory_to_image_indirect_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdCopyMemoryToImageIndirectNV,
+                            >(val)
                         }
                     },
                 }
@@ -21775,7 +21949,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21813,13 +21989,13 @@ pub mod nv {
                                 stringify!(cmd_decompress_memory_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDecompressMemoryNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDecompressMemoryNV");
                         if val.is_null() {
                             cmd_decompress_memory_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDecompressMemoryNV>(
+                                val,
+                            )
                         }
                     },
                     cmd_decompress_memory_indirect_count_nv: unsafe {
@@ -21834,14 +22010,14 @@ pub mod nv {
                                 stringify!(cmd_decompress_memory_indirect_count_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdDecompressMemoryIndirectCountNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDecompressMemoryIndirectCountNV");
                         if val.is_null() {
                             cmd_decompress_memory_indirect_count_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDecompressMemoryIndirectCountNV,
+                            >(val)
                         }
                     },
                 }
@@ -21865,7 +22041,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -21905,14 +22083,14 @@ pub mod nv {
                                 stringify!(get_pipeline_indirect_memory_requirements_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPipelineIndirectMemoryRequirementsNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPipelineIndirectMemoryRequirementsNV");
                         if val.is_null() {
                             get_pipeline_indirect_memory_requirements_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPipelineIndirectMemoryRequirementsNV,
+                            >(val)
                         }
                     },
                     cmd_update_pipeline_indirect_buffer_nv: unsafe {
@@ -21926,14 +22104,14 @@ pub mod nv {
                                 stringify!(cmd_update_pipeline_indirect_buffer_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdUpdatePipelineIndirectBufferNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdUpdatePipelineIndirectBufferNV");
                         if val.is_null() {
                             cmd_update_pipeline_indirect_buffer_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdUpdatePipelineIndirectBufferNV,
+                            >(val)
                         }
                     },
                     get_pipeline_indirect_device_address_nv: unsafe {
@@ -21946,14 +22124,14 @@ pub mod nv {
                                 stringify!(get_pipeline_indirect_device_address_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPipelineIndirectDeviceAddressNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPipelineIndirectDeviceAddressNV");
                         if val.is_null() {
                             get_pipeline_indirect_device_address_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPipelineIndirectDeviceAddressNV,
+                            >(val)
                         }
                     },
                 }
@@ -21993,7 +22171,9 @@ pub mod nv {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22034,14 +22214,14 @@ pub mod nv {
                                 stringify!(get_physical_device_optical_flow_image_formats_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceOpticalFlowImageFormatsNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceOpticalFlowImageFormatsNV");
                         if val.is_null() {
                             get_physical_device_optical_flow_image_formats_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV,
+                            >(val)
                         }
                     },
                 }
@@ -22057,7 +22237,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22098,13 +22280,13 @@ pub mod nv {
                                 stringify!(create_optical_flow_session_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateOpticalFlowSessionNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateOpticalFlowSessionNV");
                         if val.is_null() {
                             create_optical_flow_session_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateOpticalFlowSessionNV>(
+                                val,
+                            )
                         }
                     },
                     destroy_optical_flow_session_nv: unsafe {
@@ -22118,13 +22300,13 @@ pub mod nv {
                                 stringify!(destroy_optical_flow_session_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyOpticalFlowSessionNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyOpticalFlowSessionNV");
                         if val.is_null() {
                             destroy_optical_flow_session_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyOpticalFlowSessionNV>(
+                                val,
+                            )
                         }
                     },
                     bind_optical_flow_session_image_nv: unsafe {
@@ -22140,14 +22322,14 @@ pub mod nv {
                                 stringify!(bind_optical_flow_session_image_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkBindOpticalFlowSessionImageNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkBindOpticalFlowSessionImageNV");
                         if val.is_null() {
                             bind_optical_flow_session_image_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkBindOpticalFlowSessionImageNV,
+                            >(val)
                         }
                     },
                     cmd_optical_flow_execute_nv: unsafe {
@@ -22161,13 +22343,13 @@ pub mod nv {
                                 stringify!(cmd_optical_flow_execute_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdOpticalFlowExecuteNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdOpticalFlowExecuteNV");
                         if val.is_null() {
                             cmd_optical_flow_execute_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdOpticalFlowExecuteNV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -22199,7 +22381,9 @@ pub mod nv {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22237,14 +22421,14 @@ pub mod nv {
                                 stringify!(get_physical_device_cooperative_vector_properties_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceCooperativeVectorPropertiesNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceCooperativeVectorPropertiesNV");
                         if val.is_null() {
                             get_physical_device_cooperative_vector_properties_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceCooperativeVectorPropertiesNV,
+                            >(val)
                         }
                     },
                 }
@@ -22260,7 +22444,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22297,14 +22483,14 @@ pub mod nv {
                                 stringify!(convert_cooperative_vector_matrix_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkConvertCooperativeVectorMatrixNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkConvertCooperativeVectorMatrixNV");
                         if val.is_null() {
                             convert_cooperative_vector_matrix_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkConvertCooperativeVectorMatrixNV,
+                            >(val)
                         }
                     },
                     cmd_convert_cooperative_vector_matrix_nv: unsafe {
@@ -22318,14 +22504,14 @@ pub mod nv {
                                 stringify!(cmd_convert_cooperative_vector_matrix_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdConvertCooperativeVectorMatrixNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdConvertCooperativeVectorMatrixNV");
                         if val.is_null() {
                             cmd_convert_cooperative_vector_matrix_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdConvertCooperativeVectorMatrixNV,
+                            >(val)
                         }
                     },
                 }
@@ -22357,7 +22543,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22398,13 +22586,13 @@ pub mod nv {
                                 stringify!(set_latency_sleep_mode_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkSetLatencySleepModeNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSetLatencySleepModeNV");
                         if val.is_null() {
                             set_latency_sleep_mode_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSetLatencySleepModeNV>(
+                                val,
+                            )
                         }
                     },
                     latency_sleep_nv: unsafe {
@@ -22415,12 +22603,11 @@ pub mod nv {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(latency_sleep_nv)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkLatencySleepNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkLatencySleepNV");
                         if val.is_null() {
                             latency_sleep_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkLatencySleepNV>(val)
                         }
                     },
                     set_latency_marker_nv: unsafe {
@@ -22434,12 +22621,11 @@ pub mod nv {
                                 stringify!(set_latency_marker_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetLatencyMarkerNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkSetLatencyMarkerNV");
                         if val.is_null() {
                             set_latency_marker_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkSetLatencyMarkerNV>(val)
                         }
                     },
                     get_latency_timings_nv: unsafe {
@@ -22453,12 +22639,11 @@ pub mod nv {
                                 stringify!(get_latency_timings_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetLatencyTimingsNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetLatencyTimingsNV");
                         if val.is_null() {
                             get_latency_timings_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetLatencyTimingsNV>(val)
                         }
                     },
                     queue_notify_out_of_band_nv: unsafe {
@@ -22471,13 +22656,13 @@ pub mod nv {
                                 stringify!(queue_notify_out_of_band_nv)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkQueueNotifyOutOfBandNV\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkQueueNotifyOutOfBandNV");
                         if val.is_null() {
                             queue_notify_out_of_band_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkQueueNotifyOutOfBandNV>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -22533,7 +22718,9 @@ pub mod nv {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22570,14 +22757,14 @@ pub mod nv {
                                 stringify!(get_external_compute_queue_data_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetExternalComputeQueueDataNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetExternalComputeQueueDataNV");
                         if val.is_null() {
                             get_external_compute_queue_data_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetExternalComputeQueueDataNV,
+                            >(val)
                         }
                     },
                 }
@@ -22593,7 +22780,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22632,14 +22821,14 @@ pub mod nv {
                                 stringify!(create_external_compute_queue_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCreateExternalComputeQueueNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateExternalComputeQueueNV");
                         if val.is_null() {
                             create_external_compute_queue_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateExternalComputeQueueNV,
+                            >(val)
                         }
                     },
                     destroy_external_compute_queue_nv: unsafe {
@@ -22653,14 +22842,14 @@ pub mod nv {
                                 stringify!(destroy_external_compute_queue_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkDestroyExternalComputeQueueNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyExternalComputeQueueNV");
                         if val.is_null() {
                             destroy_external_compute_queue_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyExternalComputeQueueNV,
+                            >(val)
                         }
                     },
                 }
@@ -22708,7 +22897,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22748,14 +22939,14 @@ pub mod nv {
                                 stringify!(get_cluster_acceleration_structure_build_sizes_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetClusterAccelerationStructureBuildSizesNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetClusterAccelerationStructureBuildSizesNV");
                         if val.is_null() {
                             get_cluster_acceleration_structure_build_sizes_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetClusterAccelerationStructureBuildSizesNV,
+                            >(val)
                         }
                     },
                     cmd_build_cluster_acceleration_structure_indirect_nv: unsafe {
@@ -22768,14 +22959,14 @@ pub mod nv {
                                 stringify!(cmd_build_cluster_acceleration_structure_indirect_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBuildClusterAccelerationStructureIndirectNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBuildClusterAccelerationStructureIndirectNV");
                         if val.is_null() {
                             cmd_build_cluster_acceleration_structure_indirect_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBuildClusterAccelerationStructureIndirectNV,
+                            >(val)
                         }
                     },
                 }
@@ -22799,7 +22990,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22839,14 +23032,14 @@ pub mod nv {
                                 stringify!(get_partitioned_acceleration_structures_build_sizes_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPartitionedAccelerationStructuresBuildSizesNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPartitionedAccelerationStructuresBuildSizesNV");
                         if val.is_null() {
                             get_partitioned_acceleration_structures_build_sizes_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPartitionedAccelerationStructuresBuildSizesNV,
+                            >(val)
                         }
                     },
                     cmd_build_partitioned_acceleration_structures_nv: unsafe {
@@ -22859,14 +23052,14 @@ pub mod nv {
                                 stringify!(cmd_build_partitioned_acceleration_structures_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBuildPartitionedAccelerationStructuresNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBuildPartitionedAccelerationStructuresNV");
                         if val.is_null() {
                             cmd_build_partitioned_acceleration_structures_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBuildPartitionedAccelerationStructuresNV,
+                            >(val)
                         }
                     },
                 }
@@ -22898,7 +23091,9 @@ pub mod nv {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -22933,14 +23128,13 @@ pub mod nv {
                         ) -> Result {
                             panic ! (concat ! ("Unable to load " , stringify ! (get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV\0",
+                        let val = _f(
+                            c"vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV",
                         );
-                        let val = _f(cname);
                         if val.is_null() {
                             get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            :: core :: mem :: transmute :: < * const c_void , PFN_vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV > (val)
                         }
                     },
                 }
@@ -22972,7 +23166,9 @@ pub mod nv {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23008,14 +23204,14 @@ pub mod nv {
                                 stringify!(cmd_set_compute_occupancy_priority_nv)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdSetComputeOccupancyPriorityNV\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdSetComputeOccupancyPriorityNV");
                         if val.is_null() {
                             cmd_set_compute_occupancy_priority_nv
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetComputeOccupancyPriorityNV,
+                            >(val)
                         }
                     },
                 }
@@ -23042,7 +23238,9 @@ pub mod nvx {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23081,12 +23279,11 @@ pub mod nvx {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_cu_module_nvx)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateCuModuleNVX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateCuModuleNVX");
                         if val.is_null() {
                             create_cu_module_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateCuModuleNVX>(val)
                         }
                     },
                     create_cu_function_nvx: unsafe {
@@ -23101,12 +23298,11 @@ pub mod nvx {
                                 stringify!(create_cu_function_nvx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateCuFunctionNVX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateCuFunctionNVX");
                         if val.is_null() {
                             create_cu_function_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateCuFunctionNVX>(val)
                         }
                     },
                     destroy_cu_module_nvx: unsafe {
@@ -23120,12 +23316,11 @@ pub mod nvx {
                                 stringify!(destroy_cu_module_nvx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyCuModuleNVX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyCuModuleNVX");
                         if val.is_null() {
                             destroy_cu_module_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyCuModuleNVX>(val)
                         }
                     },
                     destroy_cu_function_nvx: unsafe {
@@ -23139,13 +23334,11 @@ pub mod nvx {
                                 stringify!(destroy_cu_function_nvx)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyCuFunctionNVX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkDestroyCuFunctionNVX");
                         if val.is_null() {
                             destroy_cu_function_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkDestroyCuFunctionNVX>(val)
                         }
                     },
                     cmd_cu_launch_kernel_nvx: unsafe {
@@ -23158,13 +23351,11 @@ pub mod nvx {
                                 stringify!(cmd_cu_launch_kernel_nvx)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCuLaunchKernelNVX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdCuLaunchKernelNVX");
                         if val.is_null() {
                             cmd_cu_launch_kernel_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCuLaunchKernelNVX>(val)
                         }
                     },
                 }
@@ -23188,7 +23379,9 @@ pub mod nvx {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23228,13 +23421,13 @@ pub mod nvx {
                                 stringify!(get_image_view_handle_nvx)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetImageViewHandleNVX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageViewHandleNVX");
                         if val.is_null() {
                             get_image_view_handle_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetImageViewHandleNVX>(
+                                val,
+                            )
                         }
                     },
                     get_image_view_handle64_nvx: unsafe {
@@ -23247,13 +23440,13 @@ pub mod nvx {
                                 stringify!(get_image_view_handle64_nvx)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetImageViewHandle64NVX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageViewHandle64NVX");
                         if val.is_null() {
                             get_image_view_handle64_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetImageViewHandle64NVX>(
+                                val,
+                            )
                         }
                     },
                     get_image_view_address_nvx: unsafe {
@@ -23267,13 +23460,13 @@ pub mod nvx {
                                 stringify!(get_image_view_address_nvx)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetImageViewAddressNVX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetImageViewAddressNVX");
                         if val.is_null() {
                             get_image_view_address_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetImageViewAddressNVX>(
+                                val,
+                            )
                         }
                     },
                     get_device_combined_image_sampler_index_nvx: unsafe {
@@ -23287,14 +23480,14 @@ pub mod nvx {
                                 stringify!(get_device_combined_image_sampler_index_nvx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDeviceCombinedImageSamplerIndexNVX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDeviceCombinedImageSamplerIndexNVX");
                         if val.is_null() {
                             get_device_combined_image_sampler_index_nvx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDeviceCombinedImageSamplerIndexNVX,
+                            >(val)
                         }
                     },
                 }
@@ -23329,7 +23522,9 @@ pub mod ohos {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23367,14 +23562,14 @@ pub mod ohos {
                                 stringify!(get_native_buffer_properties_ohos)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetNativeBufferPropertiesOHOS\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetNativeBufferPropertiesOHOS");
                         if val.is_null() {
                             get_native_buffer_properties_ohos
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetNativeBufferPropertiesOHOS,
+                            >(val)
                         }
                     },
                     get_memory_native_buffer_ohos: unsafe {
@@ -23388,13 +23583,13 @@ pub mod ohos {
                                 stringify!(get_memory_native_buffer_ohos)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryNativeBufferOHOS\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkGetMemoryNativeBufferOHOS");
                         if val.is_null() {
                             get_memory_native_buffer_ohos
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetMemoryNativeBufferOHOS>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -23418,7 +23613,9 @@ pub mod ohos {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23453,12 +23650,11 @@ pub mod ohos {
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_surface_ohos)))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateSurfaceOHOS\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateSurfaceOHOS");
                         if val.is_null() {
                             create_surface_ohos
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateSurfaceOHOS>(val)
                         }
                     },
                 }
@@ -23509,7 +23705,9 @@ pub mod qcom {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23547,12 +23745,11 @@ pub mod qcom {
                                 stringify!(cmd_dispatch_tile_qcom)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchTileQCOM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdDispatchTileQCOM");
                         if val.is_null() {
                             cmd_dispatch_tile_qcom
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDispatchTileQCOM>(val)
                         }
                     },
                     cmd_begin_per_tile_execution_qcom: unsafe {
@@ -23565,14 +23762,14 @@ pub mod qcom {
                                 stringify!(cmd_begin_per_tile_execution_qcom)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkCmdBeginPerTileExecutionQCOM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBeginPerTileExecutionQCOM");
                         if val.is_null() {
                             cmd_begin_per_tile_execution_qcom
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBeginPerTileExecutionQCOM,
+                            >(val)
                         }
                     },
                     cmd_end_per_tile_execution_qcom: unsafe {
@@ -23585,13 +23782,13 @@ pub mod qcom {
                                 stringify!(cmd_end_per_tile_execution_qcom)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdEndPerTileExecutionQCOM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdEndPerTileExecutionQCOM");
                         if val.is_null() {
                             cmd_end_per_tile_execution_qcom
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndPerTileExecutionQCOM>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -23639,7 +23836,9 @@ pub mod qcom {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23679,14 +23878,14 @@ pub mod qcom {
                                 stringify!(get_framebuffer_tile_properties_qcom)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetFramebufferTilePropertiesQCOM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetFramebufferTilePropertiesQCOM");
                         if val.is_null() {
                             get_framebuffer_tile_properties_qcom
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetFramebufferTilePropertiesQCOM,
+                            >(val)
                         }
                     },
                     get_dynamic_rendering_tile_properties_qcom: unsafe {
@@ -23700,14 +23899,14 @@ pub mod qcom {
                                 stringify!(get_dynamic_rendering_tile_properties_qcom)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDynamicRenderingTilePropertiesQCOM\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDynamicRenderingTilePropertiesQCOM");
                         if val.is_null() {
                             get_dynamic_rendering_tile_properties_qcom
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDynamicRenderingTilePropertiesQCOM,
+                            >(val)
                         }
                     },
                 }
@@ -23779,7 +23978,9 @@ pub mod qcom {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23815,13 +24016,13 @@ pub mod qcom {
                                 stringify!(cmd_bind_tile_memory_qcom)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindTileMemoryQCOM\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCmdBindTileMemoryQCOM");
                         if val.is_null() {
                             cmd_bind_tile_memory_qcom
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindTileMemoryQCOM>(
+                                val,
+                            )
                         }
                     },
                 }
@@ -23856,7 +24057,9 @@ pub mod qnx {
             pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
-                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23896,13 +24099,13 @@ pub mod qnx {
                                 stringify!(create_screen_surface_qnx)
                             ))
                         }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCreateScreenSurfaceQNX\0");
-                        let val = _f(cname);
+                        let val = _f(c"vkCreateScreenSurfaceQNX");
                         if val.is_null() {
                             create_screen_surface_qnx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<*const c_void, PFN_vkCreateScreenSurfaceQNX>(
+                                val,
+                            )
                         }
                     },
                     get_physical_device_screen_presentation_support_qnx: unsafe {
@@ -23916,14 +24119,14 @@ pub mod qnx {
                                 stringify!(get_physical_device_screen_presentation_support_qnx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetPhysicalDeviceScreenPresentationSupportQNX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetPhysicalDeviceScreenPresentationSupportQNX");
                         if val.is_null() {
                             get_physical_device_screen_presentation_support_qnx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX,
+                            >(val)
                         }
                     },
                 }
@@ -23947,7 +24150,9 @@ pub mod qnx {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -23984,14 +24189,14 @@ pub mod qnx {
                                 stringify!(get_screen_buffer_properties_qnx)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetScreenBufferPropertiesQNX\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetScreenBufferPropertiesQNX");
                         if val.is_null() {
                             get_screen_buffer_properties_qnx
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetScreenBufferPropertiesQNX,
+                            >(val)
                         }
                     },
                 }
@@ -24053,7 +24258,9 @@ pub mod valve {
             pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
-                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
                 });
                 Self { handle, fp }
             }
@@ -24092,14 +24299,14 @@ pub mod valve {
                                 stringify!(get_descriptor_set_layout_host_mapping_info_valve)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDescriptorSetLayoutHostMappingInfoVALVE\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDescriptorSetLayoutHostMappingInfoVALVE");
                         if val.is_null() {
                             get_descriptor_set_layout_host_mapping_info_valve
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDescriptorSetLayoutHostMappingInfoVALVE,
+                            >(val)
                         }
                     },
                     get_descriptor_set_host_mapping_valve: unsafe {
@@ -24113,14 +24320,14 @@ pub mod valve {
                                 stringify!(get_descriptor_set_host_mapping_valve)
                             ))
                         }
-                        let cname = CStr::from_bytes_with_nul_unchecked(
-                            b"vkGetDescriptorSetHostMappingVALVE\0",
-                        );
-                        let val = _f(cname);
+                        let val = _f(c"vkGetDescriptorSetHostMappingVALVE");
                         if val.is_null() {
                             get_descriptor_set_host_mapping_valve
                         } else {
-                            ::core::mem::transmute(val)
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetDescriptorSetHostMappingVALVE,
+                            >(val)
                         }
                     },
                 }

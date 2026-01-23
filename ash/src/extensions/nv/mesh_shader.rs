@@ -11,7 +11,9 @@ impl crate::nv::mesh_shader::Device {
         task_count: u32,
         first_task: u32,
     ) {
-        (self.fp.cmd_draw_mesh_tasks_nv)(command_buffer, task_count, first_task);
+        unsafe {
+            (self.fp.cmd_draw_mesh_tasks_nv)(command_buffer, task_count, first_task);
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>
@@ -24,13 +26,15 @@ impl crate::nv::mesh_shader::Device {
         draw_count: u32,
         stride: u32,
     ) {
-        (self.fp.cmd_draw_mesh_tasks_indirect_nv)(
-            command_buffer,
-            buffer,
-            offset,
-            draw_count,
-            stride,
-        );
+        unsafe {
+            (self.fp.cmd_draw_mesh_tasks_indirect_nv)(
+                command_buffer,
+                buffer,
+                offset,
+                draw_count,
+                stride,
+            );
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>
@@ -45,14 +49,16 @@ impl crate::nv::mesh_shader::Device {
         max_draw_count: u32,
         stride: u32,
     ) {
-        (self.fp.cmd_draw_mesh_tasks_indirect_count_nv)(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        );
+        unsafe {
+            (self.fp.cmd_draw_mesh_tasks_indirect_count_nv)(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            );
+        }
     }
 }

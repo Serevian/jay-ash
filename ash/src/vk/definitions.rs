@@ -1197,7 +1197,7 @@ impl<'a> ApplicationInfo<'a> {
         if self.p_application_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_application_name))
+            unsafe { Some(CStr::from_ptr(self.p_application_name)) }
         }
     }
     #[inline]
@@ -1215,7 +1215,7 @@ impl<'a> ApplicationInfo<'a> {
         if self.p_engine_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_engine_name))
+            unsafe { Some(CStr::from_ptr(self.p_engine_name)) }
         }
     }
     #[inline]
@@ -4119,7 +4119,7 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
         if self.p_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_name))
+            unsafe { Some(CStr::from_ptr(self.p_name)) }
         }
     }
     #[inline]
@@ -8729,7 +8729,7 @@ impl<'a> DisplayPropertiesKHR<'a> {
         if self.display_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.display_name))
+            unsafe { Some(CStr::from_ptr(self.display_name)) }
         }
     }
     #[inline]
@@ -10117,7 +10117,7 @@ impl<'a> LayerSettingEXT<'a> {
         if self.p_layer_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_layer_name))
+            unsafe { Some(CStr::from_ptr(self.p_layer_name)) }
         }
     }
     #[inline]
@@ -10130,7 +10130,7 @@ impl<'a> LayerSettingEXT<'a> {
         if self.p_setting_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_setting_name))
+            unsafe { Some(CStr::from_ptr(self.p_setting_name)) }
         }
     }
     #[inline]
@@ -10236,7 +10236,7 @@ impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
         if self.p_object_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_object_name))
+            unsafe { Some(CStr::from_ptr(self.p_object_name)) }
         }
     }
 }
@@ -10338,7 +10338,7 @@ impl<'a> DebugMarkerMarkerInfoEXT<'a> {
         if self.p_marker_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_marker_name))
+            unsafe { Some(CStr::from_ptr(self.p_marker_name)) }
         }
     }
     #[inline]
@@ -22608,7 +22608,7 @@ impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
         if self.p_object_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_object_name))
+            unsafe { Some(CStr::from_ptr(self.p_object_name)) }
         }
     }
 }
@@ -22706,7 +22706,7 @@ impl<'a> DebugUtilsLabelEXT<'a> {
         if self.p_label_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_label_name))
+            unsafe { Some(CStr::from_ptr(self.p_label_name)) }
         }
     }
     #[inline]
@@ -22859,7 +22859,7 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         if self.p_message_id_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_message_id_name))
+            unsafe { Some(CStr::from_ptr(self.p_message_id_name)) }
         }
     }
     #[inline]
@@ -22877,7 +22877,7 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         if self.p_message.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_message))
+            unsafe { Some(CStr::from_ptr(self.p_message)) }
         }
     }
     #[inline]
@@ -52378,7 +52378,7 @@ impl<'a> CuFunctionCreateInfoNVX<'a> {
         if self.p_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_name))
+            unsafe { Some(CStr::from_ptr(self.p_name)) }
         }
     }
 }
@@ -55071,7 +55071,7 @@ impl<'a> CudaFunctionCreateInfoNV<'a> {
         if self.p_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_name))
+            unsafe { Some(CStr::from_ptr(self.p_name)) }
         }
     }
 }
@@ -62565,7 +62565,7 @@ impl<'a> ShaderCreateInfoEXT<'a> {
         if self.p_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_name))
+            unsafe { Some(CStr::from_ptr(self.p_name)) }
         }
     }
     #[inline]
@@ -63436,7 +63436,7 @@ impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
         if self.p_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_name))
+            unsafe { Some(CStr::from_ptr(self.p_name)) }
         }
     }
     #[inline]
@@ -69927,7 +69927,7 @@ impl<'a> DataGraphPipelineCompilerControlCreateInfoARM<'a> {
         if self.p_vendor_options.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_vendor_options))
+            unsafe { Some(CStr::from_ptr(self.p_vendor_options)) }
         }
     }
 }
@@ -70059,7 +70059,7 @@ impl<'a> DataGraphPipelineShaderModuleCreateInfoARM<'a> {
         if self.p_name.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(self.p_name))
+            unsafe { Some(CStr::from_ptr(self.p_name)) }
         }
     }
     #[inline]

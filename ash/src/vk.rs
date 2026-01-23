@@ -35,16 +35,18 @@ pub use platform_types::*;
 pub(crate) unsafe fn ptr_chain_iter<T: ?Sized>(
     ptr: &mut T,
 ) -> impl Iterator<Item = *mut BaseOutStructure<'_>> {
-    let ptr = <*mut T>::cast::<BaseOutStructure<'_>>(ptr);
-    (0..).scan(ptr, |p_ptr, _| {
-        if p_ptr.is_null() {
-            return None;
-        }
-        let n_ptr = (**p_ptr).p_next;
-        let old = *p_ptr;
-        *p_ptr = n_ptr;
-        Some(old)
-    })
+    unsafe {
+        let ptr = <*mut T>::cast::<BaseOutStructure<'_>>(ptr);
+        (0..).scan(ptr, |p_ptr, _| {
+            if p_ptr.is_null() {
+                return None;
+            }
+            let n_ptr = (**p_ptr).p_next;
+            let old = *p_ptr;
+            *p_ptr = n_ptr;
+            Some(old)
+        })
+    }
 }
 pub trait Handle: Sized {
     const TYPE: ObjectType;

@@ -78,7 +78,7 @@ pub struct CStrTooLargeForStaticArray {
     pub c_str_size: usize,
 }
 #[cfg(feature = "std")]
-impl std::error::Error for CStrTooLargeForStaticArray {}
+impl core::error::Error for CStrTooLargeForStaticArray {}
 impl fmt::Display for CStrTooLargeForStaticArray {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(

@@ -10,6 +10,6 @@ impl crate::ext::swapchain_maintenance1::Device {
         &self,
         release_info: &vk::ReleaseSwapchainImagesInfoEXT<'_>,
     ) -> VkResult<()> {
-        (self.fp.release_swapchain_images_ext)(self.handle, release_info).result()
+        unsafe { (self.fp.release_swapchain_images_ext)(self.handle, release_info).result() }
     }
 }

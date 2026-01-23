@@ -11,7 +11,7 @@ impl crate::khr::external_fence_win32::Device {
         &self,
         import_info: &vk::ImportFenceWin32HandleInfoKHR<'_>,
     ) -> VkResult<()> {
-        (self.fp.import_fence_win32_handle_khr)(self.handle, import_info).result()
+        unsafe { (self.fp.import_fence_win32_handle_khr)(self.handle, import_info).result() }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceWin32HandleKHR.html>
@@ -20,8 +20,10 @@ impl crate::khr::external_fence_win32::Device {
         &self,
         get_info: &vk::FenceGetWin32HandleInfoKHR<'_>,
     ) -> VkResult<vk::HANDLE> {
-        let mut handle = mem::MaybeUninit::uninit();
-        (self.fp.get_fence_win32_handle_khr)(self.handle, get_info, handle.as_mut_ptr())
-            .assume_init_on_success(handle)
+        unsafe {
+            let mut handle = mem::MaybeUninit::uninit();
+            (self.fp.get_fence_win32_handle_khr)(self.handle, get_info, handle.as_mut_ptr())
+                .assume_init_on_success(handle)
+        }
     }
 }

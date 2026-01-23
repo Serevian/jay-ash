@@ -13,13 +13,15 @@ impl crate::khr::android_surface::Instance {
         create_info: &vk::AndroidSurfaceCreateInfoKHR<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::MaybeUninit::uninit();
-        (self.fp.create_android_surface_khr)(
-            self.handle,
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            surface.as_mut_ptr(),
-        )
-        .assume_init_on_success(surface)
+        unsafe {
+            let mut surface = mem::MaybeUninit::uninit();
+            (self.fp.create_android_surface_khr)(
+                self.handle,
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                surface.as_mut_ptr(),
+            )
+            .assume_init_on_success(surface)
+        }
     }
 }

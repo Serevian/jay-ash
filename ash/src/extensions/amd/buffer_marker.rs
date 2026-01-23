@@ -13,12 +13,14 @@ impl crate::amd::buffer_marker::Device {
         dst_offset: vk::DeviceSize,
         marker: u32,
     ) {
-        (self.fp.cmd_write_buffer_marker_amd)(
-            command_buffer,
-            pipeline_stage,
-            dst_buffer,
-            dst_offset,
-            marker,
-        )
+        unsafe {
+            (self.fp.cmd_write_buffer_marker_amd)(
+                command_buffer,
+                pipeline_stage,
+                dst_buffer,
+                dst_offset,
+                marker,
+            )
+        }
     }
 }

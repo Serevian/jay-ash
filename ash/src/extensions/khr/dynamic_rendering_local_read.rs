@@ -10,7 +10,9 @@ impl crate::khr::dynamic_rendering_local_read::Device {
         command_buffer: vk::CommandBuffer,
         location_info: &vk::RenderingAttachmentLocationInfoKHR<'_>,
     ) {
-        (self.fp.cmd_set_rendering_attachment_locations_khr)(command_buffer, location_info)
+        unsafe {
+            (self.fp.cmd_set_rendering_attachment_locations_khr)(command_buffer, location_info)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html>
@@ -20,6 +22,8 @@ impl crate::khr::dynamic_rendering_local_read::Device {
         command_buffer: vk::CommandBuffer,
         location_info: &vk::RenderingInputAttachmentIndexInfoKHR<'_>,
     ) {
-        (self.fp.cmd_set_rendering_input_attachment_indices_khr)(command_buffer, location_info)
+        unsafe {
+            (self.fp.cmd_set_rendering_input_attachment_indices_khr)(command_buffer, location_info)
+        }
     }
 }

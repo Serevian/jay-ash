@@ -11,10 +11,12 @@ impl crate::khr::line_rasterization::Device {
         line_stipple_factor: u32,
         line_stipple_pattern: u16,
     ) {
-        (self.fp.cmd_set_line_stipple_khr)(
-            command_buffer,
-            line_stipple_factor,
-            line_stipple_pattern,
-        )
+        unsafe {
+            (self.fp.cmd_set_line_stipple_khr)(
+                command_buffer,
+                line_stipple_factor,
+                line_stipple_pattern,
+            )
+        }
     }
 }

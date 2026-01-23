@@ -9,6 +9,6 @@ impl crate::ext::buffer_device_address::Device {
         &self,
         info: &vk::BufferDeviceAddressInfoEXT<'_>,
     ) -> vk::DeviceAddress {
-        (self.fp.get_buffer_device_address_ext)(self.handle, info)
+        unsafe { (self.fp.get_buffer_device_address_ext)(self.handle, info) }
     }
 }

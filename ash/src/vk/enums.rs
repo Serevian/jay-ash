@@ -988,7 +988,7 @@ impl Result {
     pub const ERROR_UNKNOWN: Self = Self(-13);
 }
 #[cfg(feature = "std")]
-impl std::error::Error for Result {}
+impl core::error::Error for Result {}
 impl fmt::Display for Result {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {

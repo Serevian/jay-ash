@@ -24,12 +24,11 @@ impl StaticFn {
                         stringify!(get_instance_proc_addr)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetInstanceProcAddr");
                 if val.is_null() {
                     get_instance_proc_addr
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetInstanceProcAddr>(val)
                 }
             },
         }
@@ -58,12 +57,11 @@ impl EntryFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_instance)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateInstance\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateInstance");
                 if val.is_null() {
                     create_instance
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateInstance>(val)
                 }
             },
             enumerate_instance_extension_properties: unsafe {
@@ -77,14 +75,14 @@ impl EntryFnV1_0 {
                         stringify!(enumerate_instance_extension_properties)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkEnumerateInstanceExtensionProperties\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkEnumerateInstanceExtensionProperties");
                 if val.is_null() {
                     enumerate_instance_extension_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkEnumerateInstanceExtensionProperties,
+                    >(val)
                 }
             },
             enumerate_instance_layer_properties: unsafe {
@@ -97,13 +95,13 @@ impl EntryFnV1_0 {
                         stringify!(enumerate_instance_layer_properties)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceLayerProperties\0");
-                let val = _f(cname);
+                let val = _f(c"vkEnumerateInstanceLayerProperties");
                 if val.is_null() {
                     enumerate_instance_layer_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkEnumerateInstanceLayerProperties>(
+                        val,
+                    )
                 }
             },
         }
@@ -142,12 +140,11 @@ impl InstanceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_instance)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyInstance\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyInstance");
                 if val.is_null() {
                     destroy_instance
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyInstance>(val)
                 }
             },
             enumerate_physical_devices: unsafe {
@@ -161,12 +158,11 @@ impl InstanceFnV1_0 {
                         stringify!(enumerate_physical_devices)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkEnumeratePhysicalDevices\0");
-                let val = _f(cname);
+                let val = _f(c"vkEnumeratePhysicalDevices");
                 if val.is_null() {
                     enumerate_physical_devices
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkEnumeratePhysicalDevices>(val)
                 }
             },
             get_physical_device_features: unsafe {
@@ -179,12 +175,11 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_features)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceFeatures\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceFeatures");
                 if val.is_null() {
                     get_physical_device_features
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceFeatures>(val)
                 }
             },
             get_physical_device_format_properties: unsafe {
@@ -198,13 +193,13 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_format_properties)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceFormatProperties\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceFormatProperties");
                 if val.is_null() {
                     get_physical_device_format_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceFormatProperties>(
+                        val,
+                    )
                 }
             },
             get_physical_device_image_format_properties: unsafe {
@@ -222,14 +217,14 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_image_format_properties)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceImageFormatProperties\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceImageFormatProperties");
                 if val.is_null() {
                     get_physical_device_image_format_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceImageFormatProperties,
+                    >(val)
                 }
             },
             get_physical_device_properties: unsafe {
@@ -242,12 +237,11 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_properties)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceProperties\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceProperties");
                 if val.is_null() {
                     get_physical_device_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceProperties>(val)
                 }
             },
             get_physical_device_queue_family_properties: unsafe {
@@ -261,14 +255,14 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_queue_family_properties)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceQueueFamilyProperties\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceQueueFamilyProperties");
                 if val.is_null() {
                     get_physical_device_queue_family_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceQueueFamilyProperties,
+                    >(val)
                 }
             },
             get_physical_device_memory_properties: unsafe {
@@ -281,13 +275,13 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_memory_properties)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceMemoryProperties\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceMemoryProperties");
                 if val.is_null() {
                     get_physical_device_memory_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceMemoryProperties>(
+                        val,
+                    )
                 }
             },
             get_device_proc_addr: unsafe {
@@ -297,12 +291,11 @@ impl InstanceFnV1_0 {
                 ) -> PFN_vkVoidFunction {
                     panic!(concat!("Unable to load ", stringify!(get_device_proc_addr)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceProcAddr\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceProcAddr");
                 if val.is_null() {
                     get_device_proc_addr
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceProcAddr>(val)
                 }
             },
             create_device: unsafe {
@@ -314,12 +307,11 @@ impl InstanceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_device)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateDevice\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateDevice");
                 if val.is_null() {
                     create_device
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateDevice>(val)
                 }
             },
             enumerate_device_extension_properties: unsafe {
@@ -334,13 +326,13 @@ impl InstanceFnV1_0 {
                         stringify!(enumerate_device_extension_properties)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkEnumerateDeviceExtensionProperties\0");
-                let val = _f(cname);
+                let val = _f(c"vkEnumerateDeviceExtensionProperties");
                 if val.is_null() {
                     enumerate_device_extension_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkEnumerateDeviceExtensionProperties>(
+                        val,
+                    )
                 }
             },
             enumerate_device_layer_properties: unsafe {
@@ -354,13 +346,13 @@ impl InstanceFnV1_0 {
                         stringify!(enumerate_device_layer_properties)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkEnumerateDeviceLayerProperties\0");
-                let val = _f(cname);
+                let val = _f(c"vkEnumerateDeviceLayerProperties");
                 if val.is_null() {
                     enumerate_device_layer_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkEnumerateDeviceLayerProperties>(
+                        val,
+                    )
                 }
             },
             get_physical_device_sparse_image_format_properties: unsafe {
@@ -379,14 +371,14 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_sparse_image_format_properties)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceSparseImageFormatProperties\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceSparseImageFormatProperties");
                 if val.is_null() {
                     get_physical_device_sparse_image_format_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceSparseImageFormatProperties,
+                    >(val)
                 }
             },
         }
@@ -531,12 +523,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_device)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyDevice\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyDevice");
                 if val.is_null() {
                     destroy_device
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyDevice>(val)
                 }
             },
             get_device_queue: unsafe {
@@ -548,12 +539,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(get_device_queue)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceQueue\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceQueue");
                 if val.is_null() {
                     get_device_queue
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceQueue>(val)
                 }
             },
             queue_submit: unsafe {
@@ -565,36 +555,33 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_submit)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit\0");
-                let val = _f(cname);
+                let val = _f(c"vkQueueSubmit");
                 if val.is_null() {
                     queue_submit
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkQueueSubmit>(val)
                 }
             },
             queue_wait_idle: unsafe {
                 unsafe extern "system" fn queue_wait_idle(_queue: Queue) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_wait_idle)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueWaitIdle\0");
-                let val = _f(cname);
+                let val = _f(c"vkQueueWaitIdle");
                 if val.is_null() {
                     queue_wait_idle
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkQueueWaitIdle>(val)
                 }
             },
             device_wait_idle: unsafe {
                 unsafe extern "system" fn device_wait_idle(_device: crate::vk::Device) -> Result {
                     panic!(concat!("Unable to load ", stringify!(device_wait_idle)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDeviceWaitIdle\0");
-                let val = _f(cname);
+                let val = _f(c"vkDeviceWaitIdle");
                 if val.is_null() {
                     device_wait_idle
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDeviceWaitIdle>(val)
                 }
             },
             allocate_memory: unsafe {
@@ -606,12 +593,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(allocate_memory)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkAllocateMemory\0");
-                let val = _f(cname);
+                let val = _f(c"vkAllocateMemory");
                 if val.is_null() {
                     allocate_memory
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkAllocateMemory>(val)
                 }
             },
             free_memory: unsafe {
@@ -622,12 +608,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(free_memory)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFreeMemory\0");
-                let val = _f(cname);
+                let val = _f(c"vkFreeMemory");
                 if val.is_null() {
                     free_memory
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkFreeMemory>(val)
                 }
             },
             map_memory: unsafe {
@@ -641,12 +626,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(map_memory)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkMapMemory\0");
-                let val = _f(cname);
+                let val = _f(c"vkMapMemory");
                 if val.is_null() {
                     map_memory
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkMapMemory>(val)
                 }
             },
             unmap_memory: unsafe {
@@ -656,12 +640,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(unmap_memory)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory\0");
-                let val = _f(cname);
+                let val = _f(c"vkUnmapMemory");
                 if val.is_null() {
                     unmap_memory
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkUnmapMemory>(val)
                 }
             },
             flush_mapped_memory_ranges: unsafe {
@@ -675,12 +658,11 @@ impl DeviceFnV1_0 {
                         stringify!(flush_mapped_memory_ranges)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFlushMappedMemoryRanges\0");
-                let val = _f(cname);
+                let val = _f(c"vkFlushMappedMemoryRanges");
                 if val.is_null() {
                     flush_mapped_memory_ranges
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkFlushMappedMemoryRanges>(val)
                 }
             },
             invalidate_mapped_memory_ranges: unsafe {
@@ -694,13 +676,11 @@ impl DeviceFnV1_0 {
                         stringify!(invalidate_mapped_memory_ranges)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkInvalidateMappedMemoryRanges\0");
-                let val = _f(cname);
+                let val = _f(c"vkInvalidateMappedMemoryRanges");
                 if val.is_null() {
                     invalidate_mapped_memory_ranges
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkInvalidateMappedMemoryRanges>(val)
                 }
             },
             get_device_memory_commitment: unsafe {
@@ -714,12 +694,11 @@ impl DeviceFnV1_0 {
                         stringify!(get_device_memory_commitment)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceMemoryCommitment\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceMemoryCommitment");
                 if val.is_null() {
                     get_device_memory_commitment
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceMemoryCommitment>(val)
                 }
             },
             bind_buffer_memory: unsafe {
@@ -731,12 +710,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_buffer_memory)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindBufferMemory\0");
-                let val = _f(cname);
+                let val = _f(c"vkBindBufferMemory");
                 if val.is_null() {
                     bind_buffer_memory
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkBindBufferMemory>(val)
                 }
             },
             bind_image_memory: unsafe {
@@ -748,12 +726,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_image_memory)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindImageMemory\0");
-                let val = _f(cname);
+                let val = _f(c"vkBindImageMemory");
                 if val.is_null() {
                     bind_image_memory
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkBindImageMemory>(val)
                 }
             },
             get_buffer_memory_requirements: unsafe {
@@ -767,12 +744,11 @@ impl DeviceFnV1_0 {
                         stringify!(get_buffer_memory_requirements)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetBufferMemoryRequirements\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetBufferMemoryRequirements");
                 if val.is_null() {
                     get_buffer_memory_requirements
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetBufferMemoryRequirements>(val)
                 }
             },
             get_image_memory_requirements: unsafe {
@@ -786,12 +762,11 @@ impl DeviceFnV1_0 {
                         stringify!(get_image_memory_requirements)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetImageMemoryRequirements\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetImageMemoryRequirements");
                 if val.is_null() {
                     get_image_memory_requirements
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetImageMemoryRequirements>(val)
                 }
             },
             get_image_sparse_memory_requirements: unsafe {
@@ -806,13 +781,13 @@ impl DeviceFnV1_0 {
                         stringify!(get_image_sparse_memory_requirements)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetImageSparseMemoryRequirements\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetImageSparseMemoryRequirements");
                 if val.is_null() {
                     get_image_sparse_memory_requirements
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetImageSparseMemoryRequirements>(
+                        val,
+                    )
                 }
             },
             queue_bind_sparse: unsafe {
@@ -824,12 +799,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_bind_sparse)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueBindSparse\0");
-                let val = _f(cname);
+                let val = _f(c"vkQueueBindSparse");
                 if val.is_null() {
                     queue_bind_sparse
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkQueueBindSparse>(val)
                 }
             },
             create_fence: unsafe {
@@ -841,12 +815,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_fence)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateFence\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateFence");
                 if val.is_null() {
                     create_fence
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateFence>(val)
                 }
             },
             destroy_fence: unsafe {
@@ -857,12 +830,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_fence)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyFence\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyFence");
                 if val.is_null() {
                     destroy_fence
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyFence>(val)
                 }
             },
             reset_fences: unsafe {
@@ -873,12 +845,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_fences)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetFences\0");
-                let val = _f(cname);
+                let val = _f(c"vkResetFences");
                 if val.is_null() {
                     reset_fences
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkResetFences>(val)
                 }
             },
             get_fence_status: unsafe {
@@ -888,12 +859,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(get_fence_status)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetFenceStatus\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetFenceStatus");
                 if val.is_null() {
                     get_fence_status
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetFenceStatus>(val)
                 }
             },
             wait_for_fences: unsafe {
@@ -906,12 +876,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(wait_for_fences)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkWaitForFences\0");
-                let val = _f(cname);
+                let val = _f(c"vkWaitForFences");
                 if val.is_null() {
                     wait_for_fences
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkWaitForFences>(val)
                 }
             },
             create_semaphore: unsafe {
@@ -923,12 +892,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_semaphore)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateSemaphore\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateSemaphore");
                 if val.is_null() {
                     create_semaphore
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateSemaphore>(val)
                 }
             },
             destroy_semaphore: unsafe {
@@ -939,12 +907,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_semaphore)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroySemaphore\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroySemaphore");
                 if val.is_null() {
                     destroy_semaphore
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroySemaphore>(val)
                 }
             },
             create_query_pool: unsafe {
@@ -956,12 +923,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_query_pool)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateQueryPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateQueryPool");
                 if val.is_null() {
                     create_query_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateQueryPool>(val)
                 }
             },
             destroy_query_pool: unsafe {
@@ -972,12 +938,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_query_pool)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyQueryPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyQueryPool");
                 if val.is_null() {
                     destroy_query_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyQueryPool>(val)
                 }
             },
             get_query_pool_results: unsafe {
@@ -996,12 +961,11 @@ impl DeviceFnV1_0 {
                         stringify!(get_query_pool_results)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetQueryPoolResults\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetQueryPoolResults");
                 if val.is_null() {
                     get_query_pool_results
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetQueryPoolResults>(val)
                 }
             },
             create_buffer: unsafe {
@@ -1013,12 +977,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_buffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateBuffer");
                 if val.is_null() {
                     create_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateBuffer>(val)
                 }
             },
             destroy_buffer: unsafe {
@@ -1029,12 +992,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyBuffer");
                 if val.is_null() {
                     destroy_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyBuffer>(val)
                 }
             },
             create_image: unsafe {
@@ -1046,12 +1008,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_image)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateImage");
                 if val.is_null() {
                     create_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateImage>(val)
                 }
             },
             destroy_image: unsafe {
@@ -1062,12 +1023,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyImage");
                 if val.is_null() {
                     destroy_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyImage>(val)
                 }
             },
             get_image_subresource_layout: unsafe {
@@ -1082,12 +1042,11 @@ impl DeviceFnV1_0 {
                         stringify!(get_image_subresource_layout)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetImageSubresourceLayout\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetImageSubresourceLayout");
                 if val.is_null() {
                     get_image_subresource_layout
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetImageSubresourceLayout>(val)
                 }
             },
             create_image_view: unsafe {
@@ -1099,12 +1058,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_image_view)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateImageView\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateImageView");
                 if val.is_null() {
                     create_image_view
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateImageView>(val)
                 }
             },
             destroy_image_view: unsafe {
@@ -1115,12 +1073,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image_view)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyImageView\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyImageView");
                 if val.is_null() {
                     destroy_image_view
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyImageView>(val)
                 }
             },
             create_command_pool: unsafe {
@@ -1132,12 +1089,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_command_pool)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateCommandPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateCommandPool");
                 if val.is_null() {
                     create_command_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateCommandPool>(val)
                 }
             },
             destroy_command_pool: unsafe {
@@ -1148,12 +1104,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_command_pool)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyCommandPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyCommandPool");
                 if val.is_null() {
                     destroy_command_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyCommandPool>(val)
                 }
             },
             reset_command_pool: unsafe {
@@ -1164,12 +1119,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_command_pool)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetCommandPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkResetCommandPool");
                 if val.is_null() {
                     reset_command_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkResetCommandPool>(val)
                 }
             },
             allocate_command_buffers: unsafe {
@@ -1183,12 +1137,11 @@ impl DeviceFnV1_0 {
                         stringify!(allocate_command_buffers)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkAllocateCommandBuffers\0");
-                let val = _f(cname);
+                let val = _f(c"vkAllocateCommandBuffers");
                 if val.is_null() {
                     allocate_command_buffers
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkAllocateCommandBuffers>(val)
                 }
             },
             free_command_buffers: unsafe {
@@ -1200,12 +1153,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(free_command_buffers)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFreeCommandBuffers\0");
-                let val = _f(cname);
+                let val = _f(c"vkFreeCommandBuffers");
                 if val.is_null() {
                     free_command_buffers
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkFreeCommandBuffers>(val)
                 }
             },
             begin_command_buffer: unsafe {
@@ -1215,12 +1167,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(begin_command_buffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBeginCommandBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkBeginCommandBuffer");
                 if val.is_null() {
                     begin_command_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkBeginCommandBuffer>(val)
                 }
             },
             end_command_buffer: unsafe {
@@ -1229,12 +1180,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(end_command_buffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkEndCommandBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkEndCommandBuffer");
                 if val.is_null() {
                     end_command_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkEndCommandBuffer>(val)
                 }
             },
             reset_command_buffer: unsafe {
@@ -1244,12 +1194,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_command_buffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetCommandBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkResetCommandBuffer");
                 if val.is_null() {
                     reset_command_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkResetCommandBuffer>(val)
                 }
             },
             cmd_copy_buffer: unsafe {
@@ -1262,12 +1211,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyBuffer");
                 if val.is_null() {
                     cmd_copy_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyBuffer>(val)
                 }
             },
             cmd_copy_image: unsafe {
@@ -1282,12 +1230,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_image)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyImage");
                 if val.is_null() {
                     cmd_copy_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyImage>(val)
                 }
             },
             cmd_copy_buffer_to_image: unsafe {
@@ -1304,12 +1251,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_copy_buffer_to_image)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyBufferToImage");
                 if val.is_null() {
                     cmd_copy_buffer_to_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyBufferToImage>(val)
                 }
             },
             cmd_copy_image_to_buffer: unsafe {
@@ -1326,12 +1272,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_copy_image_to_buffer)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyImageToBuffer");
                 if val.is_null() {
                     cmd_copy_image_to_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyImageToBuffer>(val)
                 }
             },
             cmd_update_buffer: unsafe {
@@ -1344,12 +1289,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_update_buffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdUpdateBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdUpdateBuffer");
                 if val.is_null() {
                     cmd_update_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdUpdateBuffer>(val)
                 }
             },
             cmd_fill_buffer: unsafe {
@@ -1362,12 +1306,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_fill_buffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdFillBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdFillBuffer");
                 if val.is_null() {
                     cmd_fill_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdFillBuffer>(val)
                 }
             },
             cmd_pipeline_barrier: unsafe {
@@ -1385,12 +1328,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_pipeline_barrier)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdPipelineBarrier");
                 if val.is_null() {
                     cmd_pipeline_barrier
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdPipelineBarrier>(val)
                 }
             },
             cmd_begin_query: unsafe {
@@ -1402,12 +1344,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_begin_query)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginQuery\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBeginQuery");
                 if val.is_null() {
                     cmd_begin_query
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginQuery>(val)
                 }
             },
             cmd_end_query: unsafe {
@@ -1418,12 +1359,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_query)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndQuery\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdEndQuery");
                 if val.is_null() {
                     cmd_end_query
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdEndQuery>(val)
                 }
             },
             cmd_reset_query_pool: unsafe {
@@ -1435,12 +1375,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_query_pool)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetQueryPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdResetQueryPool");
                 if val.is_null() {
                     cmd_reset_query_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdResetQueryPool>(val)
                 }
             },
             cmd_write_timestamp: unsafe {
@@ -1452,12 +1391,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdWriteTimestamp");
                 if val.is_null() {
                     cmd_write_timestamp
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdWriteTimestamp>(val)
                 }
             },
             cmd_copy_query_pool_results: unsafe {
@@ -1476,12 +1414,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_copy_query_pool_results)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyQueryPoolResults\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyQueryPoolResults");
                 if val.is_null() {
                     cmd_copy_query_pool_results
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyQueryPoolResults>(val)
                 }
             },
             cmd_execute_commands: unsafe {
@@ -1492,12 +1429,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_execute_commands)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdExecuteCommands\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdExecuteCommands");
                 if val.is_null() {
                     cmd_execute_commands
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdExecuteCommands>(val)
                 }
             },
             create_event: unsafe {
@@ -1509,12 +1445,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_event)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateEvent\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateEvent");
                 if val.is_null() {
                     create_event
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateEvent>(val)
                 }
             },
             destroy_event: unsafe {
@@ -1525,12 +1460,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_event)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyEvent\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyEvent");
                 if val.is_null() {
                     destroy_event
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyEvent>(val)
                 }
             },
             get_event_status: unsafe {
@@ -1540,12 +1474,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(get_event_status)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetEventStatus\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetEventStatus");
                 if val.is_null() {
                     get_event_status
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetEventStatus>(val)
                 }
             },
             set_event: unsafe {
@@ -1555,12 +1488,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(set_event)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetEvent\0");
-                let val = _f(cname);
+                let val = _f(c"vkSetEvent");
                 if val.is_null() {
                     set_event
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkSetEvent>(val)
                 }
             },
             reset_event: unsafe {
@@ -1570,12 +1502,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_event)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetEvent\0");
-                let val = _f(cname);
+                let val = _f(c"vkResetEvent");
                 if val.is_null() {
                     reset_event
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkResetEvent>(val)
                 }
             },
             create_buffer_view: unsafe {
@@ -1587,12 +1518,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_buffer_view)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateBufferView\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateBufferView");
                 if val.is_null() {
                     create_buffer_view
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateBufferView>(val)
                 }
             },
             destroy_buffer_view: unsafe {
@@ -1603,12 +1533,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer_view)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyBufferView\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyBufferView");
                 if val.is_null() {
                     destroy_buffer_view
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyBufferView>(val)
                 }
             },
             create_shader_module: unsafe {
@@ -1620,12 +1549,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_shader_module)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateShaderModule\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateShaderModule");
                 if val.is_null() {
                     create_shader_module
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateShaderModule>(val)
                 }
             },
             destroy_shader_module: unsafe {
@@ -1639,12 +1567,11 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_shader_module)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyShaderModule\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyShaderModule");
                 if val.is_null() {
                     destroy_shader_module
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyShaderModule>(val)
                 }
             },
             create_pipeline_cache: unsafe {
@@ -1659,12 +1586,11 @@ impl DeviceFnV1_0 {
                         stringify!(create_pipeline_cache)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreatePipelineCache\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreatePipelineCache");
                 if val.is_null() {
                     create_pipeline_cache
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreatePipelineCache>(val)
                 }
             },
             destroy_pipeline_cache: unsafe {
@@ -1678,12 +1604,11 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_pipeline_cache)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipelineCache\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyPipelineCache");
                 if val.is_null() {
                     destroy_pipeline_cache
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyPipelineCache>(val)
                 }
             },
             get_pipeline_cache_data: unsafe {
@@ -1698,12 +1623,11 @@ impl DeviceFnV1_0 {
                         stringify!(get_pipeline_cache_data)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPipelineCacheData\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPipelineCacheData");
                 if val.is_null() {
                     get_pipeline_cache_data
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPipelineCacheData>(val)
                 }
             },
             merge_pipeline_caches: unsafe {
@@ -1718,12 +1642,11 @@ impl DeviceFnV1_0 {
                         stringify!(merge_pipeline_caches)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkMergePipelineCaches\0");
-                let val = _f(cname);
+                let val = _f(c"vkMergePipelineCaches");
                 if val.is_null() {
                     merge_pipeline_caches
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkMergePipelineCaches>(val)
                 }
             },
             create_compute_pipelines: unsafe {
@@ -1740,12 +1663,11 @@ impl DeviceFnV1_0 {
                         stringify!(create_compute_pipelines)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateComputePipelines\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateComputePipelines");
                 if val.is_null() {
                     create_compute_pipelines
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateComputePipelines>(val)
                 }
             },
             destroy_pipeline: unsafe {
@@ -1756,12 +1678,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_pipeline)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipeline\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyPipeline");
                 if val.is_null() {
                     destroy_pipeline
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyPipeline>(val)
                 }
             },
             create_pipeline_layout: unsafe {
@@ -1776,12 +1697,11 @@ impl DeviceFnV1_0 {
                         stringify!(create_pipeline_layout)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreatePipelineLayout\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreatePipelineLayout");
                 if val.is_null() {
                     create_pipeline_layout
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreatePipelineLayout>(val)
                 }
             },
             destroy_pipeline_layout: unsafe {
@@ -1795,12 +1715,11 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_pipeline_layout)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipelineLayout\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyPipelineLayout");
                 if val.is_null() {
                     destroy_pipeline_layout
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyPipelineLayout>(val)
                 }
             },
             create_sampler: unsafe {
@@ -1812,12 +1731,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_sampler)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateSampler\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateSampler");
                 if val.is_null() {
                     create_sampler
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateSampler>(val)
                 }
             },
             destroy_sampler: unsafe {
@@ -1828,12 +1746,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_sampler)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroySampler\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroySampler");
                 if val.is_null() {
                     destroy_sampler
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroySampler>(val)
                 }
             },
             create_descriptor_set_layout: unsafe {
@@ -1848,12 +1765,11 @@ impl DeviceFnV1_0 {
                         stringify!(create_descriptor_set_layout)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateDescriptorSetLayout\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateDescriptorSetLayout");
                 if val.is_null() {
                     create_descriptor_set_layout
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateDescriptorSetLayout>(val)
                 }
             },
             destroy_descriptor_set_layout: unsafe {
@@ -1867,12 +1783,11 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_descriptor_set_layout)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyDescriptorSetLayout\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyDescriptorSetLayout");
                 if val.is_null() {
                     destroy_descriptor_set_layout
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyDescriptorSetLayout>(val)
                 }
             },
             create_descriptor_pool: unsafe {
@@ -1887,12 +1802,11 @@ impl DeviceFnV1_0 {
                         stringify!(create_descriptor_pool)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateDescriptorPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateDescriptorPool");
                 if val.is_null() {
                     create_descriptor_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateDescriptorPool>(val)
                 }
             },
             destroy_descriptor_pool: unsafe {
@@ -1906,12 +1820,11 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_descriptor_pool)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyDescriptorPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyDescriptorPool");
                 if val.is_null() {
                     destroy_descriptor_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyDescriptorPool>(val)
                 }
             },
             reset_descriptor_pool: unsafe {
@@ -1925,12 +1838,11 @@ impl DeviceFnV1_0 {
                         stringify!(reset_descriptor_pool)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetDescriptorPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkResetDescriptorPool");
                 if val.is_null() {
                     reset_descriptor_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkResetDescriptorPool>(val)
                 }
             },
             allocate_descriptor_sets: unsafe {
@@ -1944,12 +1856,11 @@ impl DeviceFnV1_0 {
                         stringify!(allocate_descriptor_sets)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkAllocateDescriptorSets\0");
-                let val = _f(cname);
+                let val = _f(c"vkAllocateDescriptorSets");
                 if val.is_null() {
                     allocate_descriptor_sets
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkAllocateDescriptorSets>(val)
                 }
             },
             free_descriptor_sets: unsafe {
@@ -1961,12 +1872,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(free_descriptor_sets)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFreeDescriptorSets\0");
-                let val = _f(cname);
+                let val = _f(c"vkFreeDescriptorSets");
                 if val.is_null() {
                     free_descriptor_sets
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkFreeDescriptorSets>(val)
                 }
             },
             update_descriptor_sets: unsafe {
@@ -1982,12 +1892,11 @@ impl DeviceFnV1_0 {
                         stringify!(update_descriptor_sets)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkUpdateDescriptorSets\0");
-                let val = _f(cname);
+                let val = _f(c"vkUpdateDescriptorSets");
                 if val.is_null() {
                     update_descriptor_sets
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkUpdateDescriptorSets>(val)
                 }
             },
             cmd_bind_pipeline: unsafe {
@@ -1998,12 +1907,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_bind_pipeline)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindPipeline\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBindPipeline");
                 if val.is_null() {
                     cmd_bind_pipeline
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBindPipeline>(val)
                 }
             },
             cmd_bind_descriptor_sets: unsafe {
@@ -2022,12 +1930,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_bind_descriptor_sets)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorSets\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBindDescriptorSets");
                 if val.is_null() {
                     cmd_bind_descriptor_sets
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBindDescriptorSets>(val)
                 }
             },
             cmd_clear_color_image: unsafe {
@@ -2044,12 +1951,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_clear_color_image)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdClearColorImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdClearColorImage");
                 if val.is_null() {
                     cmd_clear_color_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdClearColorImage>(val)
                 }
             },
             cmd_dispatch: unsafe {
@@ -2061,12 +1967,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_dispatch)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatch\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDispatch");
                 if val.is_null() {
                     cmd_dispatch
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDispatch>(val)
                 }
             },
             cmd_dispatch_indirect: unsafe {
@@ -2080,12 +1985,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_dispatch_indirect)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchIndirect\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDispatchIndirect");
                 if val.is_null() {
                     cmd_dispatch_indirect
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDispatchIndirect>(val)
                 }
             },
             cmd_set_event: unsafe {
@@ -2096,12 +2000,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_event)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetEvent");
                 if val.is_null() {
                     cmd_set_event
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetEvent>(val)
                 }
             },
             cmd_reset_event: unsafe {
@@ -2112,12 +2015,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_event)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdResetEvent");
                 if val.is_null() {
                     cmd_reset_event
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdResetEvent>(val)
                 }
             },
             cmd_wait_events: unsafe {
@@ -2136,12 +2038,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_wait_events)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdWaitEvents");
                 if val.is_null() {
                     cmd_wait_events
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdWaitEvents>(val)
                 }
             },
             cmd_push_constants: unsafe {
@@ -2155,12 +2056,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_push_constants)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdPushConstants");
                 if val.is_null() {
                     cmd_push_constants
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdPushConstants>(val)
                 }
             },
             create_graphics_pipelines: unsafe {
@@ -2177,12 +2077,11 @@ impl DeviceFnV1_0 {
                         stringify!(create_graphics_pipelines)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateGraphicsPipelines\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateGraphicsPipelines");
                 if val.is_null() {
                     create_graphics_pipelines
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateGraphicsPipelines>(val)
                 }
             },
             create_framebuffer: unsafe {
@@ -2194,12 +2093,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_framebuffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateFramebuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateFramebuffer");
                 if val.is_null() {
                     create_framebuffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateFramebuffer>(val)
                 }
             },
             destroy_framebuffer: unsafe {
@@ -2210,12 +2108,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_framebuffer)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyFramebuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyFramebuffer");
                 if val.is_null() {
                     destroy_framebuffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyFramebuffer>(val)
                 }
             },
             create_render_pass: unsafe {
@@ -2227,12 +2124,11 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_render_pass)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateRenderPass");
                 if val.is_null() {
                     create_render_pass
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateRenderPass>(val)
                 }
             },
             destroy_render_pass: unsafe {
@@ -2243,12 +2139,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_render_pass)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyRenderPass\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyRenderPass");
                 if val.is_null() {
                     destroy_render_pass
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyRenderPass>(val)
                 }
             },
             get_render_area_granularity: unsafe {
@@ -2262,12 +2157,11 @@ impl DeviceFnV1_0 {
                         stringify!(get_render_area_granularity)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetRenderAreaGranularity\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetRenderAreaGranularity");
                 if val.is_null() {
                     get_render_area_granularity
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetRenderAreaGranularity>(val)
                 }
             },
             cmd_set_viewport: unsafe {
@@ -2279,12 +2173,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_viewport)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewport\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetViewport");
                 if val.is_null() {
                     cmd_set_viewport
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetViewport>(val)
                 }
             },
             cmd_set_scissor: unsafe {
@@ -2296,12 +2189,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_scissor)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissor\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetScissor");
                 if val.is_null() {
                     cmd_set_scissor
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetScissor>(val)
                 }
             },
             cmd_set_line_width: unsafe {
@@ -2311,12 +2203,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_line_width)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineWidth\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetLineWidth");
                 if val.is_null() {
                     cmd_set_line_width
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLineWidth>(val)
                 }
             },
             cmd_set_depth_bias: unsafe {
@@ -2328,12 +2219,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_depth_bias)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBias\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetDepthBias");
                 if val.is_null() {
                     cmd_set_depth_bias
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBias>(val)
                 }
             },
             cmd_set_blend_constants: unsafe {
@@ -2346,12 +2236,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_set_blend_constants)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetBlendConstants\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetBlendConstants");
                 if val.is_null() {
                     cmd_set_blend_constants
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetBlendConstants>(val)
                 }
             },
             cmd_set_depth_bounds: unsafe {
@@ -2362,12 +2251,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_depth_bounds)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBounds\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetDepthBounds");
                 if val.is_null() {
                     cmd_set_depth_bounds
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBounds>(val)
                 }
             },
             cmd_set_stencil_compare_mask: unsafe {
@@ -2381,12 +2269,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_set_stencil_compare_mask)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilCompareMask\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetStencilCompareMask");
                 if val.is_null() {
                     cmd_set_stencil_compare_mask
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilCompareMask>(val)
                 }
             },
             cmd_set_stencil_write_mask: unsafe {
@@ -2400,12 +2287,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_set_stencil_write_mask)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilWriteMask\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetStencilWriteMask");
                 if val.is_null() {
                     cmd_set_stencil_write_mask
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilWriteMask>(val)
                 }
             },
             cmd_set_stencil_reference: unsafe {
@@ -2419,12 +2305,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_set_stencil_reference)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilReference\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetStencilReference");
                 if val.is_null() {
                     cmd_set_stencil_reference
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilReference>(val)
                 }
             },
             cmd_bind_index_buffer: unsafe {
@@ -2439,12 +2324,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_bind_index_buffer)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBindIndexBuffer");
                 if val.is_null() {
                     cmd_bind_index_buffer
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBindIndexBuffer>(val)
                 }
             },
             cmd_bind_vertex_buffers: unsafe {
@@ -2460,12 +2344,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_bind_vertex_buffers)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBindVertexBuffers");
                 if val.is_null() {
                     cmd_bind_vertex_buffers
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBindVertexBuffers>(val)
                 }
             },
             cmd_draw: unsafe {
@@ -2478,12 +2361,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDraw\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDraw");
                 if val.is_null() {
                     cmd_draw
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDraw>(val)
                 }
             },
             cmd_draw_indexed: unsafe {
@@ -2497,12 +2379,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw_indexed)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexed\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDrawIndexed");
                 if val.is_null() {
                     cmd_draw_indexed
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndexed>(val)
                 }
             },
             cmd_draw_indirect: unsafe {
@@ -2515,12 +2396,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw_indirect)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirect\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDrawIndirect");
                 if val.is_null() {
                     cmd_draw_indirect
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndirect>(val)
                 }
             },
             cmd_draw_indexed_indirect: unsafe {
@@ -2536,12 +2416,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_draw_indexed_indirect)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexedIndirect\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDrawIndexedIndirect");
                 if val.is_null() {
                     cmd_draw_indexed_indirect
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndexedIndirect>(val)
                 }
             },
             cmd_blit_image: unsafe {
@@ -2557,12 +2436,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_blit_image)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBlitImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBlitImage");
                 if val.is_null() {
                     cmd_blit_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBlitImage>(val)
                 }
             },
             cmd_clear_depth_stencil_image: unsafe {
@@ -2579,12 +2457,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_clear_depth_stencil_image)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdClearDepthStencilImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdClearDepthStencilImage");
                 if val.is_null() {
                     cmd_clear_depth_stencil_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdClearDepthStencilImage>(val)
                 }
             },
             cmd_clear_attachments: unsafe {
@@ -2600,12 +2477,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_clear_attachments)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdClearAttachments\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdClearAttachments");
                 if val.is_null() {
                     cmd_clear_attachments
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdClearAttachments>(val)
                 }
             },
             cmd_resolve_image: unsafe {
@@ -2620,12 +2496,11 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_resolve_image)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResolveImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdResolveImage");
                 if val.is_null() {
                     cmd_resolve_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdResolveImage>(val)
                 }
             },
             cmd_begin_render_pass: unsafe {
@@ -2639,12 +2514,11 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_begin_render_pass)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBeginRenderPass");
                 if val.is_null() {
                     cmd_begin_render_pass
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginRenderPass>(val)
                 }
             },
             cmd_next_subpass: unsafe {
@@ -2654,24 +2528,22 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_next_subpass)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdNextSubpass");
                 if val.is_null() {
                     cmd_next_subpass
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdNextSubpass>(val)
                 }
             },
             cmd_end_render_pass: unsafe {
                 unsafe extern "system" fn cmd_end_render_pass(_command_buffer: CommandBuffer) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdEndRenderPass");
                 if val.is_null() {
                     cmd_end_render_pass
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdEndRenderPass>(val)
                 }
             },
         }
@@ -2699,12 +2571,11 @@ impl EntryFnV1_1 {
                         stringify!(enumerate_instance_version)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
-                let val = _f(cname);
+                let val = _f(c"vkEnumerateInstanceVersion");
                 if val.is_null() {
                     enumerate_instance_version
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkEnumerateInstanceVersion>(val)
                 }
             },
         }
@@ -2748,13 +2619,13 @@ impl InstanceFnV1_1 {
                         stringify!(enumerate_physical_device_groups)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkEnumeratePhysicalDeviceGroups\0");
-                let val = _f(cname);
+                let val = _f(c"vkEnumeratePhysicalDeviceGroups");
                 if val.is_null() {
                     enumerate_physical_device_groups
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkEnumeratePhysicalDeviceGroups>(
+                        val,
+                    )
                 }
             },
             get_physical_device_features2: unsafe {
@@ -2767,12 +2638,11 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_features2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceFeatures2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceFeatures2");
                 if val.is_null() {
                     get_physical_device_features2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceFeatures2>(val)
                 }
             },
             get_physical_device_properties2: unsafe {
@@ -2785,13 +2655,11 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_properties2)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceProperties2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceProperties2");
                 if val.is_null() {
                     get_physical_device_properties2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceProperties2>(val)
                 }
             },
             get_physical_device_format_properties2: unsafe {
@@ -2805,13 +2673,13 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_format_properties2)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceFormatProperties2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceFormatProperties2");
                 if val.is_null() {
                     get_physical_device_format_properties2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceFormatProperties2>(
+                        val,
+                    )
                 }
             },
             get_physical_device_image_format_properties2: unsafe {
@@ -2825,14 +2693,14 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_image_format_properties2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceImageFormatProperties2\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceImageFormatProperties2");
                 if val.is_null() {
                     get_physical_device_image_format_properties2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceImageFormatProperties2,
+                    >(val)
                 }
             },
             get_physical_device_queue_family_properties2: unsafe {
@@ -2846,14 +2714,14 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_queue_family_properties2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceQueueFamilyProperties2\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceQueueFamilyProperties2");
                 if val.is_null() {
                     get_physical_device_queue_family_properties2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceQueueFamilyProperties2,
+                    >(val)
                 }
             },
             get_physical_device_memory_properties2: unsafe {
@@ -2866,13 +2734,13 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_memory_properties2)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceMemoryProperties2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceMemoryProperties2");
                 if val.is_null() {
                     get_physical_device_memory_properties2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceMemoryProperties2>(
+                        val,
+                    )
                 }
             },
             get_physical_device_sparse_image_format_properties2: unsafe {
@@ -2887,14 +2755,14 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_sparse_image_format_properties2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceSparseImageFormatProperties2\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceSparseImageFormatProperties2");
                 if val.is_null() {
                     get_physical_device_sparse_image_format_properties2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceSparseImageFormatProperties2,
+                    >(val)
                 }
             },
             get_physical_device_external_buffer_properties: unsafe {
@@ -2908,14 +2776,14 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_external_buffer_properties)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceExternalBufferProperties\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceExternalBufferProperties");
                 if val.is_null() {
                     get_physical_device_external_buffer_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceExternalBufferProperties,
+                    >(val)
                 }
             },
             get_physical_device_external_fence_properties: unsafe {
@@ -2929,14 +2797,14 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_external_fence_properties)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceExternalFenceProperties\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceExternalFenceProperties");
                 if val.is_null() {
                     get_physical_device_external_fence_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceExternalFenceProperties,
+                    >(val)
                 }
             },
             get_physical_device_external_semaphore_properties: unsafe {
@@ -2950,14 +2818,14 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_external_semaphore_properties)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceExternalSemaphoreProperties\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceExternalSemaphoreProperties");
                 if val.is_null() {
                     get_physical_device_external_semaphore_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetPhysicalDeviceExternalSemaphoreProperties,
+                    >(val)
                 }
             },
         }
@@ -2999,12 +2867,11 @@ impl DeviceFnV1_1 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_buffer_memory2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindBufferMemory2\0");
-                let val = _f(cname);
+                let val = _f(c"vkBindBufferMemory2");
                 if val.is_null() {
                     bind_buffer_memory2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkBindBufferMemory2>(val)
                 }
             },
             bind_image_memory2: unsafe {
@@ -3015,12 +2882,11 @@ impl DeviceFnV1_1 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_image_memory2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindImageMemory2\0");
-                let val = _f(cname);
+                let val = _f(c"vkBindImageMemory2");
                 if val.is_null() {
                     bind_image_memory2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkBindImageMemory2>(val)
                 }
             },
             get_device_group_peer_memory_features: unsafe {
@@ -3036,13 +2902,13 @@ impl DeviceFnV1_1 {
                         stringify!(get_device_group_peer_memory_features)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceGroupPeerMemoryFeatures\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceGroupPeerMemoryFeatures");
                 if val.is_null() {
                     get_device_group_peer_memory_features
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceGroupPeerMemoryFeatures>(
+                        val,
+                    )
                 }
             },
             cmd_set_device_mask: unsafe {
@@ -3052,12 +2918,11 @@ impl DeviceFnV1_1 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_device_mask)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDeviceMask\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetDeviceMask");
                 if val.is_null() {
                     cmd_set_device_mask
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDeviceMask>(val)
                 }
             },
             get_image_memory_requirements2: unsafe {
@@ -3071,12 +2936,11 @@ impl DeviceFnV1_1 {
                         stringify!(get_image_memory_requirements2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetImageMemoryRequirements2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetImageMemoryRequirements2");
                 if val.is_null() {
                     get_image_memory_requirements2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetImageMemoryRequirements2>(val)
                 }
             },
             get_buffer_memory_requirements2: unsafe {
@@ -3090,13 +2954,11 @@ impl DeviceFnV1_1 {
                         stringify!(get_buffer_memory_requirements2)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetBufferMemoryRequirements2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetBufferMemoryRequirements2");
                 if val.is_null() {
                     get_buffer_memory_requirements2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetBufferMemoryRequirements2>(val)
                 }
             },
             get_image_sparse_memory_requirements2: unsafe {
@@ -3111,13 +2973,13 @@ impl DeviceFnV1_1 {
                         stringify!(get_image_sparse_memory_requirements2)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetImageSparseMemoryRequirements2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetImageSparseMemoryRequirements2");
                 if val.is_null() {
                     get_image_sparse_memory_requirements2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetImageSparseMemoryRequirements2>(
+                        val,
+                    )
                 }
             },
             trim_command_pool: unsafe {
@@ -3128,12 +2990,11 @@ impl DeviceFnV1_1 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(trim_command_pool)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkTrimCommandPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkTrimCommandPool");
                 if val.is_null() {
                     trim_command_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkTrimCommandPool>(val)
                 }
             },
             get_device_queue2: unsafe {
@@ -3144,12 +3005,11 @@ impl DeviceFnV1_1 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(get_device_queue2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceQueue2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceQueue2");
                 if val.is_null() {
                     get_device_queue2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceQueue2>(val)
                 }
             },
             cmd_dispatch_base: unsafe {
@@ -3164,12 +3024,11 @@ impl DeviceFnV1_1 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_dispatch_base)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchBase\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDispatchBase");
                 if val.is_null() {
                     cmd_dispatch_base
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDispatchBase>(val)
                 }
             },
             create_descriptor_update_template: unsafe {
@@ -3184,13 +3043,13 @@ impl DeviceFnV1_1 {
                         stringify!(create_descriptor_update_template)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCreateDescriptorUpdateTemplate\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateDescriptorUpdateTemplate");
                 if val.is_null() {
                     create_descriptor_update_template
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateDescriptorUpdateTemplate>(
+                        val,
+                    )
                 }
             },
             destroy_descriptor_update_template: unsafe {
@@ -3204,13 +3063,13 @@ impl DeviceFnV1_1 {
                         stringify!(destroy_descriptor_update_template)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkDestroyDescriptorUpdateTemplate\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyDescriptorUpdateTemplate");
                 if val.is_null() {
                     destroy_descriptor_update_template
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyDescriptorUpdateTemplate>(
+                        val,
+                    )
                 }
             },
             update_descriptor_set_with_template: unsafe {
@@ -3225,13 +3084,13 @@ impl DeviceFnV1_1 {
                         stringify!(update_descriptor_set_with_template)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkUpdateDescriptorSetWithTemplate\0");
-                let val = _f(cname);
+                let val = _f(c"vkUpdateDescriptorSetWithTemplate");
                 if val.is_null() {
                     update_descriptor_set_with_template
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkUpdateDescriptorSetWithTemplate>(
+                        val,
+                    )
                 }
             },
             get_descriptor_set_layout_support: unsafe {
@@ -3245,13 +3104,13 @@ impl DeviceFnV1_1 {
                         stringify!(get_descriptor_set_layout_support)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetDescriptorSetLayoutSupport\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDescriptorSetLayoutSupport");
                 if val.is_null() {
                     get_descriptor_set_layout_support
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDescriptorSetLayoutSupport>(
+                        val,
+                    )
                 }
             },
             create_sampler_ycbcr_conversion: unsafe {
@@ -3266,13 +3125,11 @@ impl DeviceFnV1_1 {
                         stringify!(create_sampler_ycbcr_conversion)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCreateSamplerYcbcrConversion\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateSamplerYcbcrConversion");
                 if val.is_null() {
                     create_sampler_ycbcr_conversion
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateSamplerYcbcrConversion>(val)
                 }
             },
             destroy_sampler_ycbcr_conversion: unsafe {
@@ -3286,13 +3143,13 @@ impl DeviceFnV1_1 {
                         stringify!(destroy_sampler_ycbcr_conversion)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkDestroySamplerYcbcrConversion\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroySamplerYcbcrConversion");
                 if val.is_null() {
                     destroy_sampler_ycbcr_conversion
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroySamplerYcbcrConversion>(
+                        val,
+                    )
                 }
             },
         }
@@ -3338,12 +3195,11 @@ impl DeviceFnV1_2 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(reset_query_pool)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetQueryPool\0");
-                let val = _f(cname);
+                let val = _f(c"vkResetQueryPool");
                 if val.is_null() {
                     reset_query_pool
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkResetQueryPool>(val)
                 }
             },
             get_semaphore_counter_value: unsafe {
@@ -3357,12 +3213,11 @@ impl DeviceFnV1_2 {
                         stringify!(get_semaphore_counter_value)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetSemaphoreCounterValue\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetSemaphoreCounterValue");
                 if val.is_null() {
                     get_semaphore_counter_value
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetSemaphoreCounterValue>(val)
                 }
             },
             wait_semaphores: unsafe {
@@ -3373,12 +3228,11 @@ impl DeviceFnV1_2 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(wait_semaphores)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkWaitSemaphores\0");
-                let val = _f(cname);
+                let val = _f(c"vkWaitSemaphores");
                 if val.is_null() {
                     wait_semaphores
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkWaitSemaphores>(val)
                 }
             },
             signal_semaphore: unsafe {
@@ -3388,12 +3242,11 @@ impl DeviceFnV1_2 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(signal_semaphore)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkSignalSemaphore\0");
-                let val = _f(cname);
+                let val = _f(c"vkSignalSemaphore");
                 if val.is_null() {
                     signal_semaphore
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkSignalSemaphore>(val)
                 }
             },
             get_buffer_device_address: unsafe {
@@ -3406,12 +3259,11 @@ impl DeviceFnV1_2 {
                         stringify!(get_buffer_device_address)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetBufferDeviceAddress\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetBufferDeviceAddress");
                 if val.is_null() {
                     get_buffer_device_address
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetBufferDeviceAddress>(val)
                 }
             },
             get_buffer_opaque_capture_address: unsafe {
@@ -3424,13 +3276,13 @@ impl DeviceFnV1_2 {
                         stringify!(get_buffer_opaque_capture_address)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetBufferOpaqueCaptureAddress\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetBufferOpaqueCaptureAddress");
                 if val.is_null() {
                     get_buffer_opaque_capture_address
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetBufferOpaqueCaptureAddress>(
+                        val,
+                    )
                 }
             },
             get_device_memory_opaque_capture_address: unsafe {
@@ -3443,13 +3295,13 @@ impl DeviceFnV1_2 {
                         stringify!(get_device_memory_opaque_capture_address)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceMemoryOpaqueCaptureAddress\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceMemoryOpaqueCaptureAddress");
                 if val.is_null() {
                     get_device_memory_opaque_capture_address
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceMemoryOpaqueCaptureAddress>(
+                        val,
+                    )
                 }
             },
             cmd_draw_indirect_count: unsafe {
@@ -3467,12 +3319,11 @@ impl DeviceFnV1_2 {
                         stringify!(cmd_draw_indirect_count)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirectCount\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDrawIndirectCount");
                 if val.is_null() {
                     cmd_draw_indirect_count
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndirectCount>(val)
                 }
             },
             cmd_draw_indexed_indirect_count: unsafe {
@@ -3490,12 +3341,11 @@ impl DeviceFnV1_2 {
                         stringify!(cmd_draw_indexed_indirect_count)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexedIndirectCount\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdDrawIndexedIndirectCount");
                 if val.is_null() {
                     cmd_draw_indexed_indirect_count
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndexedIndirectCount>(val)
                 }
             },
             create_render_pass2: unsafe {
@@ -3507,12 +3357,11 @@ impl DeviceFnV1_2 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_render_pass2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreateRenderPass2");
                 if val.is_null() {
                     create_render_pass2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreateRenderPass2>(val)
                 }
             },
             cmd_begin_render_pass2: unsafe {
@@ -3526,12 +3375,11 @@ impl DeviceFnV1_2 {
                         stringify!(cmd_begin_render_pass2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBeginRenderPass2");
                 if val.is_null() {
                     cmd_begin_render_pass2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginRenderPass2>(val)
                 }
             },
             cmd_next_subpass2: unsafe {
@@ -3542,12 +3390,11 @@ impl DeviceFnV1_2 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_next_subpass2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdNextSubpass2");
                 if val.is_null() {
                     cmd_next_subpass2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdNextSubpass2>(val)
                 }
             },
             cmd_end_render_pass2: unsafe {
@@ -3557,12 +3404,11 @@ impl DeviceFnV1_2 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdEndRenderPass2");
                 if val.is_null() {
                     cmd_end_render_pass2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdEndRenderPass2>(val)
                 }
             },
         }
@@ -3595,13 +3441,13 @@ impl InstanceFnV1_3 {
                         stringify!(get_physical_device_tool_properties)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceToolProperties\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPhysicalDeviceToolProperties");
                 if val.is_null() {
                     get_physical_device_tool_properties
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPhysicalDeviceToolProperties>(
+                        val,
+                    )
                 }
             },
         }
@@ -3667,12 +3513,11 @@ impl DeviceFnV1_3 {
                         stringify!(create_private_data_slot)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreatePrivateDataSlot\0");
-                let val = _f(cname);
+                let val = _f(c"vkCreatePrivateDataSlot");
                 if val.is_null() {
                     create_private_data_slot
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCreatePrivateDataSlot>(val)
                 }
             },
             destroy_private_data_slot: unsafe {
@@ -3686,12 +3531,11 @@ impl DeviceFnV1_3 {
                         stringify!(destroy_private_data_slot)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyPrivateDataSlot\0");
-                let val = _f(cname);
+                let val = _f(c"vkDestroyPrivateDataSlot");
                 if val.is_null() {
                     destroy_private_data_slot
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkDestroyPrivateDataSlot>(val)
                 }
             },
             set_private_data: unsafe {
@@ -3704,12 +3548,11 @@ impl DeviceFnV1_3 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(set_private_data)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetPrivateData\0");
-                let val = _f(cname);
+                let val = _f(c"vkSetPrivateData");
                 if val.is_null() {
                     set_private_data
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkSetPrivateData>(val)
                 }
             },
             get_private_data: unsafe {
@@ -3722,12 +3565,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(get_private_data)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPrivateData\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetPrivateData");
                 if val.is_null() {
                     get_private_data
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetPrivateData>(val)
                 }
             },
             cmd_pipeline_barrier2: unsafe {
@@ -3740,12 +3582,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_pipeline_barrier2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdPipelineBarrier2");
                 if val.is_null() {
                     cmd_pipeline_barrier2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdPipelineBarrier2>(val)
                 }
             },
             cmd_write_timestamp2: unsafe {
@@ -3757,12 +3598,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdWriteTimestamp2");
                 if val.is_null() {
                     cmd_write_timestamp2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdWriteTimestamp2>(val)
                 }
             },
             queue_submit2: unsafe {
@@ -3774,12 +3614,11 @@ impl DeviceFnV1_3 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_submit2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit2\0");
-                let val = _f(cname);
+                let val = _f(c"vkQueueSubmit2");
                 if val.is_null() {
                     queue_submit2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkQueueSubmit2>(val)
                 }
             },
             cmd_copy_buffer2: unsafe {
@@ -3789,12 +3628,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyBuffer2");
                 if val.is_null() {
                     cmd_copy_buffer2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyBuffer2>(val)
                 }
             },
             cmd_copy_image2: unsafe {
@@ -3804,12 +3642,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_image2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyImage2");
                 if val.is_null() {
                     cmd_copy_image2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyImage2>(val)
                 }
             },
             cmd_copy_buffer_to_image2: unsafe {
@@ -3822,12 +3659,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_copy_buffer_to_image2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyBufferToImage2");
                 if val.is_null() {
                     cmd_copy_buffer_to_image2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyBufferToImage2>(val)
                 }
             },
             cmd_copy_image_to_buffer2: unsafe {
@@ -3840,12 +3676,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_copy_image_to_buffer2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdCopyImageToBuffer2");
                 if val.is_null() {
                     cmd_copy_image_to_buffer2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyImageToBuffer2>(val)
                 }
             },
             get_device_buffer_memory_requirements: unsafe {
@@ -3859,13 +3694,13 @@ impl DeviceFnV1_3 {
                         stringify!(get_device_buffer_memory_requirements)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceBufferMemoryRequirements\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceBufferMemoryRequirements");
                 if val.is_null() {
                     get_device_buffer_memory_requirements
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceBufferMemoryRequirements>(
+                        val,
+                    )
                 }
             },
             get_device_image_memory_requirements: unsafe {
@@ -3879,13 +3714,13 @@ impl DeviceFnV1_3 {
                         stringify!(get_device_image_memory_requirements)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceImageMemoryRequirements\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceImageMemoryRequirements");
                 if val.is_null() {
                     get_device_image_memory_requirements
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceImageMemoryRequirements>(
+                        val,
+                    )
                 }
             },
             get_device_image_sparse_memory_requirements: unsafe {
@@ -3900,14 +3735,14 @@ impl DeviceFnV1_3 {
                         stringify!(get_device_image_sparse_memory_requirements)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetDeviceImageSparseMemoryRequirements\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceImageSparseMemoryRequirements");
                 if val.is_null() {
                     get_device_image_sparse_memory_requirements
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkGetDeviceImageSparseMemoryRequirements,
+                    >(val)
                 }
             },
             cmd_set_event2: unsafe {
@@ -3918,12 +3753,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_event2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetEvent2");
                 if val.is_null() {
                     cmd_set_event2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetEvent2>(val)
                 }
             },
             cmd_reset_event2: unsafe {
@@ -3934,12 +3768,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_event2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdResetEvent2");
                 if val.is_null() {
                     cmd_reset_event2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdResetEvent2>(val)
                 }
             },
             cmd_wait_events2: unsafe {
@@ -3951,12 +3784,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_wait_events2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdWaitEvents2");
                 if val.is_null() {
                     cmd_wait_events2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdWaitEvents2>(val)
                 }
             },
             cmd_blit_image2: unsafe {
@@ -3966,12 +3798,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_blit_image2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBlitImage2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBlitImage2");
                 if val.is_null() {
                     cmd_blit_image2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBlitImage2>(val)
                 }
             },
             cmd_resolve_image2: unsafe {
@@ -3981,12 +3812,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_resolve_image2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResolveImage2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdResolveImage2");
                 if val.is_null() {
                     cmd_resolve_image2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdResolveImage2>(val)
                 }
             },
             cmd_begin_rendering: unsafe {
@@ -3996,24 +3826,22 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_begin_rendering)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRendering\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBeginRendering");
                 if val.is_null() {
                     cmd_begin_rendering
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBeginRendering>(val)
                 }
             },
             cmd_end_rendering: unsafe {
                 unsafe extern "system" fn cmd_end_rendering(_command_buffer: CommandBuffer) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_rendering)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRendering\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdEndRendering");
                 if val.is_null() {
                     cmd_end_rendering
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdEndRendering>(val)
                 }
             },
             cmd_set_cull_mode: unsafe {
@@ -4023,12 +3851,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_cull_mode)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetCullMode\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetCullMode");
                 if val.is_null() {
                     cmd_set_cull_mode
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetCullMode>(val)
                 }
             },
             cmd_set_front_face: unsafe {
@@ -4038,12 +3865,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_front_face)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetFrontFace\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetFrontFace");
                 if val.is_null() {
                     cmd_set_front_face
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetFrontFace>(val)
                 }
             },
             cmd_set_primitive_topology: unsafe {
@@ -4056,12 +3882,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_primitive_topology)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPrimitiveTopology\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetPrimitiveTopology");
                 if val.is_null() {
                     cmd_set_primitive_topology
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetPrimitiveTopology>(val)
                 }
             },
             cmd_set_viewport_with_count: unsafe {
@@ -4075,12 +3900,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_viewport_with_count)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportWithCount\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetViewportWithCount");
                 if val.is_null() {
                     cmd_set_viewport_with_count
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetViewportWithCount>(val)
                 }
             },
             cmd_set_scissor_with_count: unsafe {
@@ -4094,12 +3918,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_scissor_with_count)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissorWithCount\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetScissorWithCount");
                 if val.is_null() {
                     cmd_set_scissor_with_count
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetScissorWithCount>(val)
                 }
             },
             cmd_bind_vertex_buffers2: unsafe {
@@ -4117,12 +3940,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_bind_vertex_buffers2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBindVertexBuffers2");
                 if val.is_null() {
                     cmd_bind_vertex_buffers2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBindVertexBuffers2>(val)
                 }
             },
             cmd_set_depth_test_enable: unsafe {
@@ -4135,12 +3957,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_test_enable)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthTestEnable\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetDepthTestEnable");
                 if val.is_null() {
                     cmd_set_depth_test_enable
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthTestEnable>(val)
                 }
             },
             cmd_set_depth_write_enable: unsafe {
@@ -4153,12 +3974,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_write_enable)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthWriteEnable\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetDepthWriteEnable");
                 if val.is_null() {
                     cmd_set_depth_write_enable
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthWriteEnable>(val)
                 }
             },
             cmd_set_depth_compare_op: unsafe {
@@ -4171,12 +3991,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_compare_op)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthCompareOp\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetDepthCompareOp");
                 if val.is_null() {
                     cmd_set_depth_compare_op
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthCompareOp>(val)
                 }
             },
             cmd_set_depth_bounds_test_enable: unsafe {
@@ -4189,12 +4008,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_bounds_test_enable)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBoundsTestEnable\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetDepthBoundsTestEnable");
                 if val.is_null() {
                     cmd_set_depth_bounds_test_enable
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBoundsTestEnable>(val)
                 }
             },
             cmd_set_stencil_test_enable: unsafe {
@@ -4207,12 +4025,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_stencil_test_enable)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilTestEnable\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetStencilTestEnable");
                 if val.is_null() {
                     cmd_set_stencil_test_enable
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilTestEnable>(val)
                 }
             },
             cmd_set_stencil_op: unsafe {
@@ -4226,12 +4043,11 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_stencil_op)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilOp\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetStencilOp");
                 if val.is_null() {
                     cmd_set_stencil_op
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetStencilOp>(val)
                 }
             },
             cmd_set_rasterizer_discard_enable: unsafe {
@@ -4244,13 +4060,13 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_rasterizer_discard_enable)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCmdSetRasterizerDiscardEnable\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetRasterizerDiscardEnable");
                 if val.is_null() {
                     cmd_set_rasterizer_discard_enable
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetRasterizerDiscardEnable>(
+                        val,
+                    )
                 }
             },
             cmd_set_depth_bias_enable: unsafe {
@@ -4263,12 +4079,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_bias_enable)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBiasEnable\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetDepthBiasEnable");
                 if val.is_null() {
                     cmd_set_depth_bias_enable
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDepthBiasEnable>(val)
                 }
             },
             cmd_set_primitive_restart_enable: unsafe {
@@ -4281,13 +4096,11 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_primitive_restart_enable)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPrimitiveRestartEnable\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetPrimitiveRestartEnable");
                 if val.is_null() {
                     cmd_set_primitive_restart_enable
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetPrimitiveRestartEnable>(val)
                 }
             },
         }
@@ -4338,12 +4151,11 @@ impl DeviceFnV1_4 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(map_memory2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkMapMemory2\0");
-                let val = _f(cname);
+                let val = _f(c"vkMapMemory2");
                 if val.is_null() {
                     map_memory2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkMapMemory2>(val)
                 }
             },
             unmap_memory2: unsafe {
@@ -4353,12 +4165,11 @@ impl DeviceFnV1_4 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(unmap_memory2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory2\0");
-                let val = _f(cname);
+                let val = _f(c"vkUnmapMemory2");
                 if val.is_null() {
                     unmap_memory2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkUnmapMemory2>(val)
                 }
             },
             get_device_image_subresource_layout: unsafe {
@@ -4372,13 +4183,13 @@ impl DeviceFnV1_4 {
                         stringify!(get_device_image_subresource_layout)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceImageSubresourceLayout\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetDeviceImageSubresourceLayout");
                 if val.is_null() {
                     get_device_image_subresource_layout
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceImageSubresourceLayout>(
+                        val,
+                    )
                 }
             },
             get_image_subresource_layout2: unsafe {
@@ -4393,12 +4204,11 @@ impl DeviceFnV1_4 {
                         stringify!(get_image_subresource_layout2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetImageSubresourceLayout2\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetImageSubresourceLayout2");
                 if val.is_null() {
                     get_image_subresource_layout2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetImageSubresourceLayout2>(val)
                 }
             },
             copy_memory_to_image: unsafe {
@@ -4408,12 +4218,11 @@ impl DeviceFnV1_4 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(copy_memory_to_image)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCopyMemoryToImage");
                 if val.is_null() {
                     copy_memory_to_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCopyMemoryToImage>(val)
                 }
             },
             copy_image_to_memory: unsafe {
@@ -4423,12 +4232,11 @@ impl DeviceFnV1_4 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(copy_image_to_memory)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToMemory\0");
-                let val = _f(cname);
+                let val = _f(c"vkCopyImageToMemory");
                 if val.is_null() {
                     copy_image_to_memory
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCopyImageToMemory>(val)
                 }
             },
             copy_image_to_image: unsafe {
@@ -4438,12 +4246,11 @@ impl DeviceFnV1_4 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(copy_image_to_image)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToImage\0");
-                let val = _f(cname);
+                let val = _f(c"vkCopyImageToImage");
                 if val.is_null() {
                     copy_image_to_image
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCopyImageToImage>(val)
                 }
             },
             transition_image_layout: unsafe {
@@ -4457,12 +4264,11 @@ impl DeviceFnV1_4 {
                         stringify!(transition_image_layout)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkTransitionImageLayout\0");
-                let val = _f(cname);
+                let val = _f(c"vkTransitionImageLayout");
                 if val.is_null() {
                     transition_image_layout
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkTransitionImageLayout>(val)
                 }
             },
             cmd_push_descriptor_set: unsafe {
@@ -4479,12 +4285,11 @@ impl DeviceFnV1_4 {
                         stringify!(cmd_push_descriptor_set)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSet\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdPushDescriptorSet");
                 if val.is_null() {
                     cmd_push_descriptor_set
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdPushDescriptorSet>(val)
                 }
             },
             cmd_push_descriptor_set_with_template: unsafe {
@@ -4500,13 +4305,13 @@ impl DeviceFnV1_4 {
                         stringify!(cmd_push_descriptor_set_with_template)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSetWithTemplate\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdPushDescriptorSetWithTemplate");
                 if val.is_null() {
                     cmd_push_descriptor_set_with_template
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdPushDescriptorSetWithTemplate>(
+                        val,
+                    )
                 }
             },
             cmd_bind_descriptor_sets2: unsafe {
@@ -4519,12 +4324,11 @@ impl DeviceFnV1_4 {
                         stringify!(cmd_bind_descriptor_sets2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorSets2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBindDescriptorSets2");
                 if val.is_null() {
                     cmd_bind_descriptor_sets2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBindDescriptorSets2>(val)
                 }
             },
             cmd_push_constants2: unsafe {
@@ -4534,12 +4338,11 @@ impl DeviceFnV1_4 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_push_constants2)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdPushConstants2");
                 if val.is_null() {
                     cmd_push_constants2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdPushConstants2>(val)
                 }
             },
             cmd_push_descriptor_set2: unsafe {
@@ -4552,12 +4355,11 @@ impl DeviceFnV1_4 {
                         stringify!(cmd_push_descriptor_set2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSet2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdPushDescriptorSet2");
                 if val.is_null() {
                     cmd_push_descriptor_set2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdPushDescriptorSet2>(val)
                 }
             },
             cmd_push_descriptor_set_with_template2: unsafe {
@@ -4570,13 +4372,13 @@ impl DeviceFnV1_4 {
                         stringify!(cmd_push_descriptor_set_with_template2)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSetWithTemplate2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdPushDescriptorSetWithTemplate2");
                 if val.is_null() {
                     cmd_push_descriptor_set_with_template2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdPushDescriptorSetWithTemplate2>(
+                        val,
+                    )
                 }
             },
             cmd_set_line_stipple: unsafe {
@@ -4587,12 +4389,11 @@ impl DeviceFnV1_4 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_line_stipple)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStipple\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetLineStipple");
                 if val.is_null() {
                     cmd_set_line_stipple
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetLineStipple>(val)
                 }
             },
             cmd_bind_index_buffer2: unsafe {
@@ -4608,12 +4409,11 @@ impl DeviceFnV1_4 {
                         stringify!(cmd_bind_index_buffer2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer2\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdBindIndexBuffer2");
                 if val.is_null() {
                     cmd_bind_index_buffer2
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdBindIndexBuffer2>(val)
                 }
             },
             get_rendering_area_granularity: unsafe {
@@ -4627,12 +4427,11 @@ impl DeviceFnV1_4 {
                         stringify!(get_rendering_area_granularity)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetRenderingAreaGranularity\0");
-                let val = _f(cname);
+                let val = _f(c"vkGetRenderingAreaGranularity");
                 if val.is_null() {
                     get_rendering_area_granularity
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkGetRenderingAreaGranularity>(val)
                 }
             },
             cmd_set_rendering_attachment_locations: unsafe {
@@ -4645,13 +4444,13 @@ impl DeviceFnV1_4 {
                         stringify!(cmd_set_rendering_attachment_locations)
                     ))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCmdSetRenderingAttachmentLocations\0");
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetRenderingAttachmentLocations");
                 if val.is_null() {
                     cmd_set_rendering_attachment_locations
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<*const c_void, PFN_vkCmdSetRenderingAttachmentLocations>(
+                        val,
+                    )
                 }
             },
             cmd_set_rendering_input_attachment_indices: unsafe {
@@ -4664,14 +4463,14 @@ impl DeviceFnV1_4 {
                         stringify!(cmd_set_rendering_input_attachment_indices)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetRenderingInputAttachmentIndices\0",
-                );
-                let val = _f(cname);
+                let val = _f(c"vkCmdSetRenderingInputAttachmentIndices");
                 if val.is_null() {
                     cmd_set_rendering_input_attachment_indices
                 } else {
-                    ::core::mem::transmute(val)
+                    ::core::mem::transmute::<
+                        *const c_void,
+                        PFN_vkCmdSetRenderingInputAttachmentIndices,
+                    >(val)
                 }
             },
         }

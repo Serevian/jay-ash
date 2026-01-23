@@ -13,7 +13,9 @@ impl crate::khr::get_physical_device_properties2::Instance {
         physical_device: vk::PhysicalDevice,
         features: &mut vk::PhysicalDeviceFeatures2KHR<'_>,
     ) {
-        (self.fp.get_physical_device_features2_khr)(physical_device, features);
+        unsafe {
+            (self.fp.get_physical_device_features2_khr)(physical_device, features);
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties2KHR.html>
@@ -24,11 +26,13 @@ impl crate::khr::get_physical_device_properties2::Instance {
         format: vk::Format,
         format_properties: &mut vk::FormatProperties2KHR<'_>,
     ) {
-        (self.fp.get_physical_device_format_properties2_khr)(
-            physical_device,
-            format,
-            format_properties,
-        );
+        unsafe {
+            (self.fp.get_physical_device_format_properties2_khr)(
+                physical_device,
+                format,
+                format_properties,
+            );
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2KHR.html>
@@ -39,12 +43,14 @@ impl crate::khr::get_physical_device_properties2::Instance {
         image_format_info: &vk::PhysicalDeviceImageFormatInfo2KHR<'_>,
         image_format_properties: &mut vk::ImageFormatProperties2KHR<'_>,
     ) -> VkResult<()> {
-        (self.fp.get_physical_device_image_format_properties2_khr)(
-            physical_device,
-            image_format_info,
-            image_format_properties,
-        )
-        .result()
+        unsafe {
+            (self.fp.get_physical_device_image_format_properties2_khr)(
+                physical_device,
+                image_format_info,
+                image_format_properties,
+            )
+            .result()
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2KHR.html>
@@ -54,7 +60,12 @@ impl crate::khr::get_physical_device_properties2::Instance {
         physical_device: vk::PhysicalDevice,
         memory_properties: &mut vk::PhysicalDeviceMemoryProperties2KHR<'_>,
     ) {
-        (self.fp.get_physical_device_memory_properties2_khr)(physical_device, memory_properties);
+        unsafe {
+            (self.fp.get_physical_device_memory_properties2_khr)(
+                physical_device,
+                memory_properties,
+            );
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties2KHR.html>
@@ -64,7 +75,9 @@ impl crate::khr::get_physical_device_properties2::Instance {
         physical_device: vk::PhysicalDevice,
         properties: &mut vk::PhysicalDeviceProperties2KHR<'_>,
     ) {
-        (self.fp.get_physical_device_properties2_khr)(physical_device, properties);
+        unsafe {
+            (self.fp.get_physical_device_properties2_khr)(physical_device, properties);
+        }
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_queue_family_properties2()`][Self::get_physical_device_queue_family_properties2()]
@@ -73,13 +86,15 @@ impl crate::khr::get_physical_device_properties2::Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> usize {
-        let mut count = mem::MaybeUninit::uninit();
-        (self.fp.get_physical_device_queue_family_properties2_khr)(
-            physical_device,
-            count.as_mut_ptr(),
-            ptr::null_mut(),
-        );
-        count.assume_init() as usize
+        unsafe {
+            let mut count = mem::MaybeUninit::uninit();
+            (self.fp.get_physical_device_queue_family_properties2_khr)(
+                physical_device,
+                count.as_mut_ptr(),
+                ptr::null_mut(),
+            );
+            count.assume_init() as usize
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html>
@@ -92,13 +107,15 @@ impl crate::khr::get_physical_device_properties2::Instance {
         physical_device: vk::PhysicalDevice,
         out: &mut [vk::QueueFamilyProperties2KHR<'_>],
     ) {
-        let mut count = out.len() as u32;
-        (self.fp.get_physical_device_queue_family_properties2_khr)(
-            physical_device,
-            &mut count,
-            out.as_mut_ptr(),
-        );
-        assert_eq!(count as usize, out.len());
+        unsafe {
+            let mut count = out.len() as u32;
+            (self.fp.get_physical_device_queue_family_properties2_khr)(
+                physical_device,
+                &mut count,
+                out.as_mut_ptr(),
+            );
+            assert_eq!(count as usize, out.len());
+        }
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_sparse_image_format_properties2()`][Self::get_physical_device_sparse_image_format_properties2()]
@@ -108,16 +125,18 @@ impl crate::khr::get_physical_device_properties2::Instance {
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR<'_>,
     ) -> usize {
-        let mut count = mem::MaybeUninit::uninit();
-        (self
-            .fp
-            .get_physical_device_sparse_image_format_properties2_khr)(
-            physical_device,
-            format_info,
-            count.as_mut_ptr(),
-            ptr::null_mut(),
-        );
-        count.assume_init() as usize
+        unsafe {
+            let mut count = mem::MaybeUninit::uninit();
+            (self
+                .fp
+                .get_physical_device_sparse_image_format_properties2_khr)(
+                physical_device,
+                format_info,
+                count.as_mut_ptr(),
+                ptr::null_mut(),
+            );
+            count.assume_init() as usize
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html>
@@ -131,15 +150,17 @@ impl crate::khr::get_physical_device_properties2::Instance {
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR<'_>,
         out: &mut [vk::SparseImageFormatProperties2KHR<'_>],
     ) {
-        let mut count = out.len() as u32;
-        (self
-            .fp
-            .get_physical_device_sparse_image_format_properties2_khr)(
-            physical_device,
-            format_info,
-            &mut count,
-            out.as_mut_ptr(),
-        );
-        assert_eq!(count as usize, out.len());
+        unsafe {
+            let mut count = out.len() as u32;
+            (self
+                .fp
+                .get_physical_device_sparse_image_format_properties2_khr)(
+                physical_device,
+                format_info,
+                &mut count,
+                out.as_mut_ptr(),
+            );
+            assert_eq!(count as usize, out.len());
+        }
     }
 }

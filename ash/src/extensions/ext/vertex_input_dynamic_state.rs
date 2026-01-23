@@ -11,12 +11,14 @@ impl crate::ext::vertex_input_dynamic_state::Device {
         vertex_binding_descriptions: &[vk::VertexInputBindingDescription2EXT<'_>],
         vertex_attribute_descriptions: &[vk::VertexInputAttributeDescription2EXT<'_>],
     ) {
-        (self.fp.cmd_set_vertex_input_ext)(
-            command_buffer,
-            vertex_binding_descriptions.len() as u32,
-            vertex_binding_descriptions.as_ptr(),
-            vertex_attribute_descriptions.len() as u32,
-            vertex_attribute_descriptions.as_ptr(),
-        )
+        unsafe {
+            (self.fp.cmd_set_vertex_input_ext)(
+                command_buffer,
+                vertex_binding_descriptions.len() as u32,
+                vertex_binding_descriptions.as_ptr(),
+                vertex_attribute_descriptions.len() as u32,
+                vertex_attribute_descriptions.as_ptr(),
+            )
+        }
     }
 }

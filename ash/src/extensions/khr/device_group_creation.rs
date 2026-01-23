@@ -9,14 +9,16 @@ impl crate::khr::device_group_creation::Instance {
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_groups()`][Self::enumerate_physical_device_groups()]
     #[inline]
     pub unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {
-        let mut group_count = mem::MaybeUninit::uninit();
-        (self.fp.enumerate_physical_device_groups_khr)(
-            self.handle,
-            group_count.as_mut_ptr(),
-            ptr::null_mut(),
-        )
-        .assume_init_on_success(group_count)
-        .map(|c| c as usize)
+        unsafe {
+            let mut group_count = mem::MaybeUninit::uninit();
+            (self.fp.enumerate_physical_device_groups_khr)(
+                self.handle,
+                group_count.as_mut_ptr(),
+                ptr::null_mut(),
+            )
+            .assume_init_on_success(group_count)
+            .map(|c| c as usize)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html>
@@ -28,10 +30,16 @@ impl crate::khr::device_group_creation::Instance {
         &self,
         out: &mut [vk::PhysicalDeviceGroupProperties<'_>],
     ) -> VkResult<()> {
-        let mut count = out.len() as u32;
-        (self.fp.enumerate_physical_device_groups_khr)(self.handle, &mut count, out.as_mut_ptr())
+        unsafe {
+            let mut count = out.len() as u32;
+            (self.fp.enumerate_physical_device_groups_khr)(
+                self.handle,
+                &mut count,
+                out.as_mut_ptr(),
+            )
             .result()?;
-        assert_eq!(count as usize, out.len());
-        Ok(())
+            assert_eq!(count as usize, out.len());
+            Ok(())
+        }
     }
 }

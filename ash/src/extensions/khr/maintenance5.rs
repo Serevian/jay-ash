@@ -16,7 +16,9 @@ impl crate::khr::maintenance5::Device {
         size: vk::DeviceSize,
         index_type: vk::IndexType,
     ) {
-        (self.fp.cmd_bind_index_buffer2_khr)(command_buffer, buffer, offset, size, index_type)
+        unsafe {
+            (self.fp.cmd_bind_index_buffer2_khr)(command_buffer, buffer, offset, size, index_type)
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularityKHR.html>
@@ -25,13 +27,15 @@ impl crate::khr::maintenance5::Device {
         &self,
         rendering_area_info: &vk::RenderingAreaInfoKHR<'_>,
     ) -> vk::Extent2D {
-        let mut granularity = mem::MaybeUninit::uninit();
-        (self.fp.get_rendering_area_granularity_khr)(
-            self.handle,
-            rendering_area_info,
-            granularity.as_mut_ptr(),
-        );
-        granularity.assume_init()
+        unsafe {
+            let mut granularity = mem::MaybeUninit::uninit();
+            (self.fp.get_rendering_area_granularity_khr)(
+                self.handle,
+                rendering_area_info,
+                granularity.as_mut_ptr(),
+            );
+            granularity.assume_init()
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html>
@@ -41,7 +45,7 @@ impl crate::khr::maintenance5::Device {
         info: &vk::DeviceImageSubresourceInfoKHR<'_>,
         layout: &mut vk::SubresourceLayout2KHR<'_>,
     ) {
-        (self.fp.get_device_image_subresource_layout_khr)(self.handle, info, layout)
+        unsafe { (self.fp.get_device_image_subresource_layout_khr)(self.handle, info, layout) }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html>
@@ -61,6 +65,8 @@ impl crate::khr::maintenance5::Device {
         subresource: &vk::ImageSubresource2KHR<'_>,
         layout: &mut vk::SubresourceLayout2KHR<'_>,
     ) {
-        (self.fp.get_image_subresource_layout2_khr)(self.handle, image, subresource, layout)
+        unsafe {
+            (self.fp.get_image_subresource_layout2_khr)(self.handle, image, subresource, layout)
+        }
     }
 }

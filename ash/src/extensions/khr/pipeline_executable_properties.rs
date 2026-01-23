@@ -11,14 +11,16 @@ impl crate::khr::pipeline_executable_properties::Device {
         &self,
         executable_info: &vk::PipelineExecutableInfoKHR<'_>,
     ) -> VkResult<Vec<vk::PipelineExecutableInternalRepresentationKHR<'_>>> {
-        read_into_defaulted_vector(|count, data| {
-            (self.fp.get_pipeline_executable_internal_representations_khr)(
-                self.handle,
-                executable_info,
-                count,
-                data,
-            )
-        })
+        unsafe {
+            read_into_defaulted_vector(|count, data| {
+                (self.fp.get_pipeline_executable_internal_representations_khr)(
+                    self.handle,
+                    executable_info,
+                    count,
+                    data,
+                )
+            })
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>
@@ -27,14 +29,16 @@ impl crate::khr::pipeline_executable_properties::Device {
         &self,
         pipeline_info: &vk::PipelineInfoKHR<'_>,
     ) -> VkResult<Vec<vk::PipelineExecutablePropertiesKHR<'_>>> {
-        read_into_defaulted_vector(|count, data| {
-            (self.fp.get_pipeline_executable_properties_khr)(
-                self.handle,
-                pipeline_info,
-                count,
-                data,
-            )
-        })
+        unsafe {
+            read_into_defaulted_vector(|count, data| {
+                (self.fp.get_pipeline_executable_properties_khr)(
+                    self.handle,
+                    pipeline_info,
+                    count,
+                    data,
+                )
+            })
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html>
@@ -43,13 +47,15 @@ impl crate::khr::pipeline_executable_properties::Device {
         &self,
         executable_info: &vk::PipelineExecutableInfoKHR<'_>,
     ) -> VkResult<Vec<vk::PipelineExecutableStatisticKHR<'_>>> {
-        read_into_defaulted_vector(|count, data| {
-            (self.fp.get_pipeline_executable_statistics_khr)(
-                self.handle,
-                executable_info,
-                count,
-                data,
-            )
-        })
+        unsafe {
+            read_into_defaulted_vector(|count, data| {
+                (self.fp.get_pipeline_executable_statistics_khr)(
+                    self.handle,
+                    executable_info,
+                    count,
+                    data,
+                )
+            })
+        }
     }
 }

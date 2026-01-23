@@ -15,15 +15,17 @@ impl crate::khr::draw_indirect_count::Device {
         max_draw_count: u32,
         stride: u32,
     ) {
-        (self.fp.cmd_draw_indexed_indirect_count_khr)(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        );
+        unsafe {
+            (self.fp.cmd_draw_indexed_indirect_count_khr)(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            );
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
@@ -38,14 +40,16 @@ impl crate::khr::draw_indirect_count::Device {
         max_draw_count: u32,
         stride: u32,
     ) {
-        (self.fp.cmd_draw_indirect_count_khr)(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        );
+        unsafe {
+            (self.fp.cmd_draw_indirect_count_khr)(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            );
+        }
     }
 }

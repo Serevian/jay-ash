@@ -22,15 +22,17 @@ impl vk::Result {
 
     #[inline]
     pub unsafe fn assume_init_on_success<T>(self, v: mem::MaybeUninit<T>) -> VkResult<T> {
-        self.result().map(move |()| v.assume_init())
+        unsafe { self.result().map(move |()| v.assume_init()) }
     }
 
     #[inline]
     pub unsafe fn set_vec_len_on_success<T>(self, mut v: Vec<T>, len: usize) -> VkResult<Vec<T>> {
-        self.result().map(move |()| {
-            v.set_len(len);
-            v
-        })
+        unsafe {
+            self.result().map(move |()| {
+                v.set_len(len);
+                v
+            })
+        }
     }
 }
 
@@ -48,18 +50,20 @@ pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<
 where
     <N as TryInto<usize>>::Error: core::fmt::Debug,
 {
-    loop {
-        let mut count = N::default();
-        f(&mut count, ptr::null_mut()).result()?;
-        let mut data =
-            Vec::with_capacity(count.try_into().expect("`N` failed to convert to `usize`"));
+    unsafe {
+        loop {
+            let mut count = N::default();
+            f(&mut count, ptr::null_mut()).result()?;
+            let mut data =
+                Vec::with_capacity(count.try_into().expect("`N` failed to convert to `usize`"));
 
-        let err_code = f(&mut count, data.as_mut_ptr());
-        if err_code != vk::Result::INCOMPLETE {
-            break err_code.set_vec_len_on_success(
-                data,
-                count.try_into().expect("`N` failed to convert to `usize`"),
-            );
+            let err_code = f(&mut count, data.as_mut_ptr());
+            if err_code != vk::Result::INCOMPLETE {
+                break err_code.set_vec_len_on_success(
+                    data,
+                    count.try_into().expect("`N` failed to convert to `usize`"),
+                );
+            }
         }
     }
 }
@@ -86,17 +90,19 @@ pub(crate) unsafe fn read_into_defaulted_vector<
 where
     <N as TryInto<usize>>::Error: core::fmt::Debug,
 {
-    loop {
-        let mut count = N::default();
-        f(&mut count, ptr::null_mut()).result()?;
-        let mut data = alloc::vec![Default::default(); count.try_into().expect("`N` failed to convert to `usize`")];
+    unsafe {
+        loop {
+            let mut count = N::default();
+            f(&mut count, ptr::null_mut()).result()?;
+            let mut data = alloc::vec![Default::default(); count.try_into().expect("`N` failed to convert to `usize`")];
 
-        let err_code = f(&mut count, data.as_mut_ptr());
-        if err_code != vk::Result::INCOMPLETE {
-            break err_code.set_vec_len_on_success(
-                data,
-                count.try_into().expect("`N` failed to convert to `usize`"),
-            );
+            let err_code = f(&mut count, data.as_mut_ptr());
+            if err_code != vk::Result::INCOMPLETE {
+                break err_code.set_vec_len_on_success(
+                    data,
+                    count.try_into().expect("`N` failed to convert to `usize`"),
+                );
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ impl crate::ext::sample_locations::Device {
         command_buffer: vk::CommandBuffer,
         sample_locations_info: &vk::SampleLocationsInfoEXT<'_>,
     ) {
-        (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info)
+        unsafe { (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info) }
     }
 }
 
@@ -23,10 +23,12 @@ impl crate::ext::sample_locations::Instance {
         samples: vk::SampleCountFlags,
         multisample_properties: &mut vk::MultisamplePropertiesEXT<'_>,
     ) {
-        (self.fp.get_physical_device_multisample_properties_ext)(
-            physical_device,
-            samples,
-            multisample_properties,
-        )
+        unsafe {
+            (self.fp.get_physical_device_multisample_properties_ext)(
+                physical_device,
+                samples,
+                multisample_properties,
+            )
+        }
     }
 }
