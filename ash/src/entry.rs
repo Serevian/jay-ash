@@ -140,7 +140,7 @@ impl Entry {
     #[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]
     pub unsafe fn load_from(path: impl AsRef<std::ffi::OsStr>) -> Result<Self, LoadingError> {
         unsafe {
-            let lib = Library::new(path)
+            let lib = Library::new(path.as_ref())
                 .map_err(LoadingError::LibraryLoadFailure)
                 .map(alloc::sync::Arc::new)?;
 
