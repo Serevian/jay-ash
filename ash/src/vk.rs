@@ -58,6 +58,7 @@ pub trait Handle: Sized {
     /// # Example
     ///
     /// ```
+    /// # use jay_ash as ash;
     /// # use ash::vk::{Handle, Instance};
     /// let instance = Instance::null();
     /// assert!(instance.is_null());

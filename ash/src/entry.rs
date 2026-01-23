@@ -43,6 +43,7 @@ impl Entry {
     /// # Example
     ///
     /// ```no_run
+    /// # use jay_ash as ash;
     /// use ash::{vk, Entry};
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let entry = unsafe { Entry::load()? };
@@ -101,6 +102,7 @@ impl Entry {
     /// # Example
     ///
     /// ```no_run
+    /// # use jay_ash as ash;
     /// use ash::{vk, Entry};
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let entry = Entry::linked();
@@ -210,6 +212,7 @@ impl Entry {
     /// # Example
     ///
     /// ```no_run
+    /// # use jay_ash as ash;
     /// # use ash::{Entry, vk};
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let entry = Entry::linked();

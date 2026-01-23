@@ -1,4 +1,5 @@
 use ash::vk::{PhysicalDeviceProperties, PipelineColorBlendStateCreateInfo};
+use jay_ash as ash;
 
 #[test]
 fn assert_struct_field_is_array() {

@@ -92,11 +92,13 @@ impl<'a, T: Copy + 'a> Iterator for AlignIter<'a, T> {
 ///
 /// # Examples
 /// ```no_run
+/// # use jay_ash as ash;
 /// // Decode SPIR-V from a file
 /// let mut file = std::fs::File::open("/path/to/shader.spv").unwrap();
 /// let words = ash::util::read_spv(&mut file).unwrap();
 /// ```
 /// ```
+/// # use jay_ash as ash;
 /// // Decode SPIR-V from memory
 /// const SPIRV: &[u8] = &[
 ///     // ...
