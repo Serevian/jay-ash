@@ -3297,7 +3297,26 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .map(|constant| generate_constant(constant, &mut const_cache))
         .collect();
 
-    constants_code.push(quote! { pub const SHADER_UNUSED_NV : u32 = SHADER_UNUSED_KHR;});
+    extensions
+        .iter()
+        .flat_map(|extension| &extension.children)
+        .filter_map(get_variant!(vk_parse::FeatureChild::Require { api, items }))
+        .filter_map(|(api, items)| api.is_vulkan_api().then_some(items))
+        .flatten()
+        .filter_map(get_variant!(vk_parse::InterfaceItem::Enum))
+        .filter(|e| e.api.is_vulkan_api())
+        .filter_map(|e| match &e.spec {
+            vk_parse::EnumSpec::Alias {
+                alias,
+                extends: None,
+            } => Some((e, alias)),
+            _ => None,
+        })
+        .for_each(|(e, alias)| {
+            let name = constant_ident(&e.name);
+            let alias = constant_ident(alias);
+            constants_code.push(quote! { pub use super::#alias as #name;});
+        });
 
     let union_types = definitions
         .iter()
