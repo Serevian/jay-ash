@@ -17,7 +17,7 @@ use nom::{
     branch::alt,
     bytes::complete::{tag, take_until, take_while1},
     character::complete::{
-        char, digit1, hex_digit1, multispace0, multispace1, newline, none_of, one_of,
+        char, digit1, hex_digit1, line_ending, multispace0, multispace1, newline, none_of, one_of,
     },
     combinator::{map, map_res, opt, value},
     multi::{many1, separated_list1},
@@ -188,7 +188,7 @@ fn parse_c_identifier(i: &str) -> IResult<&str, &str> {
 }
 
 fn parse_comment_suffix(i: &str) -> IResult<&str, Option<&str>> {
-    opt(delimited(tag("//"), take_until("\n"), newline)).parse(i)
+    opt(delimited(tag("//"), take_until("\n"), line_ending)).parse(i)
 }
 
 fn parse_parameter_names(i: &str) -> IResult<&str, Vec<&str>> {
@@ -207,7 +207,7 @@ fn parse_c_define_header(i: &str) -> IResult<&str, (Option<&str>, (&str, Option<
     (pair(
         parse_comment_suffix,
         preceded(
-            preceded(opt(newline), tag("#define ")),
+            preceded(opt(line_ending), tag("#define ")),
             pair(parse_c_identifier, opt(parse_parameter_names)),
         ),
     ))
@@ -2622,6 +2622,9 @@ pub fn generate_struct(
                     "true" => quote!(#[deprecated]),
                     "ignored" => {
                         quote!(#[deprecated = "functionality described by this member no longer operates"])
+                    }
+                    "unused" => {
+                        quote!(#[deprecated = "this member is unused"])
                     }
                     x => panic!("Unknown deprecation reason {x}"),
                 });

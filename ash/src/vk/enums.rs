@@ -2950,9 +2950,9 @@ impl DepthBiasRepresentationEXT {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultAddressTypeEXT.html>"]
-pub struct DeviceFaultAddressTypeEXT(pub(crate) i32);
-impl DeviceFaultAddressTypeEXT {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultAddressTypeKHR.html>"]
+pub struct DeviceFaultAddressTypeKHR(pub(crate) i32);
+impl DeviceFaultAddressTypeKHR {
     #[inline]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
@@ -2962,7 +2962,7 @@ impl DeviceFaultAddressTypeEXT {
         self.0
     }
 }
-impl DeviceFaultAddressTypeEXT {
+impl DeviceFaultAddressTypeKHR {
     #[doc = "Currently unused"]
     pub const NONE: Self = Self(0);
     pub const READ_INVALID: Self = Self(1);
@@ -2974,9 +2974,9 @@ impl DeviceFaultAddressTypeEXT {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorBinaryHeaderVersionEXT.html>"]
-pub struct DeviceFaultVendorBinaryHeaderVersionEXT(pub(crate) i32);
-impl DeviceFaultVendorBinaryHeaderVersionEXT {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorBinaryHeaderVersionKHR.html>"]
+pub struct DeviceFaultVendorBinaryHeaderVersionKHR(pub(crate) i32);
+impl DeviceFaultVendorBinaryHeaderVersionKHR {
     #[inline]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
@@ -2986,8 +2986,9 @@ impl DeviceFaultVendorBinaryHeaderVersionEXT {
         self.0
     }
 }
-impl DeviceFaultVendorBinaryHeaderVersionEXT {
+impl DeviceFaultVendorBinaryHeaderVersionKHR {
     pub const ONE: Self = Self(1);
+    pub const ONE_EXT: Self = Self::ONE;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -3516,6 +3517,7 @@ impl fmt::Debug for ObjectType {
             Self::EXTERNAL_COMPUTE_QUEUE_NV => Some("EXTERNAL_COMPUTE_QUEUE_NV"),
             Self::INDIRECT_COMMANDS_LAYOUT_EXT => Some("INDIRECT_COMMANDS_LAYOUT_EXT"),
             Self::INDIRECT_EXECUTION_SET_EXT => Some("INDIRECT_EXECUTION_SET_EXT"),
+            Self::SHADER_INSTRUMENTATION_ARM => Some("SHADER_INSTRUMENTATION_ARM"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
             Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::PRIVATE_DATA_SLOT => Some("PRIVATE_DATA_SLOT"),

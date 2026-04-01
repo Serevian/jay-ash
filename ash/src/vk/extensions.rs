@@ -2151,6 +2151,10 @@ impl MemoryPropertyFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD: Self = Self(1_000_229_000);
 }
+#[doc = "Generated from 'VK_KHR_shader_constant_data'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_CONSTANT_DATA_FEATURES_KHR: Self = Self(1_000_231_000);
+}
 #[doc = "Generated from 'VK_KHR_dynamic_rendering_local_read'"]
 impl ImageLayout {
     pub const RENDERING_LOCAL_READ_KHR: Self = Self::RENDERING_LOCAL_READ;
@@ -2163,6 +2167,12 @@ impl StructureType {
         Self::RENDERING_ATTACHMENT_LOCATION_INFO;
     pub const RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR: Self =
         Self::RENDERING_INPUT_ATTACHMENT_INDEX_INFO;
+}
+#[doc = "Generated from 'VK_KHR_shader_abort'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_ABORT_FEATURES_KHR: Self = Self(1_000_233_000);
+    pub const DEVICE_FAULT_SHADER_ABORT_MESSAGE_INFO_KHR: Self = Self(1_000_233_001);
+    pub const PHYSICAL_DEVICE_SHADER_ABORT_PROPERTIES_KHR: Self = Self(1_000_233_002);
 }
 #[doc = "Generated from 'VK_EXT_shader_image_atomic_int64'"]
 impl StructureType {
@@ -3010,6 +3020,30 @@ impl StructureType {
         Self(1_000_316_012);
     pub const ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_009);
 }
+#[doc = "Generated from 'VK_KHR_device_address_commands'"]
+impl AddressCommandFlagsKHR {
+    pub const TRANSFORM_FEEDBACK_BUFFER_USAGE: Self = Self(0b1_0000);
+    pub const UNKNOWN_TRANSFORM_FEEDBACK_BUFFER_USAGE: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_KHR_device_address_commands'"]
+impl StructureType {
+    pub const DEVICE_MEMORY_COPY_KHR: Self = Self(1_000_318_000);
+    pub const COPY_DEVICE_MEMORY_INFO_KHR: Self = Self(1_000_318_001);
+    pub const DEVICE_MEMORY_IMAGE_COPY_KHR: Self = Self(1_000_318_002);
+    pub const COPY_DEVICE_MEMORY_IMAGE_INFO_KHR: Self = Self(1_000_318_003);
+    pub const MEMORY_RANGE_BARRIERS_INFO_KHR: Self = Self(1_000_318_004);
+    pub const MEMORY_RANGE_BARRIER_KHR: Self = Self(1_000_318_005);
+    pub const PHYSICAL_DEVICE_DEVICE_ADDRESS_COMMANDS_FEATURES_KHR: Self = Self(1_000_318_006);
+    pub const BIND_INDEX_BUFFER_3_INFO_KHR: Self = Self(1_000_318_007);
+    pub const BIND_VERTEX_BUFFER_3_INFO_KHR: Self = Self(1_000_318_008);
+    pub const DRAW_INDIRECT_2_INFO_KHR: Self = Self(1_000_318_009);
+    pub const DRAW_INDIRECT_COUNT_2_INFO_KHR: Self = Self(1_000_318_010);
+    pub const DISPATCH_INDIRECT_2_INFO_KHR: Self = Self(1_000_318_011);
+    pub const CONDITIONAL_RENDERING_BEGIN_INFO_2_EXT: Self = Self(1_000_318_012);
+    pub const BIND_TRANSFORM_FEEDBACK_BUFFER_2_INFO_EXT: Self = Self(1_000_318_013);
+    pub const MEMORY_MARKER_INFO_AMD: Self = Self(1_000_318_014);
+    pub const ACCELERATION_STRUCTURE_CREATE_INFO_2_KHR: Self = Self(1_000_318_015);
+}
 #[doc = "Generated from 'VK_EXT_graphics_pipeline_library'"]
 impl PipelineCreateFlags {
     pub const RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
@@ -3197,6 +3231,16 @@ impl Format {
 #[doc = "Generated from 'VK_EXT_4444_formats'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT: Self = Self(1_000_340_000);
+}
+#[doc = "Generated from 'VK_EXT_device_fault'"]
+impl DeviceFaultAddressTypeKHR {
+    pub const NONE_EXT: Self = Self::NONE;
+    pub const READ_INVALID_EXT: Self = Self::READ_INVALID;
+    pub const WRITE_INVALID_EXT: Self = Self::WRITE_INVALID;
+    pub const EXECUTE_INVALID_EXT: Self = Self::EXECUTE_INVALID;
+    pub const INSTRUCTION_POINTER_UNKNOWN_EXT: Self = Self::INSTRUCTION_POINTER_UNKNOWN;
+    pub const INSTRUCTION_POINTER_INVALID_EXT: Self = Self::INSTRUCTION_POINTER_INVALID;
+    pub const INSTRUCTION_POINTER_FAULT_EXT: Self = Self::INSTRUCTION_POINTER_FAULT;
 }
 #[doc = "Generated from 'VK_EXT_device_fault'"]
 impl StructureType {
@@ -4173,6 +4217,12 @@ impl PipelineCreateFlags2 {
     pub const DESCRIPTOR_BUFFER_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
     pub const DISALLOW_OPACITY_MICROMAP_ARM: Self =
         Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const INSTRUMENT_SHADERS_ARM: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance5'"]
+impl ShaderCreateFlagsEXT {
+    pub const INSTRUMENT_SHADER_ARM: Self = Self(0b1000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_maintenance5'"]
 impl StructureType {
@@ -5002,6 +5052,13 @@ impl StructureType {
     pub const GENERATED_COMMANDS_PIPELINE_INFO_EXT: Self = Self(1_000_572_013);
     pub const GENERATED_COMMANDS_SHADER_INFO_EXT: Self = Self(1_000_572_014);
 }
+#[doc = "Generated from 'VK_KHR_device_fault'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FAULT_FEATURES_KHR: Self = Self(1_000_573_000);
+    pub const PHYSICAL_DEVICE_FAULT_PROPERTIES_KHR: Self = Self(1_000_573_001);
+    pub const DEVICE_FAULT_INFO_KHR: Self = Self(1_000_573_002);
+    pub const DEVICE_FAULT_DEBUG_INFO_KHR: Self = Self(1_000_573_003);
+}
 #[doc = "Generated from 'VK_KHR_maintenance8'"]
 impl DependencyFlags {
     pub const QUEUE_FAMILY_OWNERSHIP_TRANSFER_USE_ALL_STAGES_KHR: Self = Self(0b10_0000);
@@ -5116,6 +5173,17 @@ impl StructureType {
     pub const PERFORMANCE_COUNTER_ARM: Self = Self(1_000_605_002);
     pub const PERFORMANCE_COUNTER_DESCRIPTION_ARM: Self = Self(1_000_605_003);
     pub const RENDER_PASS_PERFORMANCE_COUNTERS_BY_REGION_BEGIN_INFO_ARM: Self = Self(1_000_605_004);
+}
+#[doc = "Generated from 'VK_ARM_shader_instrumentation'"]
+impl ObjectType {
+    pub const SHADER_INSTRUMENTATION_ARM: Self = Self(1_000_607_000);
+}
+#[doc = "Generated from 'VK_ARM_shader_instrumentation'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_FEATURES_ARM: Self = Self(1_000_607_000);
+    pub const PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_PROPERTIES_ARM: Self = Self(1_000_607_001);
+    pub const SHADER_INSTRUMENTATION_CREATE_INFO_ARM: Self = Self(1_000_607_002);
+    pub const SHADER_INSTRUMENTATION_METRIC_DESCRIPTION_ARM: Self = Self(1_000_607_003);
 }
 #[doc = "Generated from 'VK_EXT_vertex_attribute_robustness'"]
 impl StructureType {
@@ -7427,6 +7495,8 @@ pub const AMD_SHADER_CORE_PROPERTIES_2_EXTENSION_NAME: &CStr = c"VK_AMD_shader_c
 pub const AMD_SHADER_CORE_PROPERTIES_2_SPEC_VERSION: u32 = 1u32;
 pub const AMD_DEVICE_COHERENT_MEMORY_EXTENSION_NAME: &CStr = c"VK_AMD_device_coherent_memory";
 pub const AMD_DEVICE_COHERENT_MEMORY_SPEC_VERSION: u32 = 1u32;
+pub const KHR_SHADER_CONSTANT_DATA_EXTENSION_NAME: &CStr = c"VK_KHR_shader_constant_data";
+pub const KHR_SHADER_CONSTANT_DATA_SPEC_VERSION: u32 = 1u32;
 pub const KHR_DYNAMIC_RENDERING_LOCAL_READ_EXTENSION_NAME: &CStr =
     c"VK_KHR_dynamic_rendering_local_read";
 pub const KHR_DYNAMIC_RENDERING_LOCAL_READ_SPEC_VERSION: u32 = 1u32;
@@ -7440,6 +7510,8 @@ pub type PFN_vkCmdSetRenderingInputAttachmentIndices = unsafe extern "system" fn
     command_buffer: CommandBuffer,
     p_input_attachment_index_info: *const RenderingInputAttachmentIndexInfo<'_>,
 );
+pub const KHR_SHADER_ABORT_EXTENSION_NAME: &CStr = c"VK_KHR_shader_abort";
+pub const KHR_SHADER_ABORT_SPEC_VERSION: u32 = 1u32;
 pub const EXT_SHADER_IMAGE_ATOMIC_INT64_EXTENSION_NAME: &CStr = c"VK_EXT_shader_image_atomic_int64";
 pub const EXT_SHADER_IMAGE_ATOMIC_INT64_SPEC_VERSION: u32 = 1u32;
 pub const KHR_SHADER_QUAD_CONTROL_EXTENSION_NAME: &CStr = c"VK_KHR_shader_quad_control";
@@ -8072,6 +8144,142 @@ pub type PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT =
         p_info: *const AccelerationStructureCaptureDescriptorDataInfoEXT<'_>,
         p_data: *mut c_void,
     ) -> Result;
+pub const KHR_DEVICE_ADDRESS_COMMANDS_EXTENSION_NAME: &CStr = c"VK_KHR_device_address_commands";
+pub const KHR_DEVICE_ADDRESS_COMMANDS_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindIndexBuffer3KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const BindIndexBuffer3InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindVertexBuffers3KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_binding: u32,
+    binding_count: u32,
+    p_binding_infos: *const BindVertexBuffer3InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndirect2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirect2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndexedIndirect2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirect2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDispatchIndirect2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DispatchIndirect2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_memory_info: *const CopyDeviceMemoryInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMemoryToImageKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_memory_info: *const CopyDeviceMemoryImageInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyImageToMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_memory_info: *const CopyDeviceMemoryImageInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdUpdateMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_dst_range: *const DeviceAddressRangeKHR,
+    dst_flags: AddressCommandFlagsKHR,
+    data_size: DeviceSize,
+    p_data: *const c_void,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdFillMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_dst_range: *const DeviceAddressRangeKHR,
+    dst_flags: AddressCommandFlagsKHR,
+    data: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyQueryPoolResultsToMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    query_pool: QueryPool,
+    first_query: u32,
+    query_count: u32,
+    p_dst_range: *const StridedDeviceAddressRangeKHR,
+    dst_flags: AddressCommandFlagsKHR,
+    query_result_flags: QueryResultFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndirectCount2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirectCount2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndexedIndirectCount2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirectCount2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginConditionalRendering2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_conditional_rendering_begin: *const ConditionalRenderingBeginInfo2EXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindTransformFeedbackBuffers2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_binding: u32,
+    binding_count: u32,
+    p_binding_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginTransformFeedback2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_counter_range: u32,
+    counter_range_count: u32,
+    p_counter_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndTransformFeedback2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_counter_range: u32,
+    counter_range_count: u32,
+    p_counter_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndirectByteCount2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    instance_count: u32,
+    first_instance: u32,
+    p_counter_info: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+    counter_offset: u32,
+    vertex_stride: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksIndirect2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirect2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksIndirectCount2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirectCount2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWriteMarkerToMemoryAMD = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const MemoryMarkerInfoAMD<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateAccelerationStructure2KHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const AccelerationStructureCreateInfo2KHR<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
+    p_acceleration_structure: *mut AccelerationStructureKHR,
+) -> Result;
 pub const EXT_GRAPHICS_PIPELINE_LIBRARY_EXTENSION_NAME: &CStr = c"VK_EXT_graphics_pipeline_library";
 pub const EXT_GRAPHICS_PIPELINE_LIBRARY_SPEC_VERSION: u32 = 1u32;
 pub const AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_EXTENSION_NAME: &CStr =
@@ -9513,6 +9721,20 @@ pub type PFN_vkUpdateIndirectExecutionSetShaderEXT = unsafe extern "system" fn(
     execution_set_write_count: u32,
     p_execution_set_writes: *const WriteIndirectExecutionSetShaderEXT<'_>,
 );
+pub const KHR_DEVICE_FAULT_EXTENSION_NAME: &CStr = c"VK_KHR_device_fault";
+pub const KHR_DEVICE_FAULT_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceFaultReportsKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    timeout: u64,
+    p_fault_counts: *mut u32,
+    p_fault_info: *mut DeviceFaultInfoKHR<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceFaultDebugInfoKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_debug_info: *mut DeviceFaultDebugInfoKHR<'_>,
+) -> Result;
 pub const KHR_MAINTENANCE_8_EXTENSION_NAME: &CStr = c"VK_KHR_maintenance8";
 pub const KHR_MAINTENANCE_8_SPEC_VERSION: u32 = 1u32;
 pub const MESA_IMAGE_ALIGNMENT_CONTROL_EXTENSION_NAME: &CStr = c"VK_MESA_image_alignment_control";
@@ -9581,6 +9803,47 @@ pub type PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM 
         p_counters: *mut PerformanceCounterARM<'_>,
         p_counter_descriptions: *mut PerformanceCounterDescriptionARM<'_>,
     ) -> Result;
+pub const ARM_SHADER_INSTRUMENTATION_EXTENSION_NAME: &CStr = c"VK_ARM_shader_instrumentation";
+pub const ARM_SHADER_INSTRUMENTATION_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_description_count: *mut u32,
+        p_descriptions: *mut ShaderInstrumentationMetricDescriptionARM<'_>,
+    ) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateShaderInstrumentationARM = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const ShaderInstrumentationCreateInfoARM<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
+    p_instrumentation: *mut ShaderInstrumentationARM,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyShaderInstrumentationARM = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    instrumentation: ShaderInstrumentationARM,
+    p_allocator: *const AllocationCallbacks<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginShaderInstrumentationARM = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    instrumentation: ShaderInstrumentationARM,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndShaderInstrumentationARM =
+    unsafe extern "system" fn(command_buffer: CommandBuffer);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetShaderInstrumentationValuesARM = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    instrumentation: ShaderInstrumentationARM,
+    p_metric_block_count: *mut u32,
+    p_metric_values: *mut c_void,
+    flags: ShaderInstrumentationValuesFlagsARM,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkClearShaderInstrumentationMetricsARM =
+    unsafe extern "system" fn(device: crate::vk::Device, instrumentation: ShaderInstrumentationARM);
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_EXTENSION_NAME: &CStr =
     c"VK_EXT_vertex_attribute_robustness";
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_SPEC_VERSION: u32 = 1u32;

@@ -364,6 +364,31 @@ impl fmt::Debug for AcquireProfilingLockFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for AddressCommandFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (AddressCommandFlagsKHR::PROTECTED.0, "PROTECTED"),
+            (AddressCommandFlagsKHR::FULLY_BOUND.0, "FULLY_BOUND"),
+            (
+                AddressCommandFlagsKHR::STORAGE_BUFFER_USAGE.0,
+                "STORAGE_BUFFER_USAGE",
+            ),
+            (
+                AddressCommandFlagsKHR::UNKNOWN_STORAGE_BUFFER_USAGE.0,
+                "UNKNOWN_STORAGE_BUFFER_USAGE",
+            ),
+            (
+                AddressCommandFlagsKHR::TRANSFORM_FEEDBACK_BUFFER_USAGE.0,
+                "TRANSFORM_FEEDBACK_BUFFER_USAGE",
+            ),
+            (
+                AddressCommandFlagsKHR::UNKNOWN_TRANSFORM_FEEDBACK_BUFFER_USAGE.0,
+                "UNKNOWN_TRANSFORM_FEEDBACK_BUFFER_USAGE",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for AddressCopyFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -1884,7 +1909,7 @@ impl fmt::Debug for DeviceEventTypeEXT {
         }
     }
 }
-impl fmt::Debug for DeviceFaultAddressTypeEXT {
+impl fmt::Debug for DeviceFaultAddressTypeKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::NONE => Some("NONE"),
@@ -1903,7 +1928,29 @@ impl fmt::Debug for DeviceFaultAddressTypeEXT {
         }
     }
 }
-impl fmt::Debug for DeviceFaultVendorBinaryHeaderVersionEXT {
+impl fmt::Debug for DeviceFaultFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DeviceFaultFlagsKHR::FLAG_DEVICE_LOST.0, "FLAG_DEVICE_LOST"),
+            (
+                DeviceFaultFlagsKHR::FLAG_MEMORY_ADDRESS.0,
+                "FLAG_MEMORY_ADDRESS",
+            ),
+            (
+                DeviceFaultFlagsKHR::FLAG_INSTRUCTION_ADDRESS.0,
+                "FLAG_INSTRUCTION_ADDRESS",
+            ),
+            (DeviceFaultFlagsKHR::FLAG_VENDOR.0, "FLAG_VENDOR"),
+            (
+                DeviceFaultFlagsKHR::FLAG_WATCHDOG_TIMEOUT.0,
+                "FLAG_WATCHDOG_TIMEOUT",
+            ),
+            (DeviceFaultFlagsKHR::FLAG_OVERFLOW.0, "FLAG_OVERFLOW"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DeviceFaultVendorBinaryHeaderVersionKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::ONE => Some("ONE"),
@@ -4580,6 +4627,10 @@ impl fmt::Debug for PipelineCreateFlags2 {
                 PipelineCreateFlags2::DISALLOW_OPACITY_MICROMAP_ARM.0,
                 "DISALLOW_OPACITY_MICROMAP_ARM",
             ),
+            (
+                PipelineCreateFlags2::INSTRUMENT_SHADERS_ARM.0,
+                "INSTRUMENT_SHADERS_ARM",
+            ),
             (PipelineCreateFlags2::CAPTURE_DATA_KHR.0, "CAPTURE_DATA_KHR"),
             (
                 PipelineCreateFlags2::INDIRECT_BINDABLE_EXT.0,
@@ -5645,6 +5696,10 @@ impl fmt::Debug for ShaderCreateFlagsEXT {
             (ShaderCreateFlagsEXT::LINK_STAGE.0, "LINK_STAGE"),
             (ShaderCreateFlagsEXT::DESCRIPTOR_HEAP.0, "DESCRIPTOR_HEAP"),
             (
+                ShaderCreateFlagsEXT::INSTRUMENT_SHADER_ARM.0,
+                "INSTRUMENT_SHADER_ARM",
+            ),
+            (
                 ShaderCreateFlagsEXT::ALLOW_VARYING_SUBGROUP_SIZE.0,
                 "ALLOW_VARYING_SUBGROUP_SIZE",
             ),
@@ -5715,6 +5770,12 @@ impl fmt::Debug for ShaderInfoTypeAMD {
         } else {
             self.0.fmt(f)
         }
+    }
+}
+impl fmt::Debug for ShaderInstrumentationValuesFlagsARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Debug for ShaderModuleCreateFlags {
@@ -6675,6 +6736,18 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD => {
                 Some("PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD")
             }
+            Self::PHYSICAL_DEVICE_SHADER_CONSTANT_DATA_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_CONSTANT_DATA_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_ABORT_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_ABORT_FEATURES_KHR")
+            }
+            Self::DEVICE_FAULT_SHADER_ABORT_MESSAGE_INFO_KHR => {
+                Some("DEVICE_FAULT_SHADER_ABORT_MESSAGE_INFO_KHR")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_ABORT_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_ABORT_PROPERTIES_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT")
             }
@@ -6945,6 +7018,30 @@ impl fmt::Debug for StructureType {
             }
             Self::ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT => {
                 Some("ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT")
+            }
+            Self::DEVICE_MEMORY_COPY_KHR => Some("DEVICE_MEMORY_COPY_KHR"),
+            Self::COPY_DEVICE_MEMORY_INFO_KHR => Some("COPY_DEVICE_MEMORY_INFO_KHR"),
+            Self::DEVICE_MEMORY_IMAGE_COPY_KHR => Some("DEVICE_MEMORY_IMAGE_COPY_KHR"),
+            Self::COPY_DEVICE_MEMORY_IMAGE_INFO_KHR => Some("COPY_DEVICE_MEMORY_IMAGE_INFO_KHR"),
+            Self::MEMORY_RANGE_BARRIERS_INFO_KHR => Some("MEMORY_RANGE_BARRIERS_INFO_KHR"),
+            Self::MEMORY_RANGE_BARRIER_KHR => Some("MEMORY_RANGE_BARRIER_KHR"),
+            Self::PHYSICAL_DEVICE_DEVICE_ADDRESS_COMMANDS_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_DEVICE_ADDRESS_COMMANDS_FEATURES_KHR")
+            }
+            Self::BIND_INDEX_BUFFER_3_INFO_KHR => Some("BIND_INDEX_BUFFER_3_INFO_KHR"),
+            Self::BIND_VERTEX_BUFFER_3_INFO_KHR => Some("BIND_VERTEX_BUFFER_3_INFO_KHR"),
+            Self::DRAW_INDIRECT_2_INFO_KHR => Some("DRAW_INDIRECT_2_INFO_KHR"),
+            Self::DRAW_INDIRECT_COUNT_2_INFO_KHR => Some("DRAW_INDIRECT_COUNT_2_INFO_KHR"),
+            Self::DISPATCH_INDIRECT_2_INFO_KHR => Some("DISPATCH_INDIRECT_2_INFO_KHR"),
+            Self::CONDITIONAL_RENDERING_BEGIN_INFO_2_EXT => {
+                Some("CONDITIONAL_RENDERING_BEGIN_INFO_2_EXT")
+            }
+            Self::BIND_TRANSFORM_FEEDBACK_BUFFER_2_INFO_EXT => {
+                Some("BIND_TRANSFORM_FEEDBACK_BUFFER_2_INFO_EXT")
+            }
+            Self::MEMORY_MARKER_INFO_AMD => Some("MEMORY_MARKER_INFO_AMD"),
+            Self::ACCELERATION_STRUCTURE_CREATE_INFO_2_KHR => {
+                Some("ACCELERATION_STRUCTURE_CREATE_INFO_2_KHR")
             }
             Self::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT")
@@ -7928,6 +8025,12 @@ impl fmt::Debug for StructureType {
                 Some("GENERATED_COMMANDS_PIPELINE_INFO_EXT")
             }
             Self::GENERATED_COMMANDS_SHADER_INFO_EXT => Some("GENERATED_COMMANDS_SHADER_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_FAULT_FEATURES_KHR => Some("PHYSICAL_DEVICE_FAULT_FEATURES_KHR"),
+            Self::PHYSICAL_DEVICE_FAULT_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_FAULT_PROPERTIES_KHR")
+            }
+            Self::DEVICE_FAULT_INFO_KHR => Some("DEVICE_FAULT_INFO_KHR"),
+            Self::DEVICE_FAULT_DEBUG_INFO_KHR => Some("DEVICE_FAULT_DEBUG_INFO_KHR"),
             Self::PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR")
             }
@@ -8021,6 +8124,18 @@ impl fmt::Debug for StructureType {
             }
             Self::RENDER_PASS_PERFORMANCE_COUNTERS_BY_REGION_BEGIN_INFO_ARM => {
                 Some("RENDER_PASS_PERFORMANCE_COUNTERS_BY_REGION_BEGIN_INFO_ARM")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_FEATURES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_PROPERTIES_ARM => {
+                Some("PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_PROPERTIES_ARM")
+            }
+            Self::SHADER_INSTRUMENTATION_CREATE_INFO_ARM => {
+                Some("SHADER_INSTRUMENTATION_CREATE_INFO_ARM")
+            }
+            Self::SHADER_INSTRUMENTATION_METRIC_DESCRIPTION_ARM => {
+                Some("SHADER_INSTRUMENTATION_METRIC_DESCRIPTION_ARM")
             }
             Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT")
