@@ -56,7 +56,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 347;
+pub const HEADER_VERSION: u32 = 348;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -28733,7 +28733,7 @@ pub struct AccelerationStructureInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub ty: AccelerationStructureTypeNV,
-    pub flags: BuildAccelerationStructureFlagsNV,
+    pub flags: BuildAccelerationStructureFlagsKHR,
     pub instance_count: u32,
     pub geometry_count: u32,
     pub p_geometries: *const GeometryNV<'a>,
@@ -28748,7 +28748,7 @@ impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::core::ptr::null(),
             ty: AccelerationStructureTypeNV::default(),
-            flags: BuildAccelerationStructureFlagsNV::default(),
+            flags: BuildAccelerationStructureFlagsKHR::default(),
             instance_count: u32::default(),
             geometry_count: u32::default(),
             p_geometries: ::core::ptr::null(),
@@ -28766,7 +28766,7 @@ impl<'a> AccelerationStructureInfoNV<'a> {
         self
     }
     #[inline]
-    pub fn flags(mut self, flags: BuildAccelerationStructureFlagsNV) -> Self {
+    pub fn flags(mut self, flags: BuildAccelerationStructureFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
@@ -44104,6 +44104,7 @@ unsafe impl<'a> TaggedStructure for MemoryBarrierAccessFlags3KHR<'a> {
 unsafe impl ExtendsSubpassDependency2 for MemoryBarrierAccessFlags3KHR<'_> {}
 unsafe impl ExtendsBufferMemoryBarrier2 for MemoryBarrierAccessFlags3KHR<'_> {}
 unsafe impl ExtendsImageMemoryBarrier2 for MemoryBarrierAccessFlags3KHR<'_> {}
+unsafe impl ExtendsMemoryRangeBarriersInfoKHR for MemoryBarrierAccessFlags3KHR<'_> {}
 impl<'a> MemoryBarrierAccessFlags3KHR<'a> {
     #[inline]
     pub fn src_access_mask3(mut self, src_access_mask3: AccessFlags3KHR) -> Self {
@@ -61079,7 +61080,7 @@ pub struct DecompressMemoryRegionNV {
     pub dst_address: DeviceAddress,
     pub compressed_size: DeviceSize,
     pub decompressed_size: DeviceSize,
-    pub decompression_method: MemoryDecompressionMethodFlagsNV,
+    pub decompression_method: MemoryDecompressionMethodFlagsEXT,
 }
 impl DecompressMemoryRegionNV {
     #[inline]
@@ -61105,7 +61106,7 @@ impl DecompressMemoryRegionNV {
     #[inline]
     pub fn decompression_method(
         mut self,
-        decompression_method: MemoryDecompressionMethodFlagsNV,
+        decompression_method: MemoryDecompressionMethodFlagsEXT,
     ) -> Self {
         self.decompression_method = decompression_method;
         self
@@ -65945,6 +65946,122 @@ impl<'a> PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM.html>"]
+#[must_use]
+pub struct PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub scheduling_controls_max_warps_count: u32,
+    pub scheduling_controls_max_queued_batches_count: u32,
+    pub scheduling_controls_max_work_group_batch_size: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_> {}
+impl ::core::default::Default
+    for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_>
+{
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            scheduling_controls_max_warps_count: u32::default(),
+            scheduling_controls_max_queued_batches_count: u32::default(),
+            scheduling_controls_max_work_group_batch_size: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure
+    for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SCHEDULING_CONTROLS_DISPATCH_PARAMETERS_PROPERTIES_ARM;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_>
+{
+}
+impl<'a> PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'a> {
+    #[inline]
+    pub fn scheduling_controls_max_warps_count(
+        mut self,
+        scheduling_controls_max_warps_count: u32,
+    ) -> Self {
+        self.scheduling_controls_max_warps_count = scheduling_controls_max_warps_count;
+        self
+    }
+    #[inline]
+    pub fn scheduling_controls_max_queued_batches_count(
+        mut self,
+        scheduling_controls_max_queued_batches_count: u32,
+    ) -> Self {
+        self.scheduling_controls_max_queued_batches_count =
+            scheduling_controls_max_queued_batches_count;
+        self
+    }
+    #[inline]
+    pub fn scheduling_controls_max_work_group_batch_size(
+        mut self,
+        scheduling_controls_max_work_group_batch_size: u32,
+    ) -> Self {
+        self.scheduling_controls_max_work_group_batch_size =
+            scheduling_controls_max_work_group_batch_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDispatchParametersARM.html>"]
+#[must_use]
+pub struct DispatchParametersARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub work_group_batch_size: u32,
+    pub max_queued_work_group_batches: u32,
+    pub max_warps_per_shader_core: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for DispatchParametersARM<'_> {}
+unsafe impl Sync for DispatchParametersARM<'_> {}
+impl ::core::default::Default for DispatchParametersARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            work_group_batch_size: u32::default(),
+            max_queued_work_group_batches: u32::default(),
+            max_warps_per_shader_core: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DispatchParametersARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DISPATCH_PARAMETERS_ARM;
+}
+impl<'a> DispatchParametersARM<'a> {
+    #[inline]
+    pub fn work_group_batch_size(mut self, work_group_batch_size: u32) -> Self {
+        self.work_group_batch_size = work_group_batch_size;
+        self
+    }
+    #[inline]
+    pub fn max_queued_work_group_batches(mut self, max_queued_work_group_batches: u32) -> Self {
+        self.max_queued_work_group_batches = max_queued_work_group_batches;
+        self
+    }
+    #[inline]
+    pub fn max_warps_per_shader_core(mut self, max_warps_per_shader_core: u32) -> Self {
+        self.max_warps_per_shader_core = max_warps_per_shader_core;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG.html>"]
 #[must_use]
 pub struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
@@ -68684,6 +68801,43 @@ impl<'a> PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePrimitiveRestartIndexFeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub primitive_restart_index: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            primitive_restart_index: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
+impl<'a> PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
+    #[inline]
+    pub fn primitive_restart_index(mut self, primitive_restart_index: bool) -> Self {
+        self.primitive_restart_index = primitive_restart_index.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFormatPackFeaturesARM.html>"]
 #[must_use]
 pub struct PhysicalDeviceFormatPackFeaturesARM<'a> {
@@ -69348,16 +69502,12 @@ unsafe impl<'a> TaggedStructure for TensorDependencyInfoARM<'a> {
 unsafe impl ExtendsDependencyInfo for TensorDependencyInfoARM<'_> {}
 impl<'a> TensorDependencyInfoARM<'a> {
     #[inline]
-    pub fn tensor_memory_barrier_count(mut self, tensor_memory_barrier_count: u32) -> Self {
-        self.tensor_memory_barrier_count = tensor_memory_barrier_count;
-        self
-    }
-    #[inline]
     pub fn tensor_memory_barriers(
         mut self,
-        tensor_memory_barriers: &'a TensorMemoryBarrierARM<'a>,
+        tensor_memory_barriers: &'a [TensorMemoryBarrierARM<'a>],
     ) -> Self {
-        self.p_tensor_memory_barriers = tensor_memory_barriers;
+        self.tensor_memory_barrier_count = tensor_memory_barriers.len() as _;
+        self.p_tensor_memory_barriers = tensor_memory_barriers.as_ptr();
         self
     }
 }
@@ -70372,7 +70522,7 @@ impl<'a> DataGraphPipelineCompilerControlCreateInfoARM<'a> {
 pub struct DataGraphPipelineCreateInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineCreateFlags2KHR,
+    pub flags: PipelineCreateFlags2,
     pub layout: PipelineLayout,
     pub resource_info_count: u32,
     pub p_resource_infos: *const DataGraphPipelineResourceInfoARM<'a>,
@@ -70386,7 +70536,7 @@ impl ::core::default::Default for DataGraphPipelineCreateInfoARM<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags2KHR::default(),
+            flags: PipelineCreateFlags2::default(),
             layout: PipelineLayout::default(),
             resource_info_count: u32::default(),
             p_resource_infos: ::core::ptr::null(),
@@ -70400,7 +70550,7 @@ unsafe impl<'a> TaggedStructure for DataGraphPipelineCreateInfoARM<'a> {
 pub unsafe trait ExtendsDataGraphPipelineCreateInfoARM {}
 impl<'a> DataGraphPipelineCreateInfoARM<'a> {
     #[inline]
-    pub fn flags(mut self, flags: PipelineCreateFlags2KHR) -> Self {
+    pub fn flags(mut self, flags: PipelineCreateFlags2) -> Self {
         self.flags = flags;
         self
     }
@@ -71845,6 +71995,120 @@ impl<'a> ExternalFormatOHOS<'a> {
     #[inline]
     pub fn external_format(mut self, external_format: u64) -> Self {
         self.external_format = external_format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerfHintInfoQCOM.html>"]
+#[must_use]
+pub struct PerfHintInfoQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ty: PerfHintTypeQCOM,
+    pub scale: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PerfHintInfoQCOM<'_> {}
+unsafe impl Sync for PerfHintInfoQCOM<'_> {}
+impl ::core::default::Default for PerfHintInfoQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            ty: PerfHintTypeQCOM::default(),
+            scale: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PerfHintInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PERF_HINT_INFO_QCOM;
+}
+impl<'a> PerfHintInfoQCOM<'a> {
+    #[inline]
+    pub fn ty(mut self, ty: PerfHintTypeQCOM) -> Self {
+        self.ty = ty;
+        self
+    }
+    #[inline]
+    pub fn scale(mut self, scale: u32) -> Self {
+        self.scale = scale;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceQueuePerfHintFeaturesQCOM.html>"]
+#[must_use]
+pub struct PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub queue_perf_hint: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
+impl ::core::default::Default for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            queue_perf_hint: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_QUEUE_PERF_HINT_FEATURES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
+    #[inline]
+    pub fn queue_perf_hint(mut self, queue_perf_hint: bool) -> Self {
+        self.queue_perf_hint = queue_perf_hint.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceQueuePerfHintPropertiesQCOM.html>"]
+#[must_use]
+pub struct PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub supported_queues: QueueFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
+impl ::core::default::Default for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            supported_queues: QueueFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_QUEUE_PERF_HINT_PROPERTIES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
+impl<'a> PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
+    #[inline]
+    pub fn supported_queues(mut self, supported_queues: QueueFlags) -> Self {
+        self.supported_queues = supported_queues;
         self
     }
 }
@@ -74296,6 +74560,7 @@ unsafe impl<'a> TaggedStructure for MemoryRangeBarriersInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_RANGE_BARRIERS_INFO_KHR;
 }
 unsafe impl ExtendsDependencyInfo for MemoryRangeBarriersInfoKHR<'_> {}
+pub unsafe trait ExtendsMemoryRangeBarriersInfoKHR {}
 impl<'a> MemoryRangeBarriersInfoKHR<'a> {
     #[inline]
     pub fn memory_range_barriers(
@@ -74304,6 +74569,23 @@ impl<'a> MemoryRangeBarriersInfoKHR<'a> {
     ) -> Self {
         self.memory_range_barrier_count = memory_range_barriers.len() as _;
         self.p_memory_range_barriers = memory_range_barriers.as_ptr();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryRangeBarriersInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -75039,6 +75321,102 @@ impl<'a> DeviceFaultShaderAbortMessageInfoKHR<'a> {
     #[inline]
     pub fn message_data(mut self, message_data: *mut c_void) -> Self {
         self.p_message_data = message_data;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphTOSANameQualityARM.html>"]
+#[must_use]
+pub struct DataGraphTOSANameQualityARM {
+    pub name: [c_char; MAX_DATA_GRAPH_TOSA_NAME_SIZE_ARM],
+    pub quality_flags: DataGraphTOSAQualityFlagsARM,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for DataGraphTOSANameQualityARM {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt.debug_struct("DataGraphTOSANameQualityARM")
+            .field("name", &self.name_as_c_str())
+            .field("quality_flags", &self.quality_flags)
+            .finish()
+    }
+}
+impl ::core::default::Default for DataGraphTOSANameQualityARM {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            name: unsafe { ::core::mem::zeroed() },
+            quality_flags: DataGraphTOSAQualityFlagsARM::default(),
+        }
+    }
+}
+impl DataGraphTOSANameQualityARM {
+    #[inline]
+    pub fn name(mut self, name: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
+    }
+    #[inline]
+    pub fn name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
+        wrap_c_str_slice_until_nul(&self.name)
+    }
+    #[inline]
+    pub fn quality_flags(mut self, quality_flags: DataGraphTOSAQualityFlagsARM) -> Self {
+        self.quality_flags = quality_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueueFamilyDataGraphTOSAPropertiesARM.html>"]
+#[must_use]
+pub struct QueueFamilyDataGraphTOSAPropertiesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub profile_count: u32,
+    pub p_profiles: *const DataGraphTOSANameQualityARM,
+    pub extension_count: u32,
+    pub p_extensions: *const DataGraphTOSANameQualityARM,
+    pub level: DataGraphTOSALevelARM,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for QueueFamilyDataGraphTOSAPropertiesARM<'_> {}
+unsafe impl Sync for QueueFamilyDataGraphTOSAPropertiesARM<'_> {}
+impl ::core::default::Default for QueueFamilyDataGraphTOSAPropertiesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            profile_count: u32::default(),
+            p_profiles: ::core::ptr::null(),
+            extension_count: u32::default(),
+            p_extensions: ::core::ptr::null(),
+            level: DataGraphTOSALevelARM::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for QueueFamilyDataGraphTOSAPropertiesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::QUEUE_FAMILY_DATA_GRAPH_TOSA_PROPERTIES_ARM;
+}
+impl<'a> QueueFamilyDataGraphTOSAPropertiesARM<'a> {
+    #[inline]
+    pub fn profiles(mut self, profiles: &'a [DataGraphTOSANameQualityARM]) -> Self {
+        self.profile_count = profiles.len() as _;
+        self.p_profiles = profiles.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn extensions(mut self, extensions: &'a [DataGraphTOSANameQualityARM]) -> Self {
+        self.extension_count = extensions.len() as _;
+        self.p_extensions = extensions.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn level(mut self, level: DataGraphTOSALevelARM) -> Self {
+        self.level = level;
         self
     }
 }
