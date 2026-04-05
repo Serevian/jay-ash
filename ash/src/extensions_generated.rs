@@ -1026,6 +1026,66 @@ pub mod arm {
             crate::vk::ARM_SCHEDULING_CONTROLS_EXTENSION_NAME as NAME,
             crate::vk::ARM_SCHEDULING_CONTROLS_SPEC_VERSION as SPEC_VERSION,
         };
+        #[doc = "VK_ARM_scheduling_controls device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_ARM_scheduling_controls device-level function pointers"]
+        pub struct DeviceFn {
+            pub cmd_set_dispatch_parameters_arm: PFN_vkCmdSetDispatchParametersARM,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    cmd_set_dispatch_parameters_arm: unsafe {
+                        unsafe extern "system" fn cmd_set_dispatch_parameters_arm(
+                            _command_buffer: CommandBuffer,
+                            _p_dispatch_parameters: *const DispatchParametersARM<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_set_dispatch_parameters_arm)
+                            ))
+                        }
+                        let val = _f(c"vkCmdSetDispatchParametersARM");
+                        if val.is_null() {
+                            cmd_set_dispatch_parameters_arm
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdSetDispatchParametersARM>(
+                                val,
+                            )
+                        }
+                    },
+                }
+            }
+        }
     }
     #[doc = "VK_ARM_render_pass_striped"]
     pub mod render_pass_striped {
@@ -1696,6 +1756,74 @@ pub mod arm {
             }
         }
     }
+    #[doc = "VK_ARM_data_graph_instruction_set_tosa"]
+    pub mod data_graph_instruction_set_tosa {
+        use super::super::*;
+        pub use {
+            crate::vk::ARM_DATA_GRAPH_INSTRUCTION_SET_TOSA_EXTENSION_NAME as NAME,
+            crate::vk::ARM_DATA_GRAPH_INSTRUCTION_SET_TOSA_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_ARM_data_graph_instruction_set_tosa instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle();
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_ARM_data_graph_instruction_set_tosa instance-level function pointers"]
+        pub struct InstanceFn {
+            pub get_physical_device_queue_family_data_graph_engine_operation_properties_arm:
+                PFN_vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_physical_device_queue_family_data_graph_engine_operation_properties_arm: unsafe {
+                        unsafe extern "system" fn get_physical_device_queue_family_data_graph_engine_operation_properties_arm(
+                            _physical_device: PhysicalDevice,
+                            _queue_family_index: u32,
+                            _p_queue_family_data_graph_properties : * const QueueFamilyDataGraphPropertiesARM < '_ >,
+                            _p_properties: *mut BaseOutStructure<'_>,
+                        ) -> Result {
+                            panic ! (concat ! ("Unable to load " , stringify ! (get_physical_device_queue_family_data_graph_engine_operation_properties_arm)))
+                        }
+                        let val = _f(
+                            c"vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM",
+                        );
+                        if val.is_null() {
+                            get_physical_device_queue_family_data_graph_engine_operation_properties_arm
+                        } else {
+                            :: core :: mem :: transmute :: < * const c_void , PFN_vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM > (val)
+                        }
+                    },
+                }
+            }
+        }
+    }
     #[doc = "VK_ARM_pipeline_opacity_micromap"]
     pub mod pipeline_opacity_micromap {
         use super::super::*;
@@ -1767,6 +1895,251 @@ pub mod arm {
                             enumerate_physical_device_queue_family_performance_counters_by_region_arm
                         } else {
                             :: core :: mem :: transmute :: < * const c_void , PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM > (val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_ARM_shader_instrumentation"]
+    pub mod shader_instrumentation {
+        use super::super::*;
+        pub use {
+            crate::vk::ARM_SHADER_INSTRUMENTATION_EXTENSION_NAME as NAME,
+            crate::vk::ARM_SHADER_INSTRUMENTATION_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_ARM_shader_instrumentation instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle();
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        entry.get_instance_proc_addr(handle, name.as_ptr()),
+                    )
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_ARM_shader_instrumentation instance-level function pointers"]
+        pub struct InstanceFn {
+            pub enumerate_physical_device_shader_instrumentation_metrics_arm:
+                PFN_vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    enumerate_physical_device_shader_instrumentation_metrics_arm: unsafe {
+                        unsafe extern "system" fn enumerate_physical_device_shader_instrumentation_metrics_arm(
+                            _physical_device: PhysicalDevice,
+                            _p_description_count: *mut u32,
+                            _p_descriptions: *mut ShaderInstrumentationMetricDescriptionARM<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(
+                                    enumerate_physical_device_shader_instrumentation_metrics_arm
+                                )
+                            ))
+                        }
+                        let val = _f(c"vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM");
+                        if val.is_null() {
+                            enumerate_physical_device_shader_instrumentation_metrics_arm
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM,
+                            >(val)
+                        }
+                    },
+                }
+            }
+        }
+        #[doc = "VK_ARM_shader_instrumentation device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_ARM_shader_instrumentation device-level function pointers"]
+        pub struct DeviceFn {
+            pub create_shader_instrumentation_arm: PFN_vkCreateShaderInstrumentationARM,
+            pub destroy_shader_instrumentation_arm: PFN_vkDestroyShaderInstrumentationARM,
+            pub cmd_begin_shader_instrumentation_arm: PFN_vkCmdBeginShaderInstrumentationARM,
+            pub cmd_end_shader_instrumentation_arm: PFN_vkCmdEndShaderInstrumentationARM,
+            pub get_shader_instrumentation_values_arm: PFN_vkGetShaderInstrumentationValuesARM,
+            pub clear_shader_instrumentation_metrics_arm:
+                PFN_vkClearShaderInstrumentationMetricsARM,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    create_shader_instrumentation_arm: unsafe {
+                        unsafe extern "system" fn create_shader_instrumentation_arm(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const ShaderInstrumentationCreateInfoARM<'_>,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_instrumentation: *mut ShaderInstrumentationARM,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_shader_instrumentation_arm)
+                            ))
+                        }
+                        let val = _f(c"vkCreateShaderInstrumentationARM");
+                        if val.is_null() {
+                            create_shader_instrumentation_arm
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateShaderInstrumentationARM,
+                            >(val)
+                        }
+                    },
+                    destroy_shader_instrumentation_arm: unsafe {
+                        unsafe extern "system" fn destroy_shader_instrumentation_arm(
+                            _device: crate::vk::Device,
+                            _instrumentation: ShaderInstrumentationARM,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(destroy_shader_instrumentation_arm)
+                            ))
+                        }
+                        let val = _f(c"vkDestroyShaderInstrumentationARM");
+                        if val.is_null() {
+                            destroy_shader_instrumentation_arm
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkDestroyShaderInstrumentationARM,
+                            >(val)
+                        }
+                    },
+                    cmd_begin_shader_instrumentation_arm: unsafe {
+                        unsafe extern "system" fn cmd_begin_shader_instrumentation_arm(
+                            _command_buffer: CommandBuffer,
+                            _instrumentation: ShaderInstrumentationARM,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_begin_shader_instrumentation_arm)
+                            ))
+                        }
+                        let val = _f(c"vkCmdBeginShaderInstrumentationARM");
+                        if val.is_null() {
+                            cmd_begin_shader_instrumentation_arm
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBeginShaderInstrumentationARM,
+                            >(val)
+                        }
+                    },
+                    cmd_end_shader_instrumentation_arm: unsafe {
+                        unsafe extern "system" fn cmd_end_shader_instrumentation_arm(
+                            _command_buffer: CommandBuffer,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_end_shader_instrumentation_arm)
+                            ))
+                        }
+                        let val = _f(c"vkCmdEndShaderInstrumentationARM");
+                        if val.is_null() {
+                            cmd_end_shader_instrumentation_arm
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdEndShaderInstrumentationARM,
+                            >(val)
+                        }
+                    },
+                    get_shader_instrumentation_values_arm: unsafe {
+                        unsafe extern "system" fn get_shader_instrumentation_values_arm(
+                            _device: crate::vk::Device,
+                            _instrumentation: ShaderInstrumentationARM,
+                            _p_metric_block_count: *mut u32,
+                            _p_metric_values: *mut c_void,
+                            _flags: ShaderInstrumentationValuesFlagsARM,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_shader_instrumentation_values_arm)
+                            ))
+                        }
+                        let val = _f(c"vkGetShaderInstrumentationValuesARM");
+                        if val.is_null() {
+                            get_shader_instrumentation_values_arm
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkGetShaderInstrumentationValuesARM,
+                            >(val)
+                        }
+                    },
+                    clear_shader_instrumentation_metrics_arm: unsafe {
+                        unsafe extern "system" fn clear_shader_instrumentation_metrics_arm(
+                            _device: crate::vk::Device,
+                            _instrumentation: ShaderInstrumentationARM,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(clear_shader_instrumentation_metrics_arm)
+                            ))
+                        }
+                        let val = _f(c"vkClearShaderInstrumentationMetricsARM");
+                        if val.is_null() {
+                            clear_shader_instrumentation_metrics_arm
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkClearShaderInstrumentationMetricsARM,
+                            >(val)
                         }
                     },
                 }
@@ -6843,7 +7216,7 @@ pub mod ext {
                     get_pipeline_properties_ext: unsafe {
                         unsafe extern "system" fn get_pipeline_properties_ext(
                             _device: crate::vk::Device,
-                            _p_pipeline_info: *const PipelineInfoEXT<'_>,
+                            _p_pipeline_info: *const PipelineInfoKHR<'_>,
                             _p_pipeline_properties: *mut BaseOutStructure<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -10491,6 +10864,75 @@ pub mod ext {
             crate::vk::EXT_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME as NAME,
             crate::vk::EXT_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION as SPEC_VERSION,
         };
+    }
+    #[doc = "VK_EXT_primitive_restart_index"]
+    pub mod primitive_restart_index {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_PRIMITIVE_RESTART_INDEX_EXTENSION_NAME as NAME,
+            crate::vk::EXT_PRIMITIVE_RESTART_INDEX_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_EXT_primitive_restart_index device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_EXT_primitive_restart_index device-level function pointers"]
+        pub struct DeviceFn {
+            pub cmd_set_primitive_restart_index_ext: PFN_vkCmdSetPrimitiveRestartIndexEXT,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    cmd_set_primitive_restart_index_ext: unsafe {
+                        unsafe extern "system" fn cmd_set_primitive_restart_index_ext(
+                            _command_buffer: CommandBuffer,
+                            _primitive_restart_index: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_set_primitive_restart_index_ext)
+                            ))
+                        }
+                        let val = _f(c"vkCmdSetPrimitiveRestartIndexEXT");
+                        if val.is_null() {
+                            cmd_set_primitive_restart_index_ext
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdSetPrimitiveRestartIndexEXT,
+                            >(val)
+                        }
+                    },
+                }
+            }
+        }
     }
 }
 #[doc = "Extensions tagged FUCHSIA"]
@@ -17071,6 +17513,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_constant_data"]
+    pub mod shader_constant_data {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_SHADER_CONSTANT_DATA_EXTENSION_NAME as NAME,
+            crate::vk::KHR_SHADER_CONSTANT_DATA_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_dynamic_rendering_local_read"]
     pub mod dynamic_rendering_local_read {
         use super::super::*;
@@ -17162,6 +17612,14 @@ pub mod khr {
                 }
             }
         }
+    }
+    #[doc = "VK_KHR_shader_abort"]
+    pub mod shader_abort {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_SHADER_ABORT_EXTENSION_NAME as NAME,
+            crate::vk::KHR_SHADER_ABORT_SPEC_VERSION as SPEC_VERSION,
+        };
     }
     #[doc = "VK_KHR_shader_quad_control"]
     pub mod shader_quad_control {
@@ -18061,6 +18519,513 @@ pub mod khr {
                             queue_submit2_khr
                         } else {
                             ::core::mem::transmute::<*const c_void, PFN_vkQueueSubmit2>(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_KHR_device_address_commands"]
+    pub mod device_address_commands {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_DEVICE_ADDRESS_COMMANDS_EXTENSION_NAME as NAME,
+            crate::vk::KHR_DEVICE_ADDRESS_COMMANDS_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_KHR_device_address_commands device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_KHR_device_address_commands device-level function pointers"]
+        pub struct DeviceFn {
+            pub cmd_bind_index_buffer3_khr: PFN_vkCmdBindIndexBuffer3KHR,
+            pub cmd_bind_vertex_buffers3_khr: PFN_vkCmdBindVertexBuffers3KHR,
+            pub cmd_draw_indirect2_khr: PFN_vkCmdDrawIndirect2KHR,
+            pub cmd_draw_indexed_indirect2_khr: PFN_vkCmdDrawIndexedIndirect2KHR,
+            pub cmd_dispatch_indirect2_khr: PFN_vkCmdDispatchIndirect2KHR,
+            pub cmd_copy_memory_khr: PFN_vkCmdCopyMemoryKHR,
+            pub cmd_copy_memory_to_image_khr: PFN_vkCmdCopyMemoryToImageKHR,
+            pub cmd_copy_image_to_memory_khr: PFN_vkCmdCopyImageToMemoryKHR,
+            pub cmd_update_memory_khr: PFN_vkCmdUpdateMemoryKHR,
+            pub cmd_fill_memory_khr: PFN_vkCmdFillMemoryKHR,
+            pub cmd_copy_query_pool_results_to_memory_khr: PFN_vkCmdCopyQueryPoolResultsToMemoryKHR,
+            pub cmd_draw_indirect_count2_khr: PFN_vkCmdDrawIndirectCount2KHR,
+            pub cmd_draw_indexed_indirect_count2_khr: PFN_vkCmdDrawIndexedIndirectCount2KHR,
+            pub cmd_begin_conditional_rendering2_ext: PFN_vkCmdBeginConditionalRendering2EXT,
+            pub cmd_bind_transform_feedback_buffers2_ext: PFN_vkCmdBindTransformFeedbackBuffers2EXT,
+            pub cmd_begin_transform_feedback2_ext: PFN_vkCmdBeginTransformFeedback2EXT,
+            pub cmd_end_transform_feedback2_ext: PFN_vkCmdEndTransformFeedback2EXT,
+            pub cmd_draw_indirect_byte_count2_ext: PFN_vkCmdDrawIndirectByteCount2EXT,
+            pub cmd_draw_mesh_tasks_indirect2_ext: PFN_vkCmdDrawMeshTasksIndirect2EXT,
+            pub cmd_draw_mesh_tasks_indirect_count2_ext: PFN_vkCmdDrawMeshTasksIndirectCount2EXT,
+            pub cmd_write_marker_to_memory_amd: PFN_vkCmdWriteMarkerToMemoryAMD,
+            pub create_acceleration_structure2_khr: PFN_vkCreateAccelerationStructure2KHR,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    cmd_bind_index_buffer3_khr: unsafe {
+                        unsafe extern "system" fn cmd_bind_index_buffer3_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const BindIndexBuffer3InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_bind_index_buffer3_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdBindIndexBuffer3KHR");
+                        if val.is_null() {
+                            cmd_bind_index_buffer3_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindIndexBuffer3KHR>(
+                                val,
+                            )
+                        }
+                    },
+                    cmd_bind_vertex_buffers3_khr: unsafe {
+                        unsafe extern "system" fn cmd_bind_vertex_buffers3_khr(
+                            _command_buffer: CommandBuffer,
+                            _first_binding: u32,
+                            _binding_count: u32,
+                            _p_binding_infos: *const BindVertexBuffer3InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_bind_vertex_buffers3_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdBindVertexBuffers3KHR");
+                        if val.is_null() {
+                            cmd_bind_vertex_buffers3_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdBindVertexBuffers3KHR>(
+                                val,
+                            )
+                        }
+                    },
+                    cmd_draw_indirect2_khr: unsafe {
+                        unsafe extern "system" fn cmd_draw_indirect2_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const DrawIndirect2InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_draw_indirect2_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdDrawIndirect2KHR");
+                        if val.is_null() {
+                            cmd_draw_indirect2_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndirect2KHR>(val)
+                        }
+                    },
+                    cmd_draw_indexed_indirect2_khr: unsafe {
+                        unsafe extern "system" fn cmd_draw_indexed_indirect2_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const DrawIndirect2InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_draw_indexed_indirect2_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdDrawIndexedIndirect2KHR");
+                        if val.is_null() {
+                            cmd_draw_indexed_indirect2_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndexedIndirect2KHR>(
+                                val,
+                            )
+                        }
+                    },
+                    cmd_dispatch_indirect2_khr: unsafe {
+                        unsafe extern "system" fn cmd_dispatch_indirect2_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const DispatchIndirect2InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_dispatch_indirect2_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdDispatchIndirect2KHR");
+                        if val.is_null() {
+                            cmd_dispatch_indirect2_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDispatchIndirect2KHR>(
+                                val,
+                            )
+                        }
+                    },
+                    cmd_copy_memory_khr: unsafe {
+                        unsafe extern "system" fn cmd_copy_memory_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_copy_memory_info: *const CopyDeviceMemoryInfoKHR<'_>,
+                        ) {
+                            panic!(concat!("Unable to load ", stringify!(cmd_copy_memory_khr)))
+                        }
+                        let val = _f(c"vkCmdCopyMemoryKHR");
+                        if val.is_null() {
+                            cmd_copy_memory_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyMemoryKHR>(val)
+                        }
+                    },
+                    cmd_copy_memory_to_image_khr: unsafe {
+                        unsafe extern "system" fn cmd_copy_memory_to_image_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_copy_memory_info: *const CopyDeviceMemoryImageInfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_copy_memory_to_image_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdCopyMemoryToImageKHR");
+                        if val.is_null() {
+                            cmd_copy_memory_to_image_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyMemoryToImageKHR>(
+                                val,
+                            )
+                        }
+                    },
+                    cmd_copy_image_to_memory_khr: unsafe {
+                        unsafe extern "system" fn cmd_copy_image_to_memory_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_copy_memory_info: *const CopyDeviceMemoryImageInfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_copy_image_to_memory_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdCopyImageToMemoryKHR");
+                        if val.is_null() {
+                            cmd_copy_image_to_memory_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdCopyImageToMemoryKHR>(
+                                val,
+                            )
+                        }
+                    },
+                    cmd_update_memory_khr: unsafe {
+                        unsafe extern "system" fn cmd_update_memory_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_dst_range: *const DeviceAddressRangeKHR,
+                            _dst_flags: AddressCommandFlagsKHR,
+                            _data_size: DeviceSize,
+                            _p_data: *const c_void,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_update_memory_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdUpdateMemoryKHR");
+                        if val.is_null() {
+                            cmd_update_memory_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdUpdateMemoryKHR>(val)
+                        }
+                    },
+                    cmd_fill_memory_khr: unsafe {
+                        unsafe extern "system" fn cmd_fill_memory_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_dst_range: *const DeviceAddressRangeKHR,
+                            _dst_flags: AddressCommandFlagsKHR,
+                            _data: u32,
+                        ) {
+                            panic!(concat!("Unable to load ", stringify!(cmd_fill_memory_khr)))
+                        }
+                        let val = _f(c"vkCmdFillMemoryKHR");
+                        if val.is_null() {
+                            cmd_fill_memory_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdFillMemoryKHR>(val)
+                        }
+                    },
+                    cmd_copy_query_pool_results_to_memory_khr: unsafe {
+                        unsafe extern "system" fn cmd_copy_query_pool_results_to_memory_khr(
+                            _command_buffer: CommandBuffer,
+                            _query_pool: QueryPool,
+                            _first_query: u32,
+                            _query_count: u32,
+                            _p_dst_range: *const StridedDeviceAddressRangeKHR,
+                            _dst_flags: AddressCommandFlagsKHR,
+                            _query_result_flags: QueryResultFlags,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_copy_query_pool_results_to_memory_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdCopyQueryPoolResultsToMemoryKHR");
+                        if val.is_null() {
+                            cmd_copy_query_pool_results_to_memory_khr
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdCopyQueryPoolResultsToMemoryKHR,
+                            >(val)
+                        }
+                    },
+                    cmd_draw_indirect_count2_khr: unsafe {
+                        unsafe extern "system" fn cmd_draw_indirect_count2_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const DrawIndirectCount2InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_draw_indirect_count2_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdDrawIndirectCount2KHR");
+                        if val.is_null() {
+                            cmd_draw_indirect_count2_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdDrawIndirectCount2KHR>(
+                                val,
+                            )
+                        }
+                    },
+                    cmd_draw_indexed_indirect_count2_khr: unsafe {
+                        unsafe extern "system" fn cmd_draw_indexed_indirect_count2_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const DrawIndirectCount2InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_draw_indexed_indirect_count2_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCmdDrawIndexedIndirectCount2KHR");
+                        if val.is_null() {
+                            cmd_draw_indexed_indirect_count2_khr
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDrawIndexedIndirectCount2KHR,
+                            >(val)
+                        }
+                    },
+                    cmd_begin_conditional_rendering2_ext: unsafe {
+                        unsafe extern "system" fn cmd_begin_conditional_rendering2_ext(
+                            _command_buffer: CommandBuffer,
+                            _p_conditional_rendering_begin : * const ConditionalRenderingBeginInfo2EXT < '_ >,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_begin_conditional_rendering2_ext)
+                            ))
+                        }
+                        let val = _f(c"vkCmdBeginConditionalRendering2EXT");
+                        if val.is_null() {
+                            cmd_begin_conditional_rendering2_ext
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBeginConditionalRendering2EXT,
+                            >(val)
+                        }
+                    },
+                    cmd_bind_transform_feedback_buffers2_ext: unsafe {
+                        unsafe extern "system" fn cmd_bind_transform_feedback_buffers2_ext(
+                            _command_buffer: CommandBuffer,
+                            _first_binding: u32,
+                            _binding_count: u32,
+                            _p_binding_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_bind_transform_feedback_buffers2_ext)
+                            ))
+                        }
+                        let val = _f(c"vkCmdBindTransformFeedbackBuffers2EXT");
+                        if val.is_null() {
+                            cmd_bind_transform_feedback_buffers2_ext
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBindTransformFeedbackBuffers2EXT,
+                            >(val)
+                        }
+                    },
+                    cmd_begin_transform_feedback2_ext: unsafe {
+                        unsafe extern "system" fn cmd_begin_transform_feedback2_ext(
+                            _command_buffer: CommandBuffer,
+                            _first_counter_range: u32,
+                            _counter_range_count: u32,
+                            _p_counter_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_begin_transform_feedback2_ext)
+                            ))
+                        }
+                        let val = _f(c"vkCmdBeginTransformFeedback2EXT");
+                        if val.is_null() {
+                            cmd_begin_transform_feedback2_ext
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdBeginTransformFeedback2EXT,
+                            >(val)
+                        }
+                    },
+                    cmd_end_transform_feedback2_ext: unsafe {
+                        unsafe extern "system" fn cmd_end_transform_feedback2_ext(
+                            _command_buffer: CommandBuffer,
+                            _first_counter_range: u32,
+                            _counter_range_count: u32,
+                            _p_counter_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_end_transform_feedback2_ext)
+                            ))
+                        }
+                        let val = _f(c"vkCmdEndTransformFeedback2EXT");
+                        if val.is_null() {
+                            cmd_end_transform_feedback2_ext
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdEndTransformFeedback2EXT>(
+                                val,
+                            )
+                        }
+                    },
+                    cmd_draw_indirect_byte_count2_ext: unsafe {
+                        unsafe extern "system" fn cmd_draw_indirect_byte_count2_ext(
+                            _command_buffer: CommandBuffer,
+                            _instance_count: u32,
+                            _first_instance: u32,
+                            _p_counter_info: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+                            _counter_offset: u32,
+                            _vertex_stride: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_draw_indirect_byte_count2_ext)
+                            ))
+                        }
+                        let val = _f(c"vkCmdDrawIndirectByteCount2EXT");
+                        if val.is_null() {
+                            cmd_draw_indirect_byte_count2_ext
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDrawIndirectByteCount2EXT,
+                            >(val)
+                        }
+                    },
+                    cmd_draw_mesh_tasks_indirect2_ext: unsafe {
+                        unsafe extern "system" fn cmd_draw_mesh_tasks_indirect2_ext(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const DrawIndirect2InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_draw_mesh_tasks_indirect2_ext)
+                            ))
+                        }
+                        let val = _f(c"vkCmdDrawMeshTasksIndirect2EXT");
+                        if val.is_null() {
+                            cmd_draw_mesh_tasks_indirect2_ext
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDrawMeshTasksIndirect2EXT,
+                            >(val)
+                        }
+                    },
+                    cmd_draw_mesh_tasks_indirect_count2_ext: unsafe {
+                        unsafe extern "system" fn cmd_draw_mesh_tasks_indirect_count2_ext(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const DrawIndirectCount2InfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_draw_mesh_tasks_indirect_count2_ext)
+                            ))
+                        }
+                        let val = _f(c"vkCmdDrawMeshTasksIndirectCount2EXT");
+                        if val.is_null() {
+                            cmd_draw_mesh_tasks_indirect_count2_ext
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCmdDrawMeshTasksIndirectCount2EXT,
+                            >(val)
+                        }
+                    },
+                    cmd_write_marker_to_memory_amd: unsafe {
+                        unsafe extern "system" fn cmd_write_marker_to_memory_amd(
+                            _command_buffer: CommandBuffer,
+                            _p_info: *const MemoryMarkerInfoAMD<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_write_marker_to_memory_amd)
+                            ))
+                        }
+                        let val = _f(c"vkCmdWriteMarkerToMemoryAMD");
+                        if val.is_null() {
+                            cmd_write_marker_to_memory_amd
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkCmdWriteMarkerToMemoryAMD>(
+                                val,
+                            )
+                        }
+                    },
+                    create_acceleration_structure2_khr: unsafe {
+                        unsafe extern "system" fn create_acceleration_structure2_khr(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const AccelerationStructureCreateInfo2KHR<'_>,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_acceleration_structure: *mut AccelerationStructureKHR,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_acceleration_structure2_khr)
+                            ))
+                        }
+                        let val = _f(c"vkCreateAccelerationStructure2KHR");
+                        if val.is_null() {
+                            create_acceleration_structure2_khr
+                        } else {
+                            ::core::mem::transmute::<
+                                *const c_void,
+                                PFN_vkCreateAccelerationStructure2KHR,
+                            >(val)
                         }
                     },
                 }
@@ -19578,6 +20543,96 @@ pub mod khr {
             crate::vk::KHR_MAINTENANCE_7_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_KHR_device_fault"]
+    pub mod device_fault {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_DEVICE_FAULT_EXTENSION_NAME as NAME,
+            crate::vk::KHR_DEVICE_FAULT_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_KHR_device_fault device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_KHR_device_fault device-level function pointers"]
+        pub struct DeviceFn {
+            pub get_device_fault_reports_khr: PFN_vkGetDeviceFaultReportsKHR,
+            pub get_device_fault_debug_info_khr: PFN_vkGetDeviceFaultDebugInfoKHR,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_device_fault_reports_khr: unsafe {
+                        unsafe extern "system" fn get_device_fault_reports_khr(
+                            _device: crate::vk::Device,
+                            _timeout: u64,
+                            _p_fault_counts: *mut u32,
+                            _p_fault_info: *mut DeviceFaultInfoKHR<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_device_fault_reports_khr)
+                            ))
+                        }
+                        let val = _f(c"vkGetDeviceFaultReportsKHR");
+                        if val.is_null() {
+                            get_device_fault_reports_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceFaultReportsKHR>(
+                                val,
+                            )
+                        }
+                    },
+                    get_device_fault_debug_info_khr: unsafe {
+                        unsafe extern "system" fn get_device_fault_debug_info_khr(
+                            _device: crate::vk::Device,
+                            _p_debug_info: *mut DeviceFaultDebugInfoKHR<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_device_fault_debug_info_khr)
+                            ))
+                        }
+                        let val = _f(c"vkGetDeviceFaultDebugInfoKHR");
+                        if val.is_null() {
+                            get_device_fault_debug_info_khr
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkGetDeviceFaultDebugInfoKHR>(
+                                val,
+                            )
+                        }
+                    },
+                }
+            }
+        }
+    }
     #[doc = "VK_KHR_maintenance8"]
     pub mod maintenance8 {
         use super::super::*;
@@ -20484,7 +21539,7 @@ pub mod nv {
                         unsafe extern "system" fn get_acceleration_structure_memory_requirements_nv(
                             _device: crate::vk::Device,
                             _p_info: *const AccelerationStructureMemoryRequirementsInfoNV<'_>,
-                            _p_memory_requirements: *mut MemoryRequirements2KHR<'_>,
+                            _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -23695,6 +24750,72 @@ pub mod qcom {
             crate::vk::QCOM_RENDER_PASS_STORE_OPS_EXTENSION_NAME as NAME,
             crate::vk::QCOM_RENDER_PASS_STORE_OPS_SPEC_VERSION as SPEC_VERSION,
         };
+    }
+    #[doc = "VK_QCOM_queue_perf_hint"]
+    pub mod queue_perf_hint {
+        use super::super::*;
+        pub use {
+            crate::vk::QCOM_QUEUE_PERF_HINT_EXTENSION_NAME as NAME,
+            crate::vk::QCOM_QUEUE_PERF_HINT_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_QCOM_queue_perf_hint device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute::<PFN_vkVoidFunction, *const c_void>(
+                        instance.get_device_proc_addr(handle, name.as_ptr()),
+                    )
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_QCOM_queue_perf_hint device-level function pointers"]
+        pub struct DeviceFn {
+            pub queue_set_perf_hint_qcom: PFN_vkQueueSetPerfHintQCOM,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    queue_set_perf_hint_qcom: unsafe {
+                        unsafe extern "system" fn queue_set_perf_hint_qcom(
+                            _queue: Queue,
+                            _p_perf_hint_info: *const PerfHintInfoQCOM<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(queue_set_perf_hint_qcom)
+                            ))
+                        }
+                        let val = _f(c"vkQueueSetPerfHintQCOM");
+                        if val.is_null() {
+                            queue_set_perf_hint_qcom
+                        } else {
+                            ::core::mem::transmute::<*const c_void, PFN_vkQueueSetPerfHintQCOM>(val)
+                        }
+                    },
+                }
+            }
+        }
     }
     #[doc = "VK_QCOM_tile_shading"]
     pub mod tile_shading {
